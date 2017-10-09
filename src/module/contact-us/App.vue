@@ -1,8 +1,7 @@
 <template>
   <article class="page-contain">
     <vue-head></vue-head>
-    <h2>首页</h2>
-    <a href="platform.html">To </a>
+    <h2>联系我们</h2>
   </article>
 </template>
 
