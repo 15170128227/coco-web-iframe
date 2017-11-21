@@ -20,16 +20,16 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-  @import './assets/css/reset.styl'
-  @import './assets/css/base.styl'
-  @import './assets/css/stylusFn.styl'
-  #app {
+<style lang="stylus" rel="stylesheet/stylus">
+  @import 'assets/css/reset.styl'
+  @import 'assets/css/base.styl'
+  @import 'assets/css/stylusFn.styl'
+ /* #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
     color: #2c3e50
     margin-top: 60px
-  }
+  }*/
 </style>

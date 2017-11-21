@@ -56,7 +56,7 @@
   /* footer start */
   .footer
     background-color #2C2F3C
-    color #fff
+    color $clrfff
     font-size 14px
     .footer-container
       display flex
