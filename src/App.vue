@@ -1,30 +1,24 @@
 <template>
   <div id="app">
-    <vue-head></vue-head>
+    <coco-head></coco-head>
     <router-view/>
   </div>
 </template>
 
 <script>
-import VueHead from './components/header/header'
+import cocoHead from './components/header/header'
 export default {
   name: 'app',
-  components: {
-    VueHead
-  },
   data () {
     return {}
+  },
+  components: {
+    cocoHead
   }
 }
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+  @import './assets/css/reset.styl';
+  @import './assets/css/base.styl';
 </style>

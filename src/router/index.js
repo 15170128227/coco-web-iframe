@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/pages/home/home'
 import aboutUs from '@/pages/about-us/about-us'
 import contactUs from '@/pages/contact-us/contact-us'
+import login from '@/pages/login/login'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/contactUs',  // 联系我们
     name: 'contactUs',
     component: contactUs
+  },
+  {
+    path: '/login',  // 登录
+    name: 'login',
+    component: login
   }
 ]
 
