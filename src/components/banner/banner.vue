@@ -4,7 +4,7 @@
     <swiper :options="swiperOption" ref="mySwiper" class="my-swiper">
       <!-- slides -->
       <swiper-slide v-for="item in bannerData.info" :key="item.id">
-        <img :src="item.imgUrl">
+        <img :src="item.imgUrl" class="s-img">
         <div class="banner-text">
           <img class="b-img" :src="item.content.imgUrl">
           <p>
@@ -73,10 +73,14 @@
       justify-content center
       align-items center
       height  484px
-      img
-        width 100%
-        max-height 484px
-        overflow hidden
+      overflow hidden
+      .s-img
+        width 1920px
+        height 484px
+        transform: translate(-50%,-50%);
+        position: absolute;
+        top: 50%;
+        left: 50%; 
       .banner-text
         position absolute
         top 0
@@ -110,9 +114,12 @@
     text-align center
     position relative
     img
-      width 100%
-      max-height 484px
-      overflow hidden
+      width 1920px
+      height  484px
+      transform: translate(-50%,-50%);
+      position: absolute;
+      top: 50%;
+      left: 50%; 
     .o-text
       position absolute
       top 0

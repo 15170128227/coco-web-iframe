@@ -16,21 +16,21 @@
         <div class="em-list">
           <div class="eml-list">
             <span class="emll-img">
-              <img src="/src/assets/images/pingpai.png">
-            </span>
+                <img src="/src/assets/images/pingpai.png" class="emmlli-pingpai">
+              </span>
             <span class="emll-desc">品牌资源</span>
           </div>
           <div class="eml-list">
             <span class="emll-img emmll-logo">
-              <img src="/src/assets/images/logoWhite.png" class="emmlli-logo">
-            </span>
+                <img src="/src/assets/images/logoWhite.png" class="emmlli-coco">
+              </span>
             <span class="emll-desc">可可奇货</span>
           </div>
           <div class="eml-list">
             <span class="emll-img">
-              <img src="/src/assets/images/zimeiti.png">
-            </span>
-            <span class= "emll-desc">自媒体</span>
+                <img src="/src/assets/images/zimeiti.png" class="emmlli-zimeiti">
+              </span>
+            <span class="emll-desc">自媒体</span>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
         bannerData: {
           isSwiper: true,
           info: [{
-              'imgUrl': '/src/assets/images/test1.png',
+              'imgUrl': '/src/assets/images/index.jpg',
               'content': {
                 imgUrl: '/src/assets/images/logoWhite.png',
                 textDescBg: '国内首家场景电商解决方案提供商',
@@ -70,7 +70,7 @@
               }
             },
             {
-              'imgUrl': '/src/assets/images/test2.png',
+              'imgUrl': '/src/assets/images/aboutUs.jpg',
               'content': {
                 imgUrl: '/src/assets/images/logoWhite.png',
                 textDescBg: 'text2',
@@ -78,7 +78,7 @@
               }
             },
             {
-              'imgUrl': '/src/assets/images/test3.png',
+              'imgUrl': '/src/assets/images/contactUs.jpg',
               'content': {
                 imgUrl: '/src/assets/images/logoWhite.png',
                 textDescBg: 'text3',
@@ -93,6 +93,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  $colorTitleColor = rgb(233,74,67) 
   .home .content
     width 960px
     margin 0 auto
@@ -106,7 +107,7 @@
         margin-top 88px
         .emll-desc
           font-size 22px
-          color rgb(233,74,67)
+          color $colorTitleColor
         .emll-img
           display block
           margin: 0 auto;
@@ -115,8 +116,6 @@
           border-radius 130px
           position relative
           background-color rgb(245,245,245)
-        .emmll-logo
-          background-color rgb(223, 74, 67)
           img
             position: absolute;
             top: 0;
@@ -124,8 +123,17 @@
             left: 0;
             right: 0;
             margin: auto;
-          .emmlli-logo
+          .emmlli-pingpai
+            width 74px
+            height 74px
+          .emmlli-coco
             width 95px
+            height 36px
+          .emmlli-zimeiti
+            width 74px
+            height 74px
+        .emmll-logo
+          background-color $colorTitleColor
         .emll-desc
           margin-top 34px
           display block

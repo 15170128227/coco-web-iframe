@@ -16,7 +16,7 @@
         bannerData: {
           isSwiper: false,
           info: {
-            'imgUrl': '/src/assets/images/test1.png',
+            'imgUrl': '/src/assets/images/aboutUs.jpg',
             'content': {
               textDescBg: '关于我们',
               textDescSm: '-About CoCo-'

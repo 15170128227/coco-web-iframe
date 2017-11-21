@@ -53,7 +53,7 @@
       height: 70px;
       img
         height auto
-        width 65px
+        width 85px
         margin-top 20px
     .header-list
       float right 
