@@ -1,0 +1,69 @@
+/****************** 参数列表 ******************/
+// width -- height
+$min-width = 960px
+
+/****************** 函数列表 ******************/
+// 兼容前缀函数
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  {prop} args
+
+// 阴影函数
+box-shadow()
+  vendor('box-shadow',arguments)
+
+// 圆角函数
+border-radius()
+  vendor('border-radius',arguments)
+
+// padding
+paddings(type,px)
+  {type} px
+
+// margin
+margins(type,px)
+  {type} px
+
+// flex布局
+flex(args...)
+  display arguments[0]
+  flex-direction arguments[1]
+  justify-content arguments[2]
+
+// flex布局 分布两边
+flexSpaceBet(args...)
+  display arguments[0]
+  justify-content arguments[1]
+
+// 单行文本移除省略号
+text-ellipsis()
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+// webkit多行文本溢出省略号
+text-ellipsis-rows(rowNum)
+  overflow hidden
+  text-overflow ellipsis
+  display -webkit-box
+  -webkit-line-clamp rowNum
+  -webkit-box-orient vertical
+
+// 定位设置
+positions(type,top = auto,right = auto,bottom = auto,left = auto)
+  position type
+  top top
+  right right
+  bottom bottom
+  left left
+
+// 宽度设置
+width(param)
+  width param
+  margin 0 auto
+  overflow hidden
+
+// 设置透明度
+opacity(n)
+  opacity n
