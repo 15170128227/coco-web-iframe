@@ -11,54 +11,91 @@
     <coco-banner :bannerData="bannerData"></coco-banner>
     <div class="content">
       <!-- 生态图 -->
-      <div class="em">
+      <div class="em w_960">
         <img src="/src/assets/images/ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
-          <div class="eml-list">
+          <div class="eml-list" v-for="item in emJson" :key="item.id">
             <span class="emll-img">
-                <img src="/src/assets/images/pingpai.png" class="emmlli-pingpai">
+                <img :src="item.urlImg" class="emmlli-pingpai">
               </span>
-            <span class="emll-desc">品牌资源</span>
-          </div>
-          <div class="eml-list">
-            <span class="emll-img emmll-logo">
-                <img src="/src/assets/images/logoWhite.png" class="emmlli-coco">
-              </span>
-            <span class="emll-desc">可可奇货</span>
-          </div>
-          <div class="eml-list">
-            <span class="emll-img">
-                <img src="/src/assets/images/zimeiti.png" class="emmlli-zimeiti">
-              </span>
-            <span class="emll-desc">自媒体</span>
+            <span class="emll-desc">{{ item.text }}</span>
           </div>
         </div>
       </div>
       <!-- 专注成长 -->
       <div class="fd">
         <img src="/src/assets/images/focus-director.png" alt="img" class="titileImg">
+        <ul class="fd-list">
+          <li class="fdl-img" v-for="item in fdJson" :key="item.id">
+            <img :src="item.urlImg" alt="fd">
+            <div class="fd-content">
+              <span class="fdc-title">{{ item.title }}</span>
+              <span class="fdc-desc">{{ item.text }}</span>
+            </div>
+          </li>
+          <!-- <li class="fdl-img">
+                        <img src="/src/assets/images/fd-list2.png" alt="fd">
+                         <div class="fd-content">
+                           <span class="fdc-title">新营销运营支持</span>
+                            <span class="fdc-desc">去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略</span>
+                        </div>
+                      </li>
+                       <li class="fdl-img">
+                        <img src="/src/assets/images/fd-list3.png" alt="fd">
+                         <div class="fd-content">
+                           <span class="fdc-title">新收益高额佣金</span>
+                            <span class="fdc-desc">零对接成本，内容化运营，高转化率，持续性营收、其他增值服务</span>
+                        </div>
+                      </li> -->
+        </ul>
       </div>
       <!-- 零成本接入 -->
       <div class="ca">
         <img src="/src/assets/images/cost-access.png" alt="img" class="titileImg">
+        <ul class="ca-list">
+          <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut()">
+            <img :src="item.urlImg" alt="fd">
+            <ul class="call-desc" :class="{active: index === listIndex}">
+              <li class="calld-content" v-for="itemL in item.text" :key="itemL.id">{{ itemL.desc }}</li>
+            </ul>
+            <span class="call-title">{{ item.title }}</span>
+          </li>
+        </ul>
       </div>
       <!-- 无损用户体验 -->
       <div class="ue">
-        <img src="/src/assets/images/user-experience.png" alt="img" class="titileImg">
+        <div class="ue-div">
+          <img src="/src/assets/images/user-experience.png" alt="img" class="titileImg">
+          <ue-banner :ueData="ueData"></ue-banner>
+        </div>
       </div>
       <!-- 合作流程 -->
       <div class="cp">
         <img src="/src/assets/images/cooperation-press.png" alt="img" class="titileImg">
+        <ul class="cp-list">
+          <li v-for="item in cpJson" :key="item.id" class="cpl-list">
+            <div class="cpll-left">
+              <span class="cpll-img">
+                  <img :src="item.urlImg" alt="cp">
+              </span>
+              <span class="cpll-text">{{ item.text }}</span>
+            </div>
+            <span class="cpll-right"></span>
+          </li>
+        </ul>
+        <div class="cp-link"><router-link to="">研发接入文档</router-link></div>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import ueBanner from '../../components/user-experience/ue-banner.vue'
   export default {
     name: 'home',
     data() {
       return {
+        listIndex: -1,
         bannerData: {
           isSwiper: true,
           info: [{
@@ -86,8 +123,160 @@
               }
             }
           ]
-        }
+        },
+        // 标题数据
+        titleJson: [
+          '/src/assets/images/ecological-map.png',
+          '/src/assets/images/focus-director.png',
+          '/src/assets/images/cost-access.png',
+          '/src/assets/images/user-experience.png',
+          '/src/assets/images/cooperation-press.png'
+        ],
+        // 生态图数据
+        emJson: [{
+            urlImg: '/src/assets/images/pingpai.png',
+            text: '品牌资源'
+          },
+          {
+            urlImg: '/src/assets/images/logoWhite.png',
+            text: '可可奇货'
+          },
+          {
+            urlImg: '/src/assets/images/zimeiti.png',
+            text: '自媒体'
+          }
+        ],
+        // 专注成长数据
+        fdJson: [{
+            urlImg: '/src/assets/images/fd-list1.png',
+            title: '新零售整体方案',
+            text: '符合自媒体的新型电商变现方案整体运营、技术、供应链、客服体系支持无损用户体验式解决方案'
+          },
+          {
+            urlImg: '/src/assets/images/fd-list2.png',
+            title: '新营销运营支持',
+            text: '去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略'
+          },
+          {
+            urlImg: '/src/assets/images/fd-list3.png',
+            title: '新收益高额佣金',
+            text: '零对接成本，内容化运营，高转化率，持续性营收、其他增值服务'
+          }
+        ],
+        // 零成本接入数据
+        caJson: [{
+            urlImg: '/src/assets/images/ca-list1.png',
+            title: '商城集成系统',
+            text: [{
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 写手对商品趣味内容包装、无损用户体验损用户体验'
+              },
+              {
+                desc: '+ 定制化联合会营销方案'
+              }
+            ]
+          },
+          {
+            urlImg: '/src/assets/images/ca-list2.png',
+            title: '运营解决方案',
+            text: [{
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              }
+            ]
+          },
+          {
+            urlImg: '/src/assets/images/ca-list3.png',
+            title: '供应链解决方案',
+            text: [{
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              }
+            ]
+          },
+          {
+            urlImg: '/src/assets/images/ca-list4.png',
+            title: '客户服务',
+            text: [{
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              }
+            ]
+          },
+          {
+            urlImg: '/src/assets/images/ca-list5.png',
+            title: '数据AI系统',
+            text: [{
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              },
+              {
+                desc: '+ 专业场景及用户行为分析'
+              }
+            ]
+          }
+        ],
+        // 无损用户体验数据
+        ueData: [{
+            urlImg: '/src/assets/images/ueImg.png',
+            title: '· 产品结构',
+            text: '重内容轻交易结构 、迎合用户浏览习惯、延长用户停留时间 、提高用户粘性'
+          },
+          {
+            urlImg: '/src/assets/images/ueImg.png',
+            title: '· 产品介绍',
+            text: '重内容轻交易结构 、迎合用户浏览'
+          }
+        ],
+        // 合作流程数据
+        cpJson: [{
+            urlImg: '/src/assets/images/cp-list1.png',
+            text: '联系商务经理'
+          },
+          {
+            urlImg: '/src/assets/images/cp-list2.png',
+            text: '授权后台账号'
+          },
+          {
+            urlImg: '/src/assets/images/cp-list3.png',
+            text: '技术接入'
+          },
+          {
+            urlImg: '/src/assets/images/cp-list4.png',
+            text: '开始运营'
+          }
+        ]
       }
+    },
+    methods: {
+      showIn(index) {
+        this.listIndex = index
+      },
+      showOut() {
+        this.listIndex = -1
+      }
+    },
+    components: {
+      ueBanner
     }
   }
 </script>
@@ -96,7 +285,7 @@
   $colorTitleColor = rgb(233,74,67) 
   $width = 960px
   .home .content
-    width $width
+    width 100%
     margin 0 auto
     text-align center
     .em
@@ -106,6 +295,12 @@
         width 320px
         float left
         margin-top 88px
+        &:nth-child(2)
+            .emll-img
+              background-color $colorTitleColor
+              img 
+                width 95px
+                height 36px
         .emll-desc
           font-size 22px
           color $colorTitleColor
@@ -124,18 +319,152 @@
             left: 0;
             right: 0;
             margin: auto;
-          .emmlli-pingpai
-            width 74px
-            height 74px
-          .emmlli-coco
-            width 95px
-            height 36px
-          .emmlli-zimeiti
-            width 74px
-            height 74px
         .emmll-logo
           background-color $colorTitleColor
         .emll-desc
           margin-top 34px
           display block
+    .fd
+      overflow hidden
+      background-color #f6f6f6
+      .fd-list
+        width $width
+        margin 0 auto
+        .fdl-img
+          float left
+          margin-right 24px
+          margin-bottom 115px
+          position relative
+          .fd-content
+            position absolute
+            text-align center
+            width 304px
+            top 0
+            margin-top 250px
+            .fdc-title
+              font-size 20px
+              color $colorTitleColor
+              display block
+              padding 0 0 22px 0;
+            .fdc-desc
+              font-size 14px
+              padding 0 23px
+              color rgb(102, 102, 102)
+              display block
+              text-align left 
+          &:last-child
+             margin-right 0
+          img
+            width 304px
+      .titileImg
+        margin 100px 0 62px 0
+    
+    // 零成本接入
+    .ca
+      padding 97px 0 127px 0
+      overflow hidden
+      width 960px
+      margin 0 auto
+      .titileImg
+        margin-bottom 63px
+      .ca-list
+        .cal-list
+          float left
+          position relative
+          margin-right 5px
+          .active
+            display block !important
+          &:last-child
+            margin-right 0
+          .call-title
+            position absolute
+            bottom 0
+            width 100%
+            left 0
+            height 108px
+            line-height 108px
+            font-size 20px
+            color rgb(255,254, 254)
+            background rgba(3, 17,33, 0.7)
+            display block
+            z-index 1
+          .call-desc
+            display none
+            position absolute
+            top 0
+            height 100%
+            width 100%
+            background rgba(223,74,67,0.8)
+            .calld-content
+              &:first-child
+                padding-top 65px
+              padding 0 20px
+              font-size 12px
+              line-height: 20px;
+              color rgb(255,254,254)
+              padding-bottom 20px
+              text-align left
+    
+    // 无损用户体验
+    .ue
+      overflow: hidden;
+      background-color: #f6f6f6;
+      .ue-div
+        margin 0 auto
+        width 1060px
+        padding 98px 0
+        .titileImg
+          margin-bottom 64px
+    // 合作流程
+    .cp
+      width $width
+      padding 100px 0
+      margin 0 auto
+      .titileImg
+        margin-bottom 66px
+      .cp-list
+        width 100%
+        display flex
+        justify-content space-between
+        overflow hidden
+        // text-align left 
+        .cpl-list
+          position relative
+          .cpll-left
+            .cpll-text
+              margin-top 44px
+              font-size 18px
+              color rgb(51,51,51)
+              display block
+          .cpll-right
+            background url('../../../src/assets/images/arrow-right.png')
+            height 25px
+            width 25px
+            display block
+            position: absolute;
+            top: 30%;
+            right: -105px;
+          .cpll-img
+            background-color rgb(233, 74, 67)
+            height 100px
+            width 100px
+            border-radius 100px
+            display block
+            position relative
+            img
+              position absolute
+              top 0
+              bottom 0
+              left 0
+              right 0
+              margin auto
+      .cp-link
+        margin-top 99px
+        a
+          background-color rgb(233,74,67);
+          padding 20px 40px 
+          color #ffffff
+          font-size 18px
+          border-radius 5px
+          text-decoration none
 </style>
