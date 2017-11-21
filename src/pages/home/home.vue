@@ -94,8 +94,9 @@
 
 <style lang="stylus" scoped>
   $colorTitleColor = rgb(233,74,67) 
+  $width = 960px
   .home .content
-    width 960px
+    width $width
     margin 0 auto
     text-align center
     .em
