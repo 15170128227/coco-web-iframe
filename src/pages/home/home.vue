@@ -16,38 +16,40 @@
         <div class="em-list">
           <div class="eml-list" v-for="item in emJson" :key="item.id">
             <span class="emll-img">
-                <img :src="item.urlImg" class="emmlli-pingpai">
-              </span>
+                  <img :src="item.urlImg" class="emmlli-pingpai">
+                </span>
             <span class="emll-desc">{{ item.text }}</span>
           </div>
         </div>
       </div>
       <!-- 专注成长 -->
       <div class="fd">
-        <img src="/src/assets/images/focus-director.png" alt="img" class="titileImg">
-        <ul class="fd-list">
-          <li class="fdl-img" v-for="item in fdJson" :key="item.id">
-            <img :src="item.urlImg" alt="fd">
-            <div class="fd-content">
-              <span class="fdc-title">{{ item.title }}</span>
-              <span class="fdc-desc">{{ item.text }}</span>
-            </div>
-          </li>
-          <!-- <li class="fdl-img">
-                        <img src="/src/assets/images/fd-list2.png" alt="fd">
-                         <div class="fd-content">
-                           <span class="fdc-title">新营销运营支持</span>
-                            <span class="fdc-desc">去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略</span>
-                        </div>
-                      </li>
-                       <li class="fdl-img">
-                        <img src="/src/assets/images/fd-list3.png" alt="fd">
-                         <div class="fd-content">
-                           <span class="fdc-title">新收益高额佣金</span>
-                            <span class="fdc-desc">零对接成本，内容化运营，高转化率，持续性营收、其他增值服务</span>
-                        </div>
-                      </li> -->
-        </ul>
+        <div class="fd-width">
+          <img src="/src/assets/images/focus-director.png" alt="img" class="titileImg">
+          <ul class="fd-list">
+            <li class="fdl-img" v-for="item in fdJson" :key="item.id">
+              <img :src="item.urlImg" alt="fd">
+              <div class="fd-content">
+                <span class="fdc-title">{{ item.title }}</span>
+                <span class="fdc-desc">{{ item.text }}</span>
+              </div>
+            </li>
+            <!-- <li class="fdl-img">
+                          <img src="/src/assets/images/fd-list2.png" alt="fd">
+                           <div class="fd-content">
+                             <span class="fdc-title">新营销运营支持</span>
+                              <span class="fdc-desc">去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略</span>
+                          </div>
+                        </li>
+                         <li class="fdl-img">
+                          <img src="/src/assets/images/fd-list3.png" alt="fd">
+                           <div class="fd-content">
+                             <span class="fdc-title">新收益高额佣金</span>
+                              <span class="fdc-desc">零对接成本，内容化运营，高转化率，持续性营收、其他增值服务</span>
+                          </div>
+                        </li> -->
+          </ul>
+        </div>
       </div>
       <!-- 零成本接入 -->
       <div class="ca">
@@ -76,14 +78,16 @@
           <li v-for="item in cpJson" :key="item.id" class="cpl-list">
             <div class="cpll-left">
               <span class="cpll-img">
-                  <img :src="item.urlImg" alt="cp">
-              </span>
+                    <img :src="item.urlImg" alt="cp">
+                </span>
               <span class="cpll-text">{{ item.text }}</span>
             </div>
             <span class="cpll-right"></span>
           </li>
         </ul>
-        <div class="cp-link"><router-link to="">研发接入文档</router-link></div>
+        <div class="cp-link">
+          <router-link to="">研发接入文档</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -327,9 +331,10 @@
     .fd
       overflow hidden
       background-color #f6f6f6
-      .fd-list
+      .fd-width
         width $width
         margin 0 auto
+      .fd-list
         .fdl-img
           float left
           margin-right 24px
