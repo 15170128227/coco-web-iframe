@@ -6,11 +6,13 @@ $fontSizeNormal = 14px
 $fontSize16 = 16px
 $fontSizeMid = 22px
 $fontSizeBig = 24px
+$fontSizeXL = 30px
 $iconSize = 24px
 
 // color
-$background-color = #fff
+$defaultBg = #fff
 $clrfff = #fff
+$clr000 = #000
 
 // width -- height
 $min-width = 960px
@@ -39,10 +41,10 @@ margins(type,px)
   {type} px
 
 // flex布局
-flex(args...)
+/*flex(args...)
   display arguments[0]
   flex-direction arguments[1]
-  justify-content arguments[2]
+  justify-content arguments[2]*/
 
 // flex布局 分布两边
 flexSpaceBet(args...)
@@ -74,9 +76,13 @@ positions(type,top = auto,right = auto,bottom = auto,left = auto)
 // 宽度设置
 width(param)
   width param
-  margin 0 auto
+  //margin 0 auto
   overflow hidden
 
 // 设置透明度
-opacity(n)
-  opacity n
+opacity(o)
+  opacity o
+
+// 文本内容
+text-align(type)
+  text-align type

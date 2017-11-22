@@ -7,10 +7,11 @@
           <img src="../../assets/images/footer_logo.png" alt="cocoLogo"/>
         </div>
         <div class="footer-nav">
-          <router-link to="/">网站首页</router-link><span> | </span>
-          <router-link to="/">渠道合作</router-link><span> | </span>
-          <router-link to="/aboutUs">关于我们</router-link><span> | </span>
-          <router-link to="/contactUs">联系我们</router-link>
+          <ul v-if="cocoNav">
+            <li v-for="(item, index) in cocoNav" :key="index" :class="'cocoNav_' + index">
+              <router-link :to="item.href">{{ item.text }}</router-link><span> | </span>
+            </li>
+          </ul>
         </div>
         <div class="footer-copyRight footerInfo">
           <p>{{copyRight}}</p>
@@ -45,25 +46,39 @@
         cocoAddr: '深圳市南山区科苑路科兴科学园A4栋806', // coco地址
         cocoMail: 'hejinfeng@cocosurprise.com', // coco邮箱
         cocoPhone: '0755-2692-0691', // coco联系方式
-        cocoService: '10:00-19:00.工作日' // 客服服务时间
+        cocoService: '10:00-19:00.工作日', // 客服服务时间
+        cocoNav: [
+          {
+            'href': '/home',
+            'text': '网站首页'
+          },
+          {
+            'href': '/aboutUs',
+            'text': '关于我们'
+          },
+          {
+            'href': '/contactUs',
+            'text': '联系我们'
+          }
+        ]
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  @import '../../assets/css/base.styl'
+  @import '../../assets/css/stylusFn.styl'
   /* footer start */
   .footer
     background-color #2C2F3C
     color $clrfff
-    font-size 14px
+    font-size $fontSizeNormal
     .footer-container
       display flex
       padding 80px 0 70px 0
       /* footer-left start */
       .footer-left
-        color #000
+        color $clr000
         flex 2
         .footer-cocoLogo
           width 96px
@@ -72,28 +87,26 @@
             width 100%
             height 100%
         .footer-nav
-          font-size 14px
+          font-size $fontSizeNormal
           font-weight bold
           padding 37px 0
           text-align left
+          .cocoNav_2
+            span
+              color #2C2F3C
           a
-            color #fff
-            text-decoration none
-            cursor pointer
+            color $clrfff
             opacity 1
             &:hover
               opacity 0.8
           span
             padding 0 27px
-            color #fff
+            color $clrfff
         .footer-copyRight
           margin-bottom 22px
         .footerInfo
-          color #fff
-          text-align left
-          p
-            margin 0
-            padding 0
+          color $clrfff
+          text-align(left)
       /* footer-left end */
       /* footer-right start */
       .footer-right
@@ -101,20 +114,15 @@
         padding-top 132px
         .rightInfo
           color #fff
-          font-size 16px
-          text-align left
+          font-size $fontSize16
+          text-align(left)
         .coco-phone
           margin-bottom 16px
           p
-            font-size 30px
-            margin 0
-            padding 0
+            font-size $fontSizeXL
         .coco-service
           font-style normal
-          font-size 12px
-          p
-            margin 0
-            padding 0
+          font-size $fontSizeSmall
   /* footer-right start */
   /* footer end */
 </style>

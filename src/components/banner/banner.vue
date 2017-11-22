@@ -61,10 +61,10 @@
 
 <style lang="stylus" scoped>
   @import '../../../node_modules/swiper/dist/css/swiper.min.css'
-  .my-swiper 
+  .my-swiper
     width 100%
     height 484px
-    .swiper-slide 
+    .swiper-slide
       text-align center
       font-size 38px
       font-weight 700
@@ -80,7 +80,7 @@
         transform: translate(-50%,-50%);
         position: absolute;
         top: 50%;
-        left: 50%; 
+        left: 50%;
       .banner-text
         position absolute
         top 0
@@ -105,21 +105,22 @@
           font-size 25px
           font-weight normal
           display inline-block
-    .swiper-pagination 
+    .swiper-pagination
       > .swiper-pagination-bullet
         background-color red
   .otherBanner
     width 100%
     height 484px
     text-align center
+    overflow hidden
     position relative
     img
-      width 1920px
+      width 100%
       height  484px
       transform: translate(-50%,-50%);
       position: absolute;
       top: 50%;
-      left: 50%; 
+      left: 50%;
     .o-text
       position absolute
       top 0
