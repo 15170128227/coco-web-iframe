@@ -76,7 +76,6 @@ team-group:tg
 </script>
 
 <style lang="stylus" scoped>
- $colorTitleColor = rgb(233,74,67) 
   .ab
     .co
       margin 0 auto
@@ -94,8 +93,6 @@ team-group:tg
         width 550px
         padding-right 25px
         .cor-title
-          color $colorTitleColor
-          font-size 30px
           padding-top 8px
           padding-bottom 22px
         .cor-text
@@ -122,6 +119,5 @@ team-group:tg
         img
           &:first-child
             padding-right 60px
-
 </style>
 
