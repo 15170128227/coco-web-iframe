@@ -60,7 +60,8 @@
       li
        float left
        list-style none
-       width: 126px;
+       width 126px
+       margin-left 1px
        &:last-child
         a
           height 34px;
@@ -68,13 +69,13 @@
           line-height 34px
           border 1px solid rgb(73, 76, 84)
           border-radius 2px
-          background-color #ffffff !important
+          background-color rgb(254,254,254) !important
           color rgb(73,76,84) !important
           margin 17px auto
           float: right
         .router-link-active
-          background-color red !important
-          color #ffffff !important
+          background-color rgb(233,74,67) !important
+          color rgb(254,254,254) !important
           border none 
        a
         color rgb(73,76,84)
@@ -85,6 +86,9 @@
         width 126px
         text-align center
         display block
+        &:hover
+          background-color rgb(233, 74, 67)
+          color rgb(254, 254, 254)
       .router-link-active
         background-color rgb(233, 74, 67)
         color rgb(254, 254, 254)

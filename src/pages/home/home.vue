@@ -446,8 +446,8 @@
             height 25px
             width 25px
             display block
-            position: absolute;
-            top: 30%;
+            position absolute
+            top 40px
             right: -105px;
           .cpll-img
             background-color rgb(233, 74, 67)
@@ -472,4 +472,6 @@
           font-size 18px
           border-radius 5px
           text-decoration none
+        &:hover
+          opacity 0.8
 </style>
