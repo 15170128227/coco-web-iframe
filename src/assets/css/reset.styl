@@ -1,7 +1,7 @@
 @import 'stylusFn.styl'  // stylus公共函数及参数引用
 
 *
- box-sizing: border-box
+  box-sizing: border-box
 
 html
   height 100%
@@ -13,23 +13,24 @@ body
   background-color $background-color
 
 dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,html,input,li,ol,p,select,table,td,textarea,ul
-    margin: 0;
-    padding: 0;
-    -webkit-text-size-adjust: none
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: none
 
 h1,h2,h3,h4,h5,h6,p,em
   font-weight normal
 
 a
-  display inline
+  display inline-block
   text-decoration:none
+  color $clrfff
+  font-size $fontSizeNormal
 /*a:hover
   color:#cd0200
   text-decoration:underline*/
 
 ul,ol,li
   list-style-type: none
-  display inline-block
   padding: 0
   margin 0
 img
@@ -42,8 +43,8 @@ p
   word-wrap break-word
 
 
-.cow_col_24,.cow_full
- width: 100%
+.cow_col_24
+  width: 100%
 
 .cow_col_23
   width: 95.83333333%
@@ -76,7 +77,7 @@ p
   width: 58.33333333%
 
 .cow_col_13
-  width: 54.16666667%;
+  width: 54.16666667%
   padding: 0 15px
 
 .cow_col_12
@@ -114,3 +115,11 @@ p
 
 .cow_col_1
   width: 4.16666667%
+
+.cow_col_1,.cow_col_10,.cow_col_11,.cow_col_12,.cow_col_14,.cow_col_15,.cow_col_16,.cow_col_17,.cow_col_18,.cow_col_19,.cow_col_2,.cow_col_20,.cow_col_21,.cow_col_22,.cow_col_23,.cow_col_24,.cow_col_3,.cow_col_4,.cow_col_5,.cow_col_6,.cow_col_7,.cow_col_8,.cow_col_9
+  padding: 0 15px
+
+.cow_col_1,.cow_col_10,.cow_col_11,.cow_col_12,.cow_col_13,.cow_col_14,.cow_col_15,.cow_col_16,.cow_col_17,.cow_col_18,.cow_col_19,.cow_col_2,.cow_col_20,.cow_col_21,.cow_col_22,.cow_col_23,.cow_col_24,.cow_col_3,.cow_col_4,.cow_col_5,.cow_col_6,.cow_col_7,.cow_col_8,.cow_col_9
+  position: relative
+  min-height: 1px
+  float: left

@@ -70,9 +70,10 @@
   @import '../../assets/css/stylusFn.styl'
   /* footer start */
   .footer
-    background-color #2C2F3C
+    background-color $Bg2C2F3C
     color $clrfff
     font-size $fontSizeNormal
+    /*float left*/
     .footer-container
       display flex
       padding 80px 0 70px 0
@@ -91,9 +92,11 @@
           font-weight bold
           padding 37px 0
           text-align left
+          li
+            display inline-block
           .cocoNav_2
             span
-              color #2C2F3C
+              color $clr2C2F3C
           a
             color $clrfff
             opacity 1
