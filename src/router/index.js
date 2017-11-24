@@ -4,6 +4,7 @@ import home from '@/pages/home/home'
 import aboutUs from '@/pages/about-us/about-us'
 import contactUs from '@/pages/contact-us/contact-us'
 import login from '@/pages/login/login'
+import document from '@/pages/document/document.vue'
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ const routes = [
     path: '/login',  // 登录
     name: 'login',
     component: login
+  },
+  {
+    path: '/document', // 文档中心
+    name: 'document',
+    component: document
   }
 ]
 

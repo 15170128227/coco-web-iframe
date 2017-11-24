@@ -86,7 +86,7 @@
           </li>
         </ul>
         <div class="cp-link">
-          <router-link to="">研发接入文档</router-link>
+          <router-link :to="{name: 'document', params: {docTypeId: '1'}}">研发接入文档</router-link>
         </div>
       </div>
     </div>
@@ -100,6 +100,7 @@
     data() {
       return {
         listIndex: -1,
+        docTypeId: window.sessionStorage.setItem('docTypeId', '1'),
         bannerData: {
           isSwiper: true,
           info: [{
@@ -286,7 +287,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  $colorTitleColor = rgb(233,74,67) 
+  $colorTitleColor = rgb(233,74,67)
   $width = 960px
   .home .content
     width 100%
@@ -302,7 +303,7 @@
         &:nth-child(2)
             .emll-img
               background-color $colorTitleColor
-              img 
+              img
                 width 95px
                 height 36px
         .emll-desc
@@ -356,14 +357,14 @@
               padding 0 23px
               color rgb(102, 102, 102)
               display block
-              text-align left 
+              text-align left
           &:last-child
              margin-right 0
           img
             width 304px
       .titileImg
         margin 100px 0 62px 0
-    
+
     // 零成本接入
     .ca
       padding 97px 0 127px 0
@@ -409,7 +410,7 @@
               color rgb(255,254,254)
               padding-bottom 20px
               text-align left
-    
+
     // 无损用户体验
     .ue
       overflow: hidden;
@@ -432,7 +433,7 @@
         display flex
         justify-content space-between
         overflow hidden
-        // text-align left 
+        // text-align left
         .cpl-list
           position relative
           .cpll-left
@@ -467,7 +468,7 @@
         margin-top 99px
         a
           background-color rgb(233,74,67);
-          padding 20px 40px 
+          padding 20px 40px
           color #ffffff
           font-size 18px
           border-radius 5px

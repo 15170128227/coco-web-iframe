@@ -2,17 +2,17 @@
   <div id="app">
     <coco-head></coco-head>
     <router-view/>
-    <vue-footer></vue-footer>
+    <coco-footer></coco-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import cocoHead from './components/header/header'
-import VueFooter from './components/footer/footer.vue'
+import cocoFooter from './components/footer/footer.vue'
 export default {
   name: 'app',
   components: {
-    cocoHead, VueFooter
+    cocoHead, cocoFooter
   },
   data () {
     return {}
@@ -21,9 +21,9 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import 'assets/css/stylusFn.styl'
   @import 'assets/css/reset.styl'
   @import 'assets/css/base.styl'
-  @import 'assets/css/stylusFn.styl'
  /* #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing: antialiased
