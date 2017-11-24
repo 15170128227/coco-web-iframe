@@ -6,14 +6,13 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import banner from './components/banner/banner.vue'
 import './utils/httpHelper'
-import axios from 'axios'
+import './utils/util'
 
 require('swiper/dist/css/swiper.css')
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.component('coco-banner', banner)
-Vue.prototype.axios = axios
 
 /* eslint-disable no-new */
 new Vue({

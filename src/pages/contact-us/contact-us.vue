@@ -62,27 +62,6 @@
           }
         }
       }
-    },
-    created() {
-      // this.axios.post('/tsh-api/api/apidetail', {
-      //   id: '68'
-      // }).then(function (response) {
-      //   console.log(response)
-      // }).catch(function (error) {
-      //   console.log(error)
-      // })
-      this.axios({
-          method: 'post',
-          url: '/tsh-api/api/apidetail',
-          data: {
-            id: '48'
-          }
-        }).then(function(response) {
-          console.log(response.data)
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
     }
   }
 </script>
