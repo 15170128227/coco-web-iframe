@@ -3,10 +3,14 @@
   <div class="docH5-container">
     <div class="docH5-column cow_col_6">
       <ul class="docH5-column-left" v-if="columnType">
-        <li v-for="(item, index) in columnType" :class="'column-' + index"><router-link to=""> {{item.title}} </router-link></li>
+        <li v-for="(item, index) in columnType" :class="'column-' + index" @click="docH5ListType($event)">
+          <router-link :to="'document?docH5id=' + item.h5Id" :data-id="item.h5Id"> {{item.title}} </router-link>
+        </li>
       </ul>
     </div>
-    <div class="docH5-content cow_col_18">内容区</div>
+    <div class="docH5-content cow_col_18">
+      <div class=""></div>
+    </div>
   </div>
 </template>
 
@@ -15,26 +19,60 @@
     name: 'docH5',
     data () {
       return {
+        currentH5Id: '',
         columnType: [{
             'title': '入驻指南',
-            'h5Id': '1'
+            'h5Id': '48'
           },
           {
             'title': '生成免登陆url',
-            'h5Id': '2'
+            'h5Id': '49'
           },
           {
             'title': '用户积分扣除接口',
-            'h5Id': '3'
+            'h5Id': '50'
           },
           {
             'title': '订单兑换成功/失败消息的接收接口',
-            'h5Id': '4'
+            'h5Id': '51'
           },
           {
             'title': '签名规则',
-            'h5Id': '5'
+            'h5Id': '52'
+          },
+          {
+            'title': '售后订单通知接口',
+            'h5Id': '71'
+          },
+          {
+            'title': '获取内页直达链接接口',
+            'h5Id': '72'
+          },
+          {
+            'title': '收货地址同步接口',
+            'h5Id': '73'
           }]
+      }
+    },
+    methods: {
+      // 当前选择切换的文档栏目类型
+      docH5ListType (e) {
+        this.currentH5Id = e.target.getAttribute('data-id')
+        console.log(this.$api)
+        this.queryDocH5list(this.currentH5Id)
+        console.log(e.target.getAttribute('data-id'))
+      },
+      // 获取H5文档
+      queryDocH5list (currentH5Id) {
+        this.$http.post(this.$api.DOCUMENT.POST_API_APIDETAIL, {
+          'id': currentH5Id
+        }).then(response => {
+          console.log(response)
+          let res = response.body
+          if (res.code === '200') {
+           console.log(res)
+          }
+        })
       }
     }
   }
@@ -53,8 +91,8 @@
         color $clrfff
         cursor pointer
         li
-          padding 13px 0
           a
+            padding 13px 0
             display block
       /* docH5-column-left end */
     /* docH5-content start */
