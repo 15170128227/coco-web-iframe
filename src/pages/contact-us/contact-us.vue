@@ -9,7 +9,7 @@
     <coco-banner :bannerData="bannerData"></coco-banner>
     <div class="bc w_960">
       <div class="bc-title">
-         <img src="/src/assets/images/cbc-title2.png" alt="bc">
+        <img src="/src/assets/images/cbc-title2.png" alt="bc">
       </div>
       <div class="bc-content">
         <img src="/src/assets/images/cbc-code.png" alt="bc">
@@ -62,6 +62,27 @@
           }
         }
       }
+    },
+    created() {
+      // this.axios.post('/tsh-api/api/apidetail', {
+      //   id: '68'
+      // }).then(function (response) {
+      //   console.log(response)
+      // }).catch(function (error) {
+      //   console.log(error)
+      // })
+      this.axios({
+          method: 'post',
+          url: '/tsh-api/api/apidetail',
+          data: {
+            id: '48'
+          }
+        }).then(function(response) {
+          console.log(response.data)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 </script>

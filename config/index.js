@@ -46,6 +46,16 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
+    proxyTable: {
+      '/tsh-api': {
+        // target: 'http://192.168.1.180:8005/tsh-api',
+        target: 'http://www.test.cocosurprise.com/tsh-api',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/tsh-api': ''
+        }
+      }
+    },
   },
   
   build: {
