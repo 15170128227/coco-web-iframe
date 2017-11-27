@@ -4,7 +4,7 @@
 import Vue from 'vue'
 // 测试环境api请求地址
 // const rootUrl ='http://www.test.cocosurprise.com'
-const rootUrl = 'http://www.test.cocosurprise.com'
+// const rootUrl = 'http://www.test.cocosurprise.com'
 
 const api = {
   HOME: {},
@@ -12,7 +12,7 @@ const api = {
   DOCUMENT: {
     // H5文档中心
     // API文档中心
-    POST_API_APIDETAIL: rootUrl + '/tsh-api/api/apidetail'
+    POST_API_APIDETAIL: '/tsh-api/api/apidetail'
   }
 }
 Vue.prototype.$api = api

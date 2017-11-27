@@ -64,13 +64,12 @@
       },
       // 获取H5文档
       queryDocH5list (currentH5Id) {
-        this.$http.post(this.$api.DOCUMENT.POST_API_APIDETAIL, {
-          'id': currentH5Id
-        }).then(response => {
-          console.log(response)
-          let res = response.body
-          if (res.code === '200') {
-           console.log(res)
+        let H5 = this.$api.DOCUMENT.POST_API_APIDETAIL
+        this.axios({
+          method: 'post',
+          url: H5,
+          data: {
+            id: currentH5Id
           }
         })
       }
