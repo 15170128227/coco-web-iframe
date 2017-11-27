@@ -1,4 +1,15 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
+import axios from 'axios'
+// import qs from 'qs'
 
-Vue.use(VueResource)
+axios.interceptors.request.use(config => {
+    let str = ''
+    Object.keys(config.data).forEach(key => {
+        str += key + '=' + config.data[key] + '&'
+    })
+    str = str.substring(0, str.lastIndexOf('&'))
+    return Object.assign(config, {data: str})
+}, error => {
+    return Promise.reject(error)
+})
+Vue.prototype.axios = axios
