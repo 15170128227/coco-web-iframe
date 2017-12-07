@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -47,7 +47,7 @@ module.exports = {
     proxyTable: {
       '/tsh-api': {
         // target: 'http://192.168.1.180:8005/tsh-api',
-        target: 'http://www.test.cocosurprise.com/tsh-api',
+        // target: 'http://www.test.cocosurprise.com/tsh-api',
         changeOrigin: true,
         pathRewrite: {
           '^/tsh-api': ''

@@ -1,5 +1,5 @@
 <!-- 联系我们 -->
-<!-- 
+<!--
   contact-us:cu
   business-cooperation：bc
   company-address: ca
@@ -43,12 +43,17 @@
         </div>
       </div>
     </div>
+    <coco-footer></coco-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import cocoFooter from '../../components/footer/footer.vue'
   export default {
     name: 'contact-us',
+    components: {
+      cocoFooter
+    },
     data() {
       return {
         bannerData: {
@@ -83,7 +88,7 @@
       background-color #f6f6f6
       text-align center
       padding 90px 0 86px 0
-      .ca-title 
+      .ca-title
         padding-bottom 62px
       .ca-content
         .cac-left
@@ -101,11 +106,11 @@
             padding-bottom 20px
             font-size 14px
             line-height 20px
-            img 
+            img
               padding-right 10px
         .cac-right
           float right
           width 410px
-          img 
+          img
             width 410px
 </style>

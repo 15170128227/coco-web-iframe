@@ -1,5 +1,5 @@
 <!-- 关于我们 -->
-<!-- 
+<!--
 aboutUs: ab
 company：co
 team-group:tg
@@ -38,12 +38,17 @@ team-group:tg
         </div>
       </div>
     </div>
+    <coco-footer></coco-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import cocoFooter from '../../components/footer/footer.vue'
   export default {
     name: 'about-us',
+    components: {
+      cocoFooter
+    },
     data() {
       return {
         bannerData: {
@@ -83,13 +88,13 @@ team-group:tg
       .co-left
         width 410px
         float left
-        img 
+        img
           float left
           height 316px
           &:first-child
             margin-right 25px
       .co-right
-        float left 
+        float left
         width 550px
         padding-right 25px
         .cor-title
@@ -113,9 +118,9 @@ team-group:tg
           line-height 20px
           color rgb(51,51,51)
       .tg-right
-        float left 
+        float left
         width 445px
-        text-align right 
+        text-align right
         img
           &:first-child
             padding-right 60px
