@@ -14,11 +14,12 @@
       <div class="em w_960">
         <img src="/src/assets/images/ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
-          <div class="eml-list" v-for="item in emJson" :key="item.id">
+          <div class="eml-list" v-for="(item, index) in emJson" :key="item.id" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
             <span class="emll-img">
-                  <img :src="item.urlImg" class="emmlli-pingpai">
-                </span>
+              <img :src="item.urlImg" class="emmlli-pingpai">
+            </span>
             <span class="emll-desc">{{ item.text }}</span>
+            <span class="emll-line"></span>
           </div>
         </div>
       </div>
@@ -90,16 +91,23 @@
         </div>
       </div>
     </div>
+    <coco-footer></coco-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import cocoFooter from '../../components/footer/footer.vue'
   import ueBanner from '../../components/user-experience/ue-banner.vue'
   export default {
     name: 'home',
+    components: {
+      ueBanner,
+      cocoFooter
+    },
     data() {
       return {
         listIndex: -1,
+        footer: '1',
         docTypeId: window.sessionStorage.setItem('docTypeId', '1'),
         bannerData: {
           isSwiper: true,
@@ -139,7 +147,7 @@
         ],
         // 生态图数据
         emJson: [{
-            urlImg: '/src/assets/images/pingpai.png',
+            urlImg: '/src/assets/images/brand-r.png',
             text: '品牌资源'
           },
           {
@@ -147,7 +155,7 @@
             text: '可可奇货'
           },
           {
-            urlImg: '/src/assets/images/zimeiti.png',
+            urlImg: '/src/assets/images/media-r.png',
             text: '自媒体'
           }
         ],
@@ -273,15 +281,18 @@
       }
     },
     methods: {
+      overFn (e, index) {
+        console.log(index)
+//        let img = e.target.querySelector('.emll-img')
+      },
+      outFn (e, index) {
+      },
       showIn(index) {
         this.listIndex = index
       },
       showOut() {
         this.listIndex = -1
       }
-    },
-    components: {
-      ueBanner
     }
   }
 </script>
@@ -300,15 +311,26 @@
         width 320px
         float left
         margin-top 88px
+        cursor pointer
         &:nth-child(2)
-            .emll-img
-              background-color $colorTitleColor
-              img
-                width 95px
-                height 36px
+          .emll-img
+             background-color $colorTitleColor
+            img
+              width 95px
+              height 36px
+          .active
+            width 32px
+            height 3px
+            display inline-block
+            background-color rgb(223, 74, 67)
         .emll-desc
           font-size 22px
           color $colorTitleColor
+        .emll-line
+          width 32px
+          height 3px
+          display inline-block
+          background-color rgb(245, 245, 245)
         .emll-img
           display block
           margin: 0 auto;
@@ -316,7 +338,7 @@
           width 130px
           border-radius 130px
           position relative
-          background-color rgb(245,245,245)
+          background-color rgb(245, 245, 245)
           img
             position: absolute;
             top: 0;
