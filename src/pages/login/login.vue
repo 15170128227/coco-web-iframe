@@ -114,7 +114,7 @@
             } else if (response.data.code === '400') {
               if (response.data.message === '0203') {
                 this.verCodeErr = '用户名或密码错误'
-              } else if (response.data.message === '用户不存在！') {
+              } else if (response.data.message === '0207') {
                 this.verCodeErr = '用户名不存在'
               } else {
                 this.verCodeErr = response.data.message
