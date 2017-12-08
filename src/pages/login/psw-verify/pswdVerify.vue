@@ -154,10 +154,10 @@
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
         } else {
-          this.isError = true
           if (typeId === 'phone') {
             const phoneNum = /^1[3|4|5|8][0-9]\d{4,8}$/
             if (!phoneNum.test(this.phone) || !(this.phone.length === 11)) {
+              this.isError = true
               this.phoneMsg = '手机号格式不正确'
             } else {
               this.axios({
@@ -167,14 +167,13 @@
                   mob: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
               })
             }
           } else if (typeId === 'email') {
-            const email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/
+            const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
             if (!email.test(this.phone)) {
               this.phoneMsg = '邮箱格式不正确'
             } else {
@@ -185,14 +184,12 @@
                   email: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
               })
             }
           } else if (typeId === 'username') {
-            console.log(this.phone)
             if (this.phone !== 'tester') {
               this.phoneMsg = '用户名不存在'
             } else {
@@ -203,7 +200,6 @@
                   userName: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }

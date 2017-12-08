@@ -4,7 +4,7 @@
       <div class="doc-column-left">
         <ul class="one-column">
           <li class="one-columns">
-            <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event, index)">
+            <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event)">
               API
               <!--<span class="doc-down one-upDown isShow"></span>-->
             </a>
@@ -25,7 +25,7 @@
         </ul>
         <ul class="one-column">
           <li class="one-columns">
-            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event, index)">
+            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event)">
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
@@ -53,14 +53,11 @@
 
 <script type="text/ecmascript-6">
   // import velocity from 'velocity-animate'
-  import cocoDocNav from './doc-nav/doc-nav.vue'
-  import cocoDocH5 from './doc-h5/doc-h5.vue'
-  import cocoDocApi from './doc-api/doc-api.vue'
   import cocoFooter from '../../components/footer/footer.vue'
   export default {
     name: 'document',
     components: {
-      cocoDocNav, cocoDocH5, cocoDocApi, cocoFooter
+      cocoFooter
     },
     data () {
       return {
@@ -364,6 +361,7 @@
       }
     },
     created () {
+      this.scrollTop()
       this.queryDocH5list(this.currentH5Id)
       this.queryList()
     },
@@ -392,6 +390,11 @@
             break
         }
       },
+      // 页面置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
+      },
       // 处理导航列表数据
       queryList () {
         this.docList.forEach(item => {
@@ -416,10 +419,9 @@
         })
       },
       // 一级导航是否展示 || 隐藏导航
-      isOneNav (e, index) {
+      isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
-//        const colummns = document.querySelectorAll('.two-column')
         if (present.style.display === 'block') {
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
@@ -434,7 +436,6 @@
       isTwoNav (e, index) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
-//        const colummns = document.querySelectorAll('.three-column')
         if (present.style.display === 'block') {
           /* for (let i = 0; i < colummns.length; i++) {
             colummns[i].style.display = "none"
@@ -450,13 +451,6 @@
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
         }
-        /* if (this.showTwoNav) {
-          e.target.parentNode.children[1].classList.add('active')
-          this.showTwoNav = false
-        } else {
-          e.target.parentNode.children[1].classList.remove('active')
-          this.showTwoNav = true
-        } */
       }
     }
   }
@@ -470,8 +464,7 @@
     overflow hidden
     /* doc-content start */
     .doc-content
-      display flex
-      background-color $defaultBg
+      background-color $Bg32
       overflow hidden
       text-align(left)
       /* doc-column-left start */
@@ -493,7 +486,7 @@
         .arrow-up
           animation: bounce-in .5s
           margin-right 20px
-          background url(/assets/images/docment/up.png) no-repeat right
+          background url(/static/images/docment/up.png) no-repeat right
         a
          color $clrd5
         .one-column
@@ -549,8 +542,9 @@
       /* doc-column-left end */
       /* doc-right-center start */
       .doc-right-center
-        flex 5
+        margin-left 260px
         background-color #f4f4f4
+        overflow hidden
         .doc-content-chunk
           background-color $defaultBg
           margin 72px

@@ -1,3 +1,4 @@
+
 <!-- 顶部导航组件 -->
 <template>
   <div>
@@ -65,21 +66,21 @@
 
 <style lang="stylus" scoped>
   @import '../../../node_modules/swiper/dist/css/swiper.min.css'
-  .my-swiper 
+  .my-swiper
     width 100%
     height 220px
     .swiper-button-prev
-      background-image url('/static/assets/images/swiper-button-prev.png')
+      background-image url('/static/images/swiper-button-prev.png')
       transform rotate(180deg)
       left 0
       width 25px
       height 28px
     .swiper-button-next
-      background-image url('/static/assets/images/swiper-button-prev.png')
+      background-image url('/static/images/swiper-button-prev.png')
       width 25px
       height 28px
       right 0
-    .swiper-slide 
+    .swiper-slide
       text-align center
       display flex
       justify-content center
@@ -97,14 +98,14 @@
         .ut-title
           color rgb(233, 74, 67)
           font-size 20px
-          text-align left 
+          text-align left
         .ut-content
           font-size 14px
           color rgb(51, 51, 51)
-          text-align left 
+          text-align left
           margin-top 14px
       .ue-img
         width 400px
         height 220px
-        float right 
+        float right
 </style>

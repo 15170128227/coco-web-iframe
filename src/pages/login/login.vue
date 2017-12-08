@@ -38,7 +38,7 @@
             </div>
             <div class="control-group-container submit">
               <div class="control-label">
-                <button class="" @click="validateCode" type="button">登录</button>
+                <button @click="validateCode" type="button">登录</button>
               </div>
             </div>
           </form>
@@ -48,7 +48,7 @@
       <form :action="jumpApi" method="post" v-show="false">
         <p><input type="text" name="username" v-model="username"/></p>
         <p><input type="password" name="password" v-model="password"/></p>
-        <input type="submit" value="登录"  id="test"/>
+        <input type="submit" value="submit"  id="test"/>
       </form>
     </div>
     <p class="copyRight">CopyRight 深圳市场景零售科技有限公司 备案号：粤ICP备17073633号-1</p>
@@ -85,10 +85,6 @@
       this.createCode()
     },
     methods: {
-      /* test () {
-        console.log('111')
-        document.getElementById('test').click()
-      }, */
       enter (e) {
         if (e.keyCode === 13) {
           this.validateCode()
@@ -108,7 +104,6 @@
           }
         }).then(response => {
           if (response) {
-            console.log(response)
             if (response.data.code === '200' && response.data.message === '0101') {
               document.getElementById('test').click()
             } else if (response.data.code === '400') {
@@ -123,69 +118,9 @@
           }
         })
       },
-      // 登录请求成功跳转中台
-      jumpLogin (userName, pasw) {
-        /* let loginIndex = 'http://192.168.1.25:8007/tsh-mg/login'
-        this.axios({
-          method: 'post',
-          url: loginIndex,
-          // 请求头信息
-          headers: {'X-Requested-With': 'XMLHttpRequest'},
-          data: {
-            username: userName,
-            password: pasw
-          }
-        }).then(res => {
-          console.log(res)
-        }) */
-        /* this.iframeState = true
-        this.url = 'http://192.168.1.25:8007/tsh-mg/login?username=' + userName + '&password=' + pasw */
-//        let form = document.createElement('form')
-       /* let iframe = document.createElement('iframe')
-        console.log('iframe', iframe)
-        iframe.src = 'http://192.168.1.25:8007/tsh-mg/login?username=' + userName + '&password=' + pasw
-        console.log('iframe.src', iframe.src)
-        let cssLink = iframe.contentWindow.document.getElementsByTagName('link')[0]
-        console.log('cssLink', cssLink)
-        cssLink.href = cssLink.href.replace(/\w+\/(?=css)/g, 'dist/static/')
-        console.log('cssLink.href', cssLink.href)
-        let jsScript = iframe.contentWindow.document.getElementsByTagName('script')
-        console.log('jsScript', jsScript)
-        // debugger;
-        for (let i = 0; i < jsScript.length; i++) {
-          jsScript[i].src = jsScript[i].src.replace(/\w+\/(?=js)/g, 'dist/static/')
-        }
-        document.body.appendChild(iframe) */
-      },
-      // 验证用户名
-      userVerify () {
-        let verifyUser = document.querySelector('.verify-user').value
-        let uPattern = /^[A-Za-z0-9]+$/ // 用户名正则（数字或字母）
-        if (verifyUser === '0') {
-          this.userVerErr = '请输入用户名'
-        } else if (!uPattern.test(verifyUser)) {
-          this.verCodeErr = '用户名或密码不正确'
-        } else if (uPattern.test(verifyUser)) {
-          this.userVerErr = ''
-        } else {
-          this.userVerErr = '该手机未注册'
-        }
-      },
-      // 验证密码
-      /* pswVerify () {
-        let verifyPsw = document.querySelector('.verify-psw').value
-        let resPsw = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{6,20}$/ //  密码正则，6到20位（字母，数字，下划线，减号）
-        if (verifyPsw === '0') {
-          this.pswVerErr = '请输入密码'
-        } else if (!resPsw.test(verifyPsw)) {
-          this.verCodeErr = '用户名或密码不正确'
-        } else {
-          this.pswVerErr = ''
-        }
-      }, */
       // 验证验随机函数
       createCode () {
-        // 设置长度，这里看需求，我这里设置了4
+        // 设置长度4
         let codeLength = 4
         // 获取模拟验证码值
 //        this.codeV = document.querySelector('.compar-verify')
@@ -202,26 +137,10 @@
         // 将拼接好的字符串赋值给展示verCodeVal
         this.verCodeVal = this.verCode
       },
-      // 验证码验证
-      /* verifyCode () {
-        // 获取验证码值
-        let oValue = document.querySelector('.verify-code').value.toUpperCase()
-        if (oValue === '0') {
-          this.verCodeErr = '请输入验证码'
-        } else if (oValue !== this.verCodeVal) {
-          this.verCodeErr = '验证码不正确，请重新输入'
-          this.createCode()
-        } else {
-          this.verCodeErr = ''
-        }
-      }, */
       // 登录验证所有
       validateCode () {
-       /* this.userVerify() // 校验用户名
-        this.pswVerify() // 校验密码
-        this.verifyCode() // 校验验证码 */
         const verifyUser = document.querySelector('.verify-user').value
-        let uPattern = /^[0-9a-zA-z-_]+$/ // 用户名正则（数字或字母）
+        let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母）
         if (verifyUser === '') {
           this.userVerErr = '请输入用户名'
         } else if (!uPattern.test(verifyUser)) {
@@ -233,9 +152,8 @@
         }
         // 验证密码
         const verifyPsw = document.querySelector('.verify-psw').value
-        console.log(verifyPsw)
 //        let resPsw = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{6,20}$/ //  密码正则，6到20位（字母，数字，下划线，减号）
-        let resPsw = /^[\w]{6,20}$/
+        let resPsw = new RegExp(/^[\w]{6,20}$/)
         if (verifyPsw === '') {
           this.pswVerErr = '请输入密码'
         } else if (!resPsw.test(verifyPsw)) {
