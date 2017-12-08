@@ -8,12 +8,12 @@
               API
             </a>
             <ul class="two-column" v-if="columnType1" :style="'display:'+ display">
-              <li class="" v-for="(item, index) in columnType1" :class="'two-columns-' + index" :key="index">
+              <li class="" v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
                 <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" class="arrow-down">
                   {{item.title}}
                 </a>
                 <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="'display:'+ display">
-                  <li class="" v-for="(subNav, index) in item.subNav" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)" :key="index">
+                  <li class="" v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
                     <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"> {{subNav.subNavTitle}} </router-link>
                   </li>
                 </ul>
@@ -27,7 +27,7 @@
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
-              <li class="" v-for="(item, index) in columnType2" :class="'two-columns-' + index" @click="docH5ListType($event, item.dataId)">
+              <li class="" v-for="(item, index) in columnType2" :key="index" :class="'two-columns-' + index" @click="docH5ListType($event, item.dataId)">
                 <router-link :to="'document?docH5Id=' + item.dataId" :data-id="item.dataId"> {{item.title}} </router-link>
               </li>
             </ul>
@@ -50,7 +50,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-//  import velocity from 'velocity-animate'
+  // import velocity from 'velocity-animate'
   import cocoFooter from '../../components/footer/footer.vue'
   export default {
     name: 'document',
@@ -69,7 +69,6 @@
         isShow: false,
         display: 'block', // 初始化
         iconClass: 'down',
-        bodyHeight: 0,
         docList: [
           // API文档模拟数据
           {
@@ -367,8 +366,8 @@
     methods: {
       iconClick (e) {
         let target = e.target.parentNode
+        let colummns = document.querySelectorAll('.three-column')
         const present = target.querySelector('.three-column')
-        const colummns = document.querySelectorAll('.three-column')
         switch (this.iconClass) {
           case 'up':
             e.target.parentNode.children[1].classList.remove('active')
@@ -388,19 +387,6 @@
             }
             break
         }
-      },
-      iconClickFn (type, id) {
-        console.log('id', id)
-        let dataType = ['1', '2']
-        let currentIndex = null
-        dataType.some(function(v, index) {
-          console.log('v', v)
-          if (v === id) {
-            console.log('index', index)
-            currentIndex = index
-            console.log('currentIndex', currentIndex)
-          }
-        })
       },
       // 页面置顶
       scrollTop () {
@@ -425,17 +411,9 @@
       },
       // 获取H5文档
       queryDocH5list (currentH5Id) {
-        let H5 = this.$api.DOCUMENT.POST_API_APIDETAIL
-        this.axios({
-          method: 'post',
-          url: H5,
-          data: {
-            id: currentH5Id
-          }
-        }).then(response => {
-          if (response) {
-            this.content = response.data.data.content
-          }
+        let url = this.$api.DOCUMENT.POST_API_APIDETAIL
+        this.axios.get(`${url}?id=${currentH5Id}`).then(({data: {data}}) => {
+          this.content = data.content
         })
       },
       // 一级导航是否展示 || 隐藏导航
@@ -453,7 +431,7 @@
         }
       },
       // 二级级导航是否展示 || 隐藏导航
-      isTwoNav (e) {
+      isTwoNav (e, index) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
         if (present.style.display === 'block') {
@@ -461,6 +439,9 @@
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
+          /* for (let i = 0; i < colummns.length; i++) {
+            colummns[i].style.display = "none"
+          } */
           present.style.display = 'block'
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
@@ -478,7 +459,7 @@
     overflow hidden
     /* doc-content start */
     .doc-content
-      background-color $defaultBg
+      background-color $Bg32
       overflow hidden
       text-align(left)
       /* doc-column-left start */
@@ -495,12 +476,12 @@
           right 20px
         .arrow-down
           animation: bounce-in .5s
-          background url(../../assets/images/docment/down.png) no-repeat right
+          background url(/static/images/docment/down.png) no-repeat right
           margin-right 20px
         .arrow-up
           animation: bounce-in .5s
           margin-right 20px
-          background url(../../assets/images/docment/up.png) no-repeat right
+          background url(/static/images/docment/up.png) no-repeat right
         a
          color $clrd5
         .one-column
@@ -556,9 +537,9 @@
       /* doc-column-left end */
       /* doc-right-center start */
       .doc-right-center
-        background-color #f4f4f4
         margin-left 260px
-        overflow auto
+        background-color #f4f4f4
+        overflow hidden
         .doc-content-chunk
           background-color $defaultBg
           margin 72px

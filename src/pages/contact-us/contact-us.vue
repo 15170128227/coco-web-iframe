@@ -9,36 +9,36 @@
     <coco-banner :bannerData="bannerData"></coco-banner>
     <div class="bc w_960">
       <div class="bc-title">
-        <img src="/src/assets/images/cbc-title2.png" alt="bc">
+        <img src="/static/images/cbc-title2.png" alt="bc">
       </div>
       <div class="bc-content">
-        <img src="/src/assets/images/cbc-code.png" alt="bc">
-        <img src="/src/assets/images/cbc-consult.png" alt="bc">
+        <img src="/static/images/cbc-code.png" alt="bc">
+        <img src="/static/images/cbc-consult.png" alt="bc">
       </div>
     </div>
     <div class="ca">
       <div class="w_960">
         <div class="ca-title">
-          <img src="/src/assets/images/cbc-title1.png" alt="ca">
+          <img src="/static/images/cbc-title1.png" alt="ca">
         </div>
         <div class="ca-content">
           <div class="cac-left">
             <h4 class="cacl-title">深圳市场景零售科技有限公司</h4>
             <p class="cacl-list">
-              <img src="/src/assets/images/cbc-address.png" alt="ca" class="cacl-img">
+              <img src="/static/images/cbc-address.png" alt="ca" class="cacl-img">
               <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806（地铁罗宝线深大 站C出口)</span>
             </p>
             <p class="cacl-list">
-              <img src="/src/assets/images/cbc-tel.png" alt="ca" class="cacl-img">
+              <img src="/static/images/cbc-tel.png" alt="ca" class="cacl-img">
               <span class="cacl-text">0755-26920691</span>
             </p>
             <p class="cacl-list">
-              <img src="/src/assets/images/cbc-email.png" alt="ca" class="cacl-img">
+              <img src="/static/images/cbc-email.png" alt="ca" class="cacl-img">
               <span class="cacl-text">hejinfeng@cocosurprise.com</span>
             </p>
           </div>
           <div class="cac-right">
-            <img src="/src/assets/images/cbc-map.png" alt="ca">
+            <img src="/static/images/cbc-map.png" alt="ca">
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
         bannerData: {
           isSwiper: false,
           info: {
-            'imgUrl': '/src/assets/images/contactUs.jpg',
+            'imgUrl': '/static/images/contactUs.jpg',
             'content': {
               textDescBg: '联系我们',
               textDescSm: '-Contact CoCo-'

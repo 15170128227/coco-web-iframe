@@ -23,7 +23,7 @@ export default {
       console.log('route', to)// 此处不要使用箭头函数
     } */
   },
-created () {
+  created () {
     let href = window.location.href
     if (href) {
       let res = href.split('/')[3]

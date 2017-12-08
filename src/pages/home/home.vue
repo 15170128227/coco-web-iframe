@@ -12,7 +12,7 @@
     <div class="content">
       <!-- 生态图 -->
       <div class="em w_960">
-        <img src="/src/assets/images/ecological-map.png" alt="img" class="titileImg">
+        <img src="/static/images/ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
           <div class="eml-list" v-for="(item, index) in emJson" :key="item.id" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
             <span class="emll-img">
@@ -26,7 +26,7 @@
       <!-- 专注成长 -->
       <div class="fd">
         <div class="fd-width">
-          <img src="/src/assets/images/focus-director.png" alt="img" class="titileImg">
+          <img src="/static/images/focus-director.png" alt="img" class="titileImg">
           <ul class="fd-list">
             <li class="fdl-img" v-for="item in fdJson" :key="item.id">
               <img :src="item.urlImg" alt="fd">
@@ -36,14 +36,14 @@
               </div>
             </li>
             <!-- <li class="fdl-img">
-                          <img src="/src/assets/images/fd-list2.png" alt="fd">
+                          <img src="/static/images/fd-list2.png" alt="fd">
                            <div class="fd-content">
                              <span class="fdc-title">新营销运营支持</span>
                               <span class="fdc-desc">去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略</span>
                           </div>
                         </li>
                          <li class="fdl-img">
-                          <img src="/src/assets/images/fd-list3.png" alt="fd">
+                          <img src="/static/images/fd-list3.png" alt="fd">
                            <div class="fd-content">
                              <span class="fdc-title">新收益高额佣金</span>
                               <span class="fdc-desc">零对接成本，内容化运营，高转化率，持续性营收、其他增值服务</span>
@@ -54,7 +54,7 @@
       </div>
       <!-- 零成本接入 -->
       <div class="ca">
-        <img src="/src/assets/images/cost-access.png" alt="img" class="titileImg">
+        <img src="/static/images/cost-access.png" alt="img" class="titileImg">
         <ul class="ca-list">
           <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut()">
             <img :src="item.urlImg" alt="fd">
@@ -68,13 +68,13 @@
       <!-- 无损用户体验 -->
       <div class="ue">
         <div class="ue-div">
-          <img src="/src/assets/images/user-experience.png" alt="img" class="titileImg">
+          <img src="/static/images/user-experience.png" alt="img" class="titileImg">
           <ue-banner :ueData="ueData"></ue-banner>
         </div>
       </div>
       <!-- 合作流程 -->
       <div class="cp">
-        <img src="/src/assets/images/cooperation-press.png" alt="img" class="titileImg">
+        <img src="/static/images/cooperation-press.png" alt="img" class="titileImg">
         <ul class="cp-list">
           <li v-for="item in cpJson" :key="item.id" class="cpl-list">
             <div class="cpll-left">
@@ -112,25 +112,25 @@
         bannerData: {
           isSwiper: true,
           info: [{
-              'imgUrl': '/src/assets/images/index.jpg',
+              'imgUrl': '/static/images/index.jpg',
               'content': {
-                imgUrl: '/src/assets/images/logoWhite.png',
+                imgUrl: '/static/images/logoWhite.png',
                 textDescBg: '国内首家场景电商解决方案提供商',
                 textDescSm: '开启自媒体/APP内容电商变现时代/让流量更值钱'
               }
             },
             {
-              'imgUrl': '/src/assets/images/aboutUs.jpg',
+              'imgUrl': '/static/images/aboutUs.jpg',
               'content': {
-                imgUrl: '/src/assets/images/logoWhite.png',
+                imgUrl: '/static/images/logoWhite.png',
                 textDescBg: 'text2',
                 textDescSm: 'text2'
               }
             },
             {
-              'imgUrl': '/src/assets/images/contactUs.jpg',
+              'imgUrl': '/static/images/contactUs.jpg',
               'content': {
-                imgUrl: '/src/assets/images/logoWhite.png',
+                imgUrl: '/static/images/logoWhite.png',
                 textDescBg: 'text3',
                 textDescSm: 'text3'
               }
@@ -139,46 +139,46 @@
         },
         // 标题数据
         titleJson: [
-          '/src/assets/images/ecological-map.png',
-          '/src/assets/images/focus-director.png',
-          '/src/assets/images/cost-access.png',
-          '/src/assets/images/user-experience.png',
-          '/src/assets/images/cooperation-press.png'
+          '/static/images/ecological-map.png',
+          '/static/images/focus-director.png',
+          '/static/images/cost-access.png',
+          '/static/images/user-experience.png',
+          '/static/images/cooperation-press.png'
         ],
         // 生态图数据
         emJson: [{
-            urlImg: '/src/assets/images/brand-r.png',
+            urlImg: '/static/images/brand-r.png',
             text: '品牌资源'
           },
           {
-            urlImg: '/src/assets/images/logoWhite.png',
+            urlImg: '/static/images/logoWhite.png',
             text: '可可奇货'
           },
           {
-            urlImg: '/src/assets/images/media-r.png',
+            urlImg: '/static/images/media-r.png',
             text: '自媒体'
           }
         ],
         // 专注成长数据
         fdJson: [{
-            urlImg: '/src/assets/images/fd-list1.png',
+            urlImg: '/static/images/fd-list1.png',
             title: '新零售整体方案',
             text: '符合自媒体的新型电商变现方案整体运营、技术、供应链、客服体系支持无损用户体验式解决方案'
           },
           {
-            urlImg: '/src/assets/images/fd-list2.png',
+            urlImg: '/static/images/fd-list2.png',
             title: '新营销运营支持',
             text: '去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略'
           },
           {
-            urlImg: '/src/assets/images/fd-list3.png',
+            urlImg: '/static/images/fd-list3.png',
             title: '新收益高额佣金',
             text: '零对接成本，内容化运营，高转化率，持续性营收、其他增值服务'
           }
         ],
         // 零成本接入数据
         caJson: [{
-            urlImg: '/src/assets/images/ca-list1.png',
+            urlImg: '/static/images/ca-list1.png',
             title: '商城集成系统',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -192,7 +192,7 @@
             ]
           },
           {
-            urlImg: '/src/assets/images/ca-list2.png',
+            urlImg: '/static/images/ca-list2.png',
             title: '运营解决方案',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -206,7 +206,7 @@
             ]
           },
           {
-            urlImg: '/src/assets/images/ca-list3.png',
+            urlImg: '/static/images/ca-list3.png',
             title: '供应链解决方案',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -220,7 +220,7 @@
             ]
           },
           {
-            urlImg: '/src/assets/images/ca-list4.png',
+            urlImg: '/static/images/ca-list4.png',
             title: '客户服务',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -234,7 +234,7 @@
             ]
           },
           {
-            urlImg: '/src/assets/images/ca-list5.png',
+            urlImg: '/static/images/ca-list5.png',
             title: '数据AI系统',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -250,31 +250,31 @@
         ],
         // 无损用户体验数据
         ueData: [{
-            urlImg: '/src/assets/images/ueImg.png',
+            urlImg: '/static/images/ueImg.png',
             title: '· 产品结构',
             text: '重内容轻交易结构 、迎合用户浏览习惯、延长用户停留时间 、提高用户粘性'
           },
           {
-            urlImg: '/src/assets/images/ueImg.png',
+            urlImg: '/static/images/ueImg.png',
             title: '· 产品介绍',
             text: '重内容轻交易结构 、迎合用户浏览'
           }
         ],
         // 合作流程数据
         cpJson: [{
-            urlImg: '/src/assets/images/cp-list1.png',
+            urlImg: '/static/images/cp-list1.png',
             text: '联系商务经理'
           },
           {
-            urlImg: '/src/assets/images/cp-list2.png',
+            urlImg: '/static/images/cp-list2.png',
             text: '授权后台账号'
           },
           {
-            urlImg: '/src/assets/images/cp-list3.png',
+            urlImg: '/static/images/cp-list3.png',
             text: '技术接入'
           },
           {
-            urlImg: '/src/assets/images/cp-list4.png',
+            urlImg: '/static/images/cp-list4.png',
             text: '开始运营'
           }
         ]
@@ -282,7 +282,6 @@
     },
     methods: {
       overFn (e, index) {
-        console.log(index)
 //        let img = e.target.querySelector('.emll-img')
       },
       outFn (e, index) {
@@ -318,7 +317,7 @@
             img
               width 95px
               height 36px
-          .active
+          .emll-line
             width 32px
             height 3px
             display inline-block
@@ -465,7 +464,7 @@
               color rgb(51,51,51)
               display block
           .cpll-right
-            background url('../../../src/assets/images/arrow-right.png')
+            background url('/static/images/arrow-right.png')
             height 25px
             width 25px
             display block

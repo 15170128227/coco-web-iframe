@@ -52,6 +52,13 @@ module.exports = {
         pathRewrite: {
           '^/tsh-api': ''
         }
+      },
+      '/tsh-mg': {
+        target: 'http://open-center.test.cocosurprise.com/tsh-mg',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/tsh-mg': ''
+        }
       }
     },
   },
@@ -63,8 +70,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-
+    assetsPublicPath: './',
+    assetsApiConfig: 'config',
     /**
      * Source Maps
      */

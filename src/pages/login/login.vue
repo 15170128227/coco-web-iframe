@@ -85,10 +85,6 @@
       this.createCode()
     },
     methods: {
-      /* test () {
-        console.log('111')
-        document.getElementById('test').click()
-      }, */
       enter (e) {
         if (e.keyCode === 13) {
           this.validateCode()
@@ -143,9 +139,6 @@
       },
       // 登录验证所有
       validateCode () {
-       /* this.userVerify() // 校验用户名
-        this.pswVerify() // 校验密码
-        this.verifyCode() // 校验验证码 */
         const verifyUser = document.querySelector('.verify-user').value
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母）
         if (verifyUser === '') {
@@ -192,7 +185,7 @@
     width 100%
     height 680px
     overflow hidden
-    background url(../../assets/images/login_bg.jpg) no-repeat center
+    background url(/static/images/login_bg.jpg) no-repeat center
     .w_960
       position relative
       height 100%

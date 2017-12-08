@@ -59,4 +59,19 @@ const router = new VueRouter({
   routes: routes
 })
 
+ router.afterEach((to, from) => {
+  /* let footer = document.querySelectorAll('.footer')[0]
+  footer.style.display = 'bock'
+   if (to.name === 'login') {
+     console.log('11111')
+     footer.style.display = 'none'
+     // document.body.removeChild(footer)
+  } else {
+    console.log('22222222')
+    footer.style.display = 'bock'
+  }
+  // footer.style.display = 'bock'
+  console.log('to.name', to.name)
+  console.log('footer', document.querySelectorAll('.footer')[0]) */
+})
 export default router

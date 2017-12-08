@@ -2,7 +2,7 @@
   <div class="retrieve-psw-outer">
     <h2>密码找回</h2>
     <div class="retrieve-pas-modal">
-      <router-link v-for="(item, index) in retrievePasM" :to="{path: '/pswVerify', query: {id: item.value}}" :key="index">{{item.title}}</router-link>
+      <router-link v-for="(item, index) in retrievePasM" :key="index" :to="{path: '/pswVerify', query: {id: item.value}}">{{item.title}}</router-link>
     </div>
   </div>
 </template>

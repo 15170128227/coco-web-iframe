@@ -3,7 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0" http-equiv="Access-Control-Allow-Origin">
-    <title>coco-web</title>
+    <meta name="Keywords" content="可可奇货，电商">
+    <meta name="description" content="可可奇货，电商">
+    <meta name="author" content="">
+    <meta name="robots" content="">
+    <title>可可奇货</title>
+    <script>
+      (function(window) {
+        var protocol = location.protocol + '//'
+        var cocoUrl = location.host;
+        var script = document.createElement('script');
+        var localSrc = './configs/config.js';
+        var onlineSrc = protocol + cocoUrl + '/config/config.js';
+        if (cocoUrl.indexOf('8090') > -1 || cocoUrl.indexOf('cocosurprise') > -1) {
+          script.src = onlineSrc;
+        } else {
+          script.src = localSrc;
+        }
+        document.head.appendChild(script)
+      })(window)
+    </script>
   </head>
   <body>
     <div id="app"></div>

@@ -6,16 +6,16 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import banner from './components/banner/banner.vue'
 import Common from './utils/common.js' // 公共函数组件注册
-import './utils/httpHelper'
+// import Api from './utils/httpHelper'
+// import Api from './config/config'
 import './utils/util'
-import api from './config/dev'
-require('swiper/dist/css/swiper.css')
-
+import 'swiper/dist/css/swiper.css'
+Vue.prototype.$api = JSON.parse(window.sessionStorage.getItem('webApi'))
 Vue.config.productionTip = false
 Vue.use(Common) // 公共函数 $common
 Vue.use(VueAwesomeSwiper)
 Vue.component('coco-banner', banner)
-Vue.prototype.interface = api
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -47,7 +47,6 @@
           loop: true,
           pagination: '.swiper-pagination',
           onSlideChangeEnd(swiper) {
-            console.log('onSlideChangeEnd', swiper.realIndex)
           }
         }
       }

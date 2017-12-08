@@ -8,10 +8,10 @@
         <!--<span v-for="(item, index) in docType" :data-type="item.docType">{{item.docType}}</span>-->
       </div>
       <ul class="docH5-column-left cow_col_24" v-if="columnList">
-        <li class="cow_col_24" v-for="(item, index) in columnList" :class="'column-' + index" @click="docH5ListType($event)">
+        <li class="cow_col_24" v-for="(item, index) in columnList" :key="index" :class="'column-' + index" @click="docH5ListType($event)">
           <router-link :to="'document?docH5id=' + item.h5Id" :data-id="item.h5Id"> {{item.title}} </router-link>
           <ul class="" v-if="subNav">
-            <li v-for="(item, index) in subNav" :class="'subNav-' + index">
+            <li v-for="(item, index) in subNav" :key="index" :class="'subNav-' + index">
               <router-link :to="'document?docH5id=' + item.subNavTypeId" :data-id="item.subNavTypeId"> {{item.subNavTitle}} </router-link>
             </li>
           </ul>
@@ -33,8 +33,8 @@
     data () {
       return {
         currentH5Id: '48', // 当前H5文档id
-        content: '' || window.sessionStorage.setItem('content', this.content),
-        docListDatas: this.docListData || window.sessionStorage.getItem('docListData'),
+        content: '',
+        docListDatas: this.docListData,
         typeState: false, // 类型切换
         currentDocType: '1', // 文档中心初始化显示API或H5
         columnList: '', // 一级列表数据
@@ -185,15 +185,7 @@
         ]
       }
     },
-    computed: {
-//      dataListFn () {
-//        console.log(this.docListData)
-//        let docListDatas = this.docListData // 数据
-//        return docListDatas
-//      }
-    },
     created () {
-      console.log(window.sessionStorage.getItem('docListData', JSON.stringify('docListData')))
       this.modifyNav(null, 1)
       this.docListDatas.forEach(item => {
         this.columnList = item.columnType // 左边栏目列表
@@ -229,20 +221,9 @@
       },
       // 获取H5文档
       queryDocH5list (currentH5Id) {
-        let H5 = this.$api.DOCUMENT.POST_API_APIDETAIL
-        this.axios({
-          method: 'post',
-          url: H5,
-          data: {
-            id: currentH5Id
-          }
-        }).then(response => {
-//          console.log(response.data.data.content)
-//          console.log(response.status)
-//          console.log(response.statusText)
-//          console.log(response.headers)
-//          console.log(response.config)
-          this.content = response.data.data.content || window.sessionStorage.getItem('content')
+        let url = this.$api.DOCUMENT.POST_API_APIDETAIL
+        this.axios.get(`${url}?id=${currentH5Id}`).then(({data: {data}}) => {
+          this.content = data.content
         })
       }
     }
