@@ -4,7 +4,7 @@
     <div class="w_960 footer-container">
       <div class="footer-left">
         <div class="footer-cocoLogo">
-          <img src="../../assets/images/footer_logo.png" alt="cocoLogo"/>
+          <img src="/static/images/footer_logo.png" alt="cocoLogo"/>
         </div>
         <div class="footer-nav">
           <ul v-if="cocoNav">

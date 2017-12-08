@@ -1,7 +1,7 @@
 <!-- 顶部导航组件 -->
 <template>
   <header class="head-contain">
-    <span class="logo"><router-link :to="navList[0].localHref"><img src="../../assets/images/logo.png" alt="logo"></router-link></span>
+    <span class="logo"><router-link :to="navList[0].localHref"><img src="/static/images/logo.png" alt="logo"></router-link></span>
     <nav class="header-list">
       <li v-for="(item, index) in navList" :key="index">
         <router-link :to="item.localHref">{{ item.text }}</router-link>

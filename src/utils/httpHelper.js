@@ -1,13 +1,13 @@
 /**
  * Created by Administrator on 2017/11/24.
  */
-import Vue from 'vue'
 // 测试环境api请求地址
-const rootUrl1 = 'http://www.test.cocosurprise.com'
-const rootUrl2 = 'http://open-center.test.cocosurprise.com'
+// const protocol = 'http:'
+const rootUrl1 = '//www.test.cocosurprise.com'
+const rootUrl2 = '//open-center.test.cocosurprise.com'
 // const rootUrl3 = 'http://192.168.1.48:8007'
 
-const api = {
+const Api = {
   HOME: {},
   // 文档中心
   DOCUMENT: {
@@ -24,4 +24,5 @@ const api = {
     POST_MODIFYPWDBYMOBFROMPAGE: rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage'
   }
 }
-Vue.prototype.$api = api
+
+export default Api

@@ -9,13 +9,13 @@
               <!--<span class="doc-down one-upDown isShow"></span>-->
             </a>
             <ul class="two-column" v-if="columnType1" :style="'display:'+ display">
-              <li class="" v-for="(item, index) in columnType1" :class="'two-columns-' + index">
+              <li class="" v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
                 <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" class="arrow-down">
                   {{item.title}}
                   <!--<span class="arrow-down two-upDown isShow"></span>-->
                 </a>
                 <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="'display:'+ display">
-                  <li class="" v-for="subNav in item.subNav" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
+                  <li class="" v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
                     <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"> {{subNav.subNavTitle}} </router-link>
                   </li>
                 </ul>
@@ -29,7 +29,7 @@
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
-              <li class="" v-for="(item, index) in columnType2" :class="'two-columns-' + index" @click="docH5ListType($event, item.dataId)">
+              <li class="" v-for="(item, index) in columnType2" :key="index" :class="'two-columns-' + index" @click="docH5ListType($event, item.dataId)">
                 <router-link :to="'document?docH5Id=' + item.dataId" :data-id="item.dataId"> {{item.title}} </router-link>
               </li>
             </ul>
@@ -52,7 +52,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import velocity from 'velocity-animate'
+  // import velocity from 'velocity-animate'
   import cocoDocNav from './doc-nav/doc-nav.vue'
   import cocoDocH5 from './doc-h5/doc-h5.vue'
   import cocoDocApi from './doc-api/doc-api.vue'
@@ -74,11 +74,6 @@
         isShow: false,
         display: 'block', // 初始化
         iconClass: 'down',
-        bodyHeight: 0,
-        componentsType: {
-          '1': 'cocoDocH5',
-          '2': 'cocoDocApi'
-        },
         docList: [
           // API文档模拟数据
           {
@@ -372,25 +367,11 @@
       this.queryDocH5list(this.currentH5Id)
       this.queryList()
     },
-    computed: {
-      ifShowBody () {
-        let c = true
-        switch (this.iconClass) {
-          case 'up':
-            c = true
-            break
-          case 'down':
-            c = false
-            break
-        }
-        return c
-      }
-    },
     methods: {
       iconClick (e) {
         let target = e.target.parentNode
+        let colummns = document.querySelectorAll('.three-column')
         const present = target.querySelector('.three-column')
-        const colummns = document.querySelectorAll('.three-column')
         switch (this.iconClass) {
           case 'up':
             e.target.parentNode.children[1].classList.remove('active')
@@ -411,39 +392,6 @@
             break
         }
       },
-      iconClickFn (type, id) {
-        console.log('id', id)
-        let dataType = ['1', '2']
-        let currentIndex = null
-        dataType.some(function(v, index) {
-          console.log('v', v)
-          if (v === id) {
-            console.log('index', index)
-            currentIndex = index
-            console.log('currentIndex', currentIndex)
-          }
-        })
-      },
-      // 向上
-      enter (el, done) {
-       /* let self = this
-        velocity(el, { height: self.bodyHeight + 'px' }, {duration: 500, complete: done}) */
-        console.log('self.bodyHeight', self.bodyHeight)
-      },
-      beforeLeave (el, done) {
-       /* this.bodyHeight = el.clientHeight
-        console.log('done', done) */
-      },
-      // 向下
-      leave (el, done) {
-        /* el.style.height = el.clientHeight + 'px'
-        console.log('el.style.height', el.style.height)
-        velocity(el, { height: '0px' }, {duration: 500, complete: done}) */
-//        document.querySelector('.router-link-active').classList.remove('router-link-exact-active')
-      },
-      toggle (type) {
-        this.isShow = !this.isShow
-      },
       // 处理导航列表数据
       queryList () {
         this.docList.forEach(item => {
@@ -462,22 +410,9 @@
       },
       // 获取H5文档
       queryDocH5list (currentH5Id) {
-        let H5 = this.$api.DOCUMENT.POST_API_APIDETAIL
-        this.axios({
-          method: 'post',
-          url: H5,
-          data: {
-            id: currentH5Id
-          }
-        }).then(response => {
-//          console.log(response.data.data.content)
-//          console.log(response.status)
-//          console.log(response.statusText)
-//          console.log(response.headers)
-//          console.log(response.config)
-          if (response) {
-            this.content = response.data.data.content
-          }
+        let url = this.$api.DOCUMENT.POST_API_APIDETAIL
+        this.axios.get(`${url}?id=${currentH5Id}`).then(({data: {data}}) => {
+          this.content = data.content
         })
       },
       // 一级导航是否展示 || 隐藏导航
@@ -553,12 +488,12 @@
           right 20px
         .arrow-down
           animation: bounce-in .5s
-          background url(../../assets/images/docment/down.png) no-repeat right
+          background url(/static/images/docment/down.png) no-repeat right
           margin-right 20px
         .arrow-up
           animation: bounce-in .5s
           margin-right 20px
-          background url(../../assets/images/docment/up.png) no-repeat right
+          background url(/assets/images/docment/up.png) no-repeat right
         a
          color $clrd5
         .one-column

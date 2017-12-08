@@ -267,7 +267,7 @@
     width 100%
     height 680px
     overflow hidden
-    background url(../../assets/images/login_bg.jpg) no-repeat center
+    background url(/static/images/login_bg.jpg) no-repeat center
     .w_960
       position relative
       height 100%

@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 /test/unit/coverage/
 
+/configs/devs.js
+/configs/locals.js
+
+
 # Editor directories and files
 .idea
 .vscode

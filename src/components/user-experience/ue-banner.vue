@@ -69,13 +69,13 @@
     width 100%
     height 220px
     .swiper-button-prev
-      background-image url('../../../src/assets/images/swiper-button-prev.png')
+      background-image url('/static/assets/images/swiper-button-prev.png')
       transform rotate(180deg)
       left 0
       width 25px
       height 28px
     .swiper-button-next
-      background-image url('../../../src/assets/images/swiper-button-prev.png')
+      background-image url('/static/assets/images/swiper-button-prev.png')
       width 25px
       height 28px
       right 0

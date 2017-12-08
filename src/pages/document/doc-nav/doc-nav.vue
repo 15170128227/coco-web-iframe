@@ -2,7 +2,7 @@
   <div class="docH5-column cow_col_4" v-if="dataListFn">
     <ul class="docH5-column-left cow_col_24">
       <li class="cow_col_24">
-        <router-link v-for="(item, index) in docListDatas" :to="'document?docH5id=' + item.h5Id" :data-id="item.h5Id"> {{item.docType}} </router-link>
+        <router-link v-for="(item, index) in docListDatas" :key="index" :to="'document?docH5id=' + item.h5Id" :data-id="item.h5Id"> {{item.docType}} </router-link>
       </li>
     </ul>
   </div>
