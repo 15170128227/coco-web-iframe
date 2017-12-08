@@ -4,7 +4,7 @@
       <div class="doc-column-left">
         <ul class="one-column">
           <li class="one-columns">
-            <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event, index)">
+            <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event)">
               API
               <!--<span class="doc-down one-upDown isShow"></span>-->
             </a>
@@ -25,7 +25,7 @@
         </ul>
         <ul class="one-column">
           <li class="one-columns">
-            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event, index)">
+            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event)">
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
@@ -481,7 +481,7 @@
         })
       },
       // 一级导航是否展示 || 隐藏导航
-      isOneNav (e, index) {
+      isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
 //        const colummns = document.querySelectorAll('.two-column')
