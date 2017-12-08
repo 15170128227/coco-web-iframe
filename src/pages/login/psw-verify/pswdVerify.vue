@@ -176,7 +176,7 @@
               })
             }
           } else if (typeId === 'email') {
-            const email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/
+            const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
             if (!email.test(this.phone)) {
               this.phoneMsg = '邮箱格式不正确'
             } else {

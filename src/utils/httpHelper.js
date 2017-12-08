@@ -3,8 +3,8 @@
  */
 import Vue from 'vue'
 // 测试环境api请求地址
-const rootUrl1 = 'http://www.test.cocosurprise.com'
-const rootUrl2 = 'http://open-center.test.cocosurprise.com'
+const rootUrl1 = '//www.test.cocosurprise.com'
+const rootUrl2 = '//open-center.test.cocosurprise.com'
 const rootUrl3 = 'http://192.168.1.48:8007'
 
 const api = {
@@ -15,8 +15,8 @@ const api = {
   },
   // 登录
   LOGIN: {
-    POST_LOGINUSER: rootUrl1 + '/tsh-mg/user/loginByUserPassword', // 校验用户名及密码
-    POST_JUMPLOGIN: rootUrl1 + '/tsh-mg/login' // 跳转中台接口
+    POST_LOGINUSER: rootUrl2 + '/tsh-mg/user/loginByUserPassword', // 校验用户名及密码
+    POST_JUMPLOGIN: rootUrl2 + '/tsh-mg/login' // 跳转中台接口
   },
   RETRIEVEPSW: {
     POST_MODIFYPWDBYMOBFROMPAGE: rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage', // 找回密码
