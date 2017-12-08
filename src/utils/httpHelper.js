@@ -16,7 +16,7 @@ const api = {
   },
   // 登录
   LOGIN: {
-    POST_LOGINUSER: rootUrl2 + '/tsh-mg/user/loginByUserPassword',
+    POST_LOGINUSER: rootUrl1 + '/tsh-mg/user/loginByUserPassword',
     POST_JUMPLOGIN: rootUrl1 + '/tsh-mg/login'
   },
   RETRIEVEPSW: {
