@@ -54,7 +54,7 @@ team-group:tg
         bannerData: {
           isSwiper: false,
           info: {
-            'imgUrl': '/src/assets/images/aboutUs.jpg',
+            'imgUrl': '/static/assets/images/aboutUs.jpg',
             'content': {
               textDescBg: '关于我们',
               textDescSm: '-About CoCo-'
