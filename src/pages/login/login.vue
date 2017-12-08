@@ -112,7 +112,7 @@
             if (response.data.code === '200' && response.data.message === '0101') {
               document.getElementById('test').click()
             } else if (response.data.code === '400') {
-              if (response.data.message === '用户名错误！' || '密码错误！') {
+              if (response.data.message === '0203') {
                 this.verCodeErr = '用户名或密码错误'
               } else if (response.data.message === '用户不存在！') {
                 this.verCodeErr = '用户名不存在'
