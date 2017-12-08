@@ -153,12 +153,10 @@
         let typeVal = document.querySelector('.typeVal').value // 当前类型输入文本值
         const retPsw = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYMOBFROMPAGE // 验证当前文本是否数据库存在
         let typeId = this.$route.query.id
-        console.log('this.phone', this.phone === '')
         if (this.phone === '') {
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
         } else {
-          console.log('typeId', typeId)
           if (typeId === 'phone') {
             const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
             if (!phoneNum.test(this.phone) || !(this.phone.length === 11)) {
@@ -172,7 +170,6 @@
                   mob: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
@@ -190,14 +187,12 @@
                   email: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
               })
             }
           } else if (typeId === 'username') {
-            console.log(this.phone)
             if (this.phone !== 'tester') {
               this.phoneMsg = '用户名不存在'
             } else {
@@ -208,7 +203,6 @@
                   userName: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
