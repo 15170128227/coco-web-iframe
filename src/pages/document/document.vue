@@ -6,16 +6,14 @@
           <li class="one-columns">
             <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event)">
               API
-              <!--<span class="doc-down one-upDown isShow"></span>-->
             </a>
             <ul class="two-column" v-if="columnType1" :style="'display:'+ display">
-              <li class="" v-for="(item, index) in columnType1" :class="'two-columns-' + index">
+              <li class="" v-for="(item, index) in columnType1" :class="'two-columns-' + index" :key="index">
                 <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" class="arrow-down">
                   {{item.title}}
-                  <!--<span class="arrow-down two-upDown isShow"></span>-->
                 </a>
                 <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="'display:'+ display">
-                  <li class="" v-for="subNav in item.subNav" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
+                  <li class="" v-for="(subNav, index) in item.subNav" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)" :key="index">
                     <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"> {{subNav.subNavTitle}} </router-link>
                   </li>
                 </ul>
@@ -52,15 +50,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import velocity from 'velocity-animate'
-  import cocoDocNav from './doc-nav/doc-nav.vue'
-  import cocoDocH5 from './doc-h5/doc-h5.vue'
-  import cocoDocApi from './doc-api/doc-api.vue'
+//  import velocity from 'velocity-animate'
   import cocoFooter from '../../components/footer/footer.vue'
   export default {
     name: 'document',
     components: {
-      cocoDocNav, cocoDocH5, cocoDocApi, cocoFooter
+      cocoFooter
     },
     data () {
       return {
@@ -75,10 +70,6 @@
         display: 'block', // 初始化
         iconClass: 'down',
         bodyHeight: 0,
-        componentsType: {
-          '1': 'cocoDocH5',
-          '2': 'cocoDocApi'
-        },
         docList: [
           // API文档模拟数据
           {
@@ -369,22 +360,9 @@
       }
     },
     created () {
+      this.scrollTop()
       this.queryDocH5list(this.currentH5Id)
       this.queryList()
-    },
-    computed: {
-      ifShowBody () {
-        let c = true
-        switch (this.iconClass) {
-          case 'up':
-            c = true
-            break
-          case 'down':
-            c = false
-            break
-        }
-        return c
-      }
     },
     methods: {
       iconClick (e) {
@@ -424,25 +402,10 @@
           }
         })
       },
-      // 向上
-      enter (el, done) {
-       /* let self = this
-        velocity(el, { height: self.bodyHeight + 'px' }, {duration: 500, complete: done}) */
-        console.log('self.bodyHeight', self.bodyHeight)
-      },
-      beforeLeave (el, done) {
-       /* this.bodyHeight = el.clientHeight
-        console.log('done', done) */
-      },
-      // 向下
-      leave (el, done) {
-        /* el.style.height = el.clientHeight + 'px'
-        console.log('el.style.height', el.style.height)
-        velocity(el, { height: '0px' }, {duration: 500, complete: done}) */
-//        document.querySelector('.router-link-active').classList.remove('router-link-exact-active')
-      },
-      toggle (type) {
-        this.isShow = !this.isShow
+      // 页面置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
       },
       // 处理导航列表数据
       queryList () {
@@ -470,11 +433,6 @@
             id: currentH5Id
           }
         }).then(response => {
-//          console.log(response.data.data.content)
-//          console.log(response.status)
-//          console.log(response.statusText)
-//          console.log(response.headers)
-//          console.log(response.config)
           if (response) {
             this.content = response.data.data.content
           }
@@ -484,7 +442,6 @@
       isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
-//        const colummns = document.querySelectorAll('.two-column')
         if (present.style.display === 'block') {
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
@@ -496,32 +453,18 @@
         }
       },
       // 二级级导航是否展示 || 隐藏导航
-      isTwoNav (e, index) {
+      isTwoNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
-//        const colummns = document.querySelectorAll('.three-column')
         if (present.style.display === 'block') {
-          /* for (let i = 0; i < colummns.length; i++) {
-            colummns[i].style.display = "none"
-          } */
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
-          /* for (let i = 0; i < colummns.length; i++) {
-            colummns[i].style.display = "none"
-          } */
           present.style.display = 'block'
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
         }
-        /* if (this.showTwoNav) {
-          e.target.parentNode.children[1].classList.add('active')
-          this.showTwoNav = false
-        } else {
-          e.target.parentNode.children[1].classList.remove('active')
-          this.showTwoNav = true
-        } */
       }
     }
   }
@@ -535,7 +478,6 @@
     overflow hidden
     /* doc-content start */
     .doc-content
-      display flex
       background-color $defaultBg
       overflow hidden
       text-align(left)
@@ -543,13 +485,13 @@
       .doc-column-left
         background-color $Bg32
         position relative
-        flex 1
+        float left
+        width 260px
         .isShow
           width 12px
           height 10px
           display inline-block
           position absolute
-          /*top auto*/
           right 20px
         .arrow-down
           animation: bounce-in .5s
@@ -614,8 +556,9 @@
       /* doc-column-left end */
       /* doc-right-center start */
       .doc-right-center
-        flex 5
         background-color #f4f4f4
+        margin-left 260px
+        overflow auto
         .doc-content-chunk
           background-color $defaultBg
           margin 72px
