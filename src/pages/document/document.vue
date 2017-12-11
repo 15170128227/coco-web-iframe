@@ -469,9 +469,9 @@
       text-align(left)
       /* doc-column-left start */
       .doc-column-left
+        width 260px
+        float left
         background-color $Bg32
-        position relative
-        flex 1
         .isShow
           width 12px
           height 10px
