@@ -2,11 +2,13 @@
 /**
  * Created by Administrator on 2017/11/24.
  */
-var rootUrl1 = 'www.test.cocosurprise.com'
-var rootUrl2 = 'open-center.test.cocosurprise.com'
+// 测试环境api请求地址
+// const protocol = 'http:'
+const rootUrl1 = 'www.test.cocosurprise.com'
+const rootUrl2 = 'open-center.test.cocosurprise.com'
 // const rootUrl3 = 'http://192.168.1.48:8007'
-var protocol = location.protocol + '//'
-var Api = {
+const protocol = location.protocol + '//'
+window.webApi = {
   HOME: {},
   // 文档中心
   DOCUMENT: {
@@ -25,9 +27,6 @@ var Api = {
     POST_MODIFYPWDBYMOB: rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMob', // 通过手机号和用户名找回密码
     POST_MODIFYPWDBYEMAIL: rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByEmail' // 通过邮箱找回密码
   }
-}
 
-if (window) {
-  window.webApi = Api
-  rootUrl1 = rootUrl2 = protocol = Api = null
 }
+window.sessionStorage.setItem('webApi', JSON.stringify(window.webApi))
