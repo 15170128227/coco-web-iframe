@@ -2,13 +2,11 @@
 /**
  * Created by Administrator on 2017/11/24.
  */
-// 测试环境api请求地址
-// const protocol = 'http:'
 var rootUrl1 = 'www.test.cocosurprise.com'
 var rootUrl2 = 'open-center.test.cocosurprise.com'
 // const rootUrl3 = 'http://192.168.1.48:8007'
 var protocol = location.protocol + '//'
-window.webApi = {
+var webApi = {
   HOME: {},
   // 文档中心
   DOCUMENT: {
@@ -25,4 +23,8 @@ window.webApi = {
     POST_MODIFYPWDBYMOBFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage'
   }
 }
-window.sessionStorage.setItem('webApi', JSON.stringify(window.webApi))
+// window.sessionStorage.setItem('webApi', JSON.stringify(window.webApi))
+if (window) {
+  window.webApi = webApi
+  rootUrl1 = rootUrl2 = protocol = webApi = null
+}
