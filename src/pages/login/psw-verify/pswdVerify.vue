@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="pasVer-content">
-        <div class="pasVer-one" v-show="'step2' === isActive">
+        <div class="pasVer-one" v-show="'step1' === isActive">
           <div class="one-content">
             <p class="control" v-if="pswType">
               <span class="c-type">{{ pswType }}</span>
@@ -39,7 +39,7 @@
             </p>
           </div>
         </div>
-        <div class="pasVer-two"  v-show="'step1' === isActive">
+        <div class="pasVer-two"  v-show="'step2' === isActive">
           <div class="two-content">
             <p class="control">
               <span class="c-type">{{ stepTwoType }}</span>
