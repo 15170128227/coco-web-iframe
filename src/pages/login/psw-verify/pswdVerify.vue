@@ -78,7 +78,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import '../../../utils/validate.js'
+  // import '../../../utils/validate.js'
   export default {
     data () {
       return {
