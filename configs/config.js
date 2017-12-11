@@ -20,9 +20,13 @@ window.webApi = {
     POST_LOGINUSER: protocol + rootUrl2 + '/tsh-mg/user/loginByUserPassword',
     POST_JUMPLOGIN: protocol + rootUrl1 + '/tsh-mg/login'
   },
+  // 找回密码
   RETRIEVEPSW: {
-    // 找回密码
-    POST_MODIFYPWDBYMOBFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage'
+    POST_MODIFYPWDBYMOBFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage', // 通过手机号验证找回密码
+    POST_MODIFYPWDBYUSERNAMEFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByNameFormPage', // 通过用户名验证找回密码
+    POST_MODIFYPWDBYEMAILFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByEmailFormPage', // 通过邮箱验证找回密码
+    POST_MODIFYPWDBYMOB: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMob', // 通过手机号和用户名找回密码
+    POST_MODIFYPWDBYEMAIL: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByEmail' // 通过邮箱找回密码
   }
 }
 window.sessionStorage.setItem('webApi', JSON.stringify(window.webApi))

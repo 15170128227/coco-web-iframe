@@ -150,20 +150,28 @@
       // 验证输入手机号 || 用户名 || 邮箱是否跳转下一步
       nextStep () {
         const self = this // 重置当前this
-        let typeVal = document.querySelector('.typeVal').value // 当前类型输入文本值
-        const retPsw = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYMOBFROMPAGE // 验证当前文本是否数据库存在
+        const typeVal = document.querySelector('.typeVal').value // 当前类型输入文本值
         let typeId = this.$route.query.id
         if (this.phone === '') {
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
         } else {
           if (typeId === 'phone') {
-            const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
+            let phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
             if (!phoneNum.test(this.phone) || !(this.phone.length === 11)) {
               this.isError = true
               this.phoneMsg = '手机号格式不正确'
             } else {
-              this.axios({
+              let retMob = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYMOBFROMPAGE // 验证手机号找回
+              this.axios.post(retMob, {
+                mob: typeVal
+              }).then(response => {
+                console.log(response)
+                if (response) {
+                  this.validateorStep()
+                }
+              })
+              /* this.axios({
                 method: 'post',
                 url: retPsw,
                 data: {
@@ -173,14 +181,23 @@
                 if (response) {
                   this.validateorStep()
                 }
-              })
+              }) */
             }
           } else if (typeId === 'email') {
-            const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
+            let email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
             if (!email.test(this.phone)) {
               this.phoneMsg = '邮箱格式不正确'
             } else {
-              this.axios({
+              let retEmail = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 验证邮箱找回
+              this.axios.post(retEmail, {
+                email: typeVal
+              }).then(response => {
+                console.log(response)
+                if (response) {
+                  this.validateorStep()
+                }
+              })
+              /* this.axios({
                 method: 'post',
                 url: retPsw,
                 data: {
@@ -190,13 +207,22 @@
                 if (response) {
                   this.validateorStep()
                 }
-              })
+              }) */
             }
           } else if (typeId === 'username') {
             if (this.phone !== 'tester') {
               this.phoneMsg = '用户名不存在'
             } else {
-              this.axios({
+              let retUser = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 验证用户名找回
+              this.axios.post(retUser, {
+                email: typeVal
+              }).then(response => {
+                console.log(response)
+                if (response) {
+                  this.validateorStep()
+                }
+              })
+              /* this.axios({
                 method: 'post',
                 url: retPsw,
                 data: {
@@ -206,7 +232,7 @@
                 if (response) {
                   this.validateorStep()
                 }
-              })
+              }) */
             }
           }
         }
@@ -222,6 +248,14 @@
         if ((this.code.toUpperCase() !== this.randomCode) && this.code !== '') {
           this.ranCode()
         }
+      },
+      // 通过手机号找回密码第一步
+      retMob () {
+
+      },
+      // 通过用户名找回密码第一步
+      retUser () {
+
       },
       // 验证逻辑
       validateorStep () {
@@ -277,7 +311,14 @@
       // 从新获取验证码
       reNewCode () {
         const retPsw = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYMOBFROMPAGE // 验证当前文本是否数据库存在
-        this.axios({
+        this.axios.post(retPsw, {
+          mob: '15099944361'
+        }).then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
+        /* this.axios({
           method: 'post',
           url: retPsw,
           data: {
@@ -285,7 +326,7 @@
           }
         }).then(response => {
           console.log(response)
-        })
+        }) */
         if (this.countNum === 0) {
           clearInterval(this.timer)
           this.countNum = 59
