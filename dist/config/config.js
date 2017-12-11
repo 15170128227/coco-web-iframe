@@ -4,10 +4,10 @@
  */
 // 测试环境api请求地址
 // const protocol = 'http:'
-var rootUrl1 = 'www.test.cocosurprise.com'
-var rootUrl2 = 'open-center.test.cocosurprise.com'
+const rootUrl1 = 'www.test.cocosurprise.com'
+const rootUrl2 = 'open-center.test.cocosurprise.com'
 // const rootUrl3 = 'http://192.168.1.48:8007'
-var protocol = location.protocol + '//'
+const protocol = location.protocol + '//'
 window.webApi = {
   HOME: {},
   // 文档中心
@@ -22,7 +22,8 @@ window.webApi = {
   },
   RETRIEVEPSW: {
     // 找回密码
-    POST_MODIFYPWDBYMOBFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage'
+    POST_MODIFYPWDBYMOBFROMPAGE: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMobFormPage', // 手机号找回密码
+    POST_MODIFYPWDBYMOB: protocol + rootUrl2 + '/tsh-mg/distributionInfo/modifyPwdByMob' // 通过手机号重置密码
   }
 }
 window.sessionStorage.setItem('webApi', JSON.stringify(window.webApi))
