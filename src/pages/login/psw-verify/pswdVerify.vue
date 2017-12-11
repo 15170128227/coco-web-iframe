@@ -29,7 +29,7 @@
             </p>
             <p class="c-code control">
               <span class="c-type">验证码</span>
-              <input v-model="code" name="code" class="input"  v-validate="'required'" @input="codeInput" type="password">
+              <input v-model="code" name="code" class="input" @input="codeInput" type="password">
               <span  class="lc-code" @click="codeClick">{{ randomCode }}</span>
               <span class="is-error" v-show="errors.has('验证码')&&!isCode">{{ errors.first('code') }}</span>
               <span class="is-error" v-show="isCode">验证码错误</span>
@@ -78,7 +78,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import '../../../utils/validate.js'
+  // import '../../../utils/validate.js'
   export default {
     data () {
       return {
