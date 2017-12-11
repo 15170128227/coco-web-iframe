@@ -282,7 +282,6 @@
     },
     methods: {
       overFn (e, index) {
-        console.log(index)
 //        let img = e.target.querySelector('.emll-img')
       },
       outFn (e, index) {
@@ -318,7 +317,7 @@
             img
               width 95px
               height 36px
-          .active
+          .emll-line
             width 32px
             height 3px
             display inline-block

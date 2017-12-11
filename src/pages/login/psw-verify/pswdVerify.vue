@@ -20,18 +20,18 @@
         </div>
       </div>
       <div class="pasVer-content">
-        <div class="pasVer-one">
+        <div class="pasVer-one" v-show="'step2' === isActive">
           <div class="one-content">
             <p class="control" v-if="pswType">
               <span class="c-type">{{ pswType }}</span>
-              <input :name="pswId" v-model="phone" class="input typeVal" type="text" @input="listenType()">
+              <input :name="pswId" v-model="phone" class="input typeVal" type="text" @input="listenType">
               <span class="is-error" v-show="isError">{{ phoneMsg }}</span>
             </p>
             <p class="c-code control">
               <span class="c-type">验证码</span>
               <input v-model="code" name="code" class="input"  v-validate="'required'" @input="codeInput" type="password">
               <span  class="lc-code" @click="codeClick">{{ randomCode }}</span>
-              <span class="is-error" v-show="errors.has('code')&&!isCode">{{ errors.first('code') }}</span>
+              <span class="is-error" v-show="errors.has('验证码')&&!isCode">{{ errors.first('code') }}</span>
               <span class="is-error" v-show="isCode">验证码错误</span>
             </p>
             <p class="control">
@@ -39,12 +39,12 @@
             </p>
           </div>
         </div>
-        <div class="pasVer-two"  v-show="'step2' === isActive">
+        <div class="pasVer-two"  v-show="'step1' === isActive">
           <div class="two-content">
             <p class="control">
               <span class="c-type">{{ stepTwoType }}</span>
-              <span class="newCode" @click="reNewCode">重新获取<span class="countNum">{ countNum }}</span></span>
-              <input name="atucode"  v-model="atucode" class="input" type="password" :style="{'padding-left': setp2Pf}">
+              <span class="newCode" @click="reNewCode">重新获取<span class="countNum">{{ countNum }}</span></span>
+              <input name="atucode"  v-model="atucode" class="input" type="password" :style="{'padding-left': step2Pf}">
               <span class="is-error" v-show="isTrueCode">{{ codeMsg }}</span>
             </p>
             <p class="control">
@@ -60,14 +60,14 @@
               <span class="is-error" v-show="isSuerPwd">{{ newSuerMsg }}</span>
             </p>
             <p class="control">
-              <button class="next" @click="checkrevamp">确认修改</button>
+              <button class="next" @click="passWord">确认修改</button>
             </p>
           </div>
         </div>
         <div class="pasVer-three" v-show="'step3' === isActive">
           <div class="three-content">
           <span class="three-c">
-            <span><img src="/src/assets/images/fb-suer.png"></span>
+            <span><img src="/static/images/fb-suer.png"></span>
             <span class="three-desc">马上为您跳转到登录...</span>
           </span>
           </div>
@@ -93,28 +93,31 @@
         codeMsg: '', // 验证码提示
         pwd: '', // 密码
         isPwd: false,
+        step2Pf: '', // 第二步第一个输入框padding-left
         newMsg: '',  // 新密码验证提示信息
-        isSuerPwd: false,
+        isSuerPwd: false, // 确认密码
         isTrueCode: false,
         atucode: '', // 第二步手机||邮箱验证码
         showPwd: false, // 密码是否显示||隐藏
         showPwd2: false, // 密码是否显示||隐藏
         newSuerMsg: '',
+        countNum: 59, // 初始化倒计时
+        timer: null, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', // 第二步骤第一个输入框padding-left
         phone: '',
         isActive: 'step1', // 初始化找回密码步骤
-        urlImg: '/src/assets/images/pasVer_one.png', // 找回密码第一步nav背景初始化
+        urlImg: '/static/images/pasVer_one.png', // 找回密码第一步nav背景初始化
         // 找回密码nav步骤背景图
         navData: [
           {
-            urlImg: '/src/assets/images/pasVer_one.png'
+            urlImg: '/static/images/pasVer_one.png'
           },
           {
-            urlImg: '/src/assets/images/perVer_two.png'
+            urlImg: '/static/images/perVer_two.png'
           },
           {
-            urlImg: '/src/assets/images/perVer_three.png'
+            urlImg: '/static/images/perVer_three.png'
           }
         ]
       }
@@ -133,15 +136,15 @@
         if (this.pswId === 'phone') {
           this.pswType = '手机号'
           this.stepTwoWord = '手机短信验证码'
-          this.setp2Pf = '110px'
+          this.step2Pf = '110px'
         } else if (this.pswId === 'email') {
           this.pswType = '邮箱'
           this.stepTwoWord = '绑定邮箱验证码'
-          this.setp2Pf = '110px'
+          this.step2Pf = '110px'
         } else if (this.pswId === 'username') {
           this.pswType = '用户名'
           this.stepTwoWord = '绑定邮箱验证码'
-          this.setp2Pf = '110px'
+          this.step2Pf = '110px'
         }
       },
       // 验证输入手机号 || 用户名 || 邮箱是否跳转下一步
@@ -154,10 +157,10 @@
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
         } else {
-          this.isError = true
           if (typeId === 'phone') {
-            const phoneNum = /^1[3|4|5|8][0-9]\d{4,8}$/
+            const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
             if (!phoneNum.test(this.phone) || !(this.phone.length === 11)) {
+              this.isError = true
               this.phoneMsg = '手机号格式不正确'
             } else {
               this.axios({
@@ -167,14 +170,13 @@
                   mob: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
               })
             }
           } else if (typeId === 'email') {
-            const email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/
+            const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
             if (!email.test(this.phone)) {
               this.phoneMsg = '邮箱格式不正确'
             } else {
@@ -185,14 +187,12 @@
                   email: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
               })
             }
           } else if (typeId === 'username') {
-            console.log(this.phone)
             if (this.phone !== 'tester') {
               this.phoneMsg = '用户名不存在'
             } else {
@@ -203,7 +203,6 @@
                   userName: typeVal
                 }
               }).then(response => {
-                console.log('response', response.data)
                 if (response) {
                   this.validateorStep()
                 }
@@ -227,7 +226,7 @@
       // 验证逻辑
       validateorStep () {
         const self = this
-        this.isTrue = false
+        this.isError = false
         this.$validator.validateAll().then(result => {
           if (result) {
             if (self.code.toUpperCase() !== self.randomCode) {
@@ -258,99 +257,122 @@
         }
         // 将拼接好的字符串赋值给展示的Value
         this.randomCode = code
-      }
-    },
-    listenType() {
-      if (this.phone === '') {
-        this.isTrue = true
-        this.phoneMsg = '请输入' + this.pswType
-      } else {
-        this.isTrue = false
-      }
-    },
-    codeInput () {
-      if (this.code.length > 0) {
-        this.isCode = false
-      }
-    },
-    codeClick () {
-      this.ranCode()
-    },
-    // 从新获取验证码
-    reNewCode() {
-      if (this.countNum === 0) {
-        clearInterval(this.timer)
-        this.countNum = 59
-        this.timer = setInterval(() => {
-          if (this.countNum === 0) {
-            clearInterval(this.timer)
-          } else {
-            this.countNum--
+      },
+      listenType() {
+        if (this.phone === '') {
+          this.isError = true
+          this.phoneMsg = '请输入' + this.pswType
+        } else {
+          this.isError = false
+        }
+      },
+      codeInput () {
+        if (this.code.length > 0) {
+          this.isCode = false
+        }
+      },
+      codeClick () {
+        this.ranCode()
+      },
+      // 从新获取验证码
+      reNewCode () {
+        const retPsw = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYMOBFROMPAGE // 验证当前文本是否数据库存在
+        this.axios({
+          method: 'post',
+          url: retPsw,
+          data: {
+            mob: '15099944361'
           }
-        }, 1000)
-      }
-    },
-    // 切换密码
-    swithPwd(index) {
-      if (index === 1) {
-        this.showPwd = !this.showPwd
-      }
-      if (index === 2) {
-        this.showPwd2 = !this.showPwd2
-      }
-    },
-    // 确认修改
-    checkrevamp() {
-      if (this.atucode === '') {
-        this.codeMsg = '请输入短信验证码'
-        this.isTrueCode = true
-      } else {
-        if (this.atucode !== '1234') {
-          this.codeMsg = '短信验证码不正确'
+        }).then(response => {
+          console.log(response)
+        })
+        if (this.countNum === 0) {
+          clearInterval(this.timer)
+          this.countNum = 59
+          this.timer = setInterval(() => {
+            if (this.countNum === 0) {
+              clearInterval(this.timer)
+            } else {
+              this.countNum--
+            }
+          }, 1000)
+        }
+      },
+      // 切换密码
+      swithPwd(index) {
+        if (index === 1) {
+          this.showPwd = !this.showPwd
+        }
+        if (index === 2) {
+          this.showPwd2 = !this.showPwd2
+        }
+      },
+      // 密码
+      passWord () {
+        let molPass = 'http://open-center.test.cocosurprise.com/tsh-mg/distributionInfo/modifyPwdByMobFormPage'
+        this.axios({
+          method: 'post',
+          url: molPass,
+          data: {
+            mob: '15099944361',
+            validCode: '649184',
+            password: 'He123456'
+          }
+        })
+      },
+      // 确认修改
+      checkrevamp() {
+        if (this.atucode === '') {
+          this.codeMsg = '请输入短信验证码'
           this.isTrueCode = true
         } else {
-          this.isTrueCode = false
-        }
-      }
-      if (this.pwd === '') {
-        this.newMsg = '请输入新密码'
-        this.isPwd = true
-      } else {
-        const reg6 = /^[a-zA-Z\d_]{6,}$/
-        if (!reg6.test(this.pwd)) {
-          this.newMsg = '密码不能少于6位数'
-          this.isPwd = true
-        } else {
-          // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
-          // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
-          // 特殊字符的范围为 !#$%^&*
-          const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/
-          if (!reg.test(this.pwd)) {
-            this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
-            this.isPwd = true
+          if (this.atucode !== '1234') {
+            this.codeMsg = '短信验证码不正确'
+            this.isTrueCode = true
           } else {
-            this.isPwd = false
+            this.isTrueCode = false
           }
         }
-      }
-      if (this.suerPwd === '') {
-        this.newSuerMsg = '请输入确认密码'
-        this.isSuerPwd = true
-      } else {
-        if (this.pwd.length > 0 && this.suerPwd.length > 0 && this.pwd !== this.suerPwd) {
-          this.newSuerMsg = '两次输入密码不一致'
+        if (this.pwd === '') {
+          this.newMsg = '请输入新密码'
+          this.isPwd = true
+        } else {
+          const reg6 = new RegExp(/^[a-zA-Z\d_]{6,}$/)
+          if (!reg6.test(this.pwd)) {
+            this.newMsg = '密码不能少于6位数'
+            this.isPwd = true
+          } else {
+            // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
+            // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
+            // 特殊字符的范围为 !#$%^&*
+            const reg = new RegExp(/^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/)
+            if (!reg.test(this.pwd)) {
+              this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
+              this.isPwd = true
+            } else {
+              this.isPwd = false
+            }
+          }
+        }
+        if (this.suerPwd === '') {
+          this.newSuerMsg = '请输入确认密码'
           this.isSuerPwd = true
         } else {
-          this.isSuerPwd = false
+          if (this.pwd.length > 0 && this.suerPwd.length > 0 && this.pwd !== this.suerPwd) {
+            this.newSuerMsg = '两次输入密码不一致'
+            this.isSuerPwd = true
+          } else {
+            this.isSuerPwd = false
+          }
         }
-      }
-      if (this.pwd !== '' &&
-        this.suerPwd !== '' &&
-        this.atucode !== '' &&
-        this.pwd === this.suerPwd &&
-        this.atucode === '1234') {
-        this.isActive = 'step3'
-        this.urlImg = this.navData[2].urlImg
+        if (this.pwd !== '' &&
+          this.suerPwd !== '' &&
+          this.atucode !== '' &&
+          this.pwd === this.suerPwd &&
+          this.atucode === '1234') {
+          this.isActive = 'step3'
+          this.urlImg = this.navData[2].urlImg
+        }
       }
     }
   }
@@ -462,6 +484,7 @@
            // code
           .newCode
             position absolute
+            cursor pointer
             font-size 12px
             line-height 46px
             color #999
@@ -488,10 +511,10 @@
             left 305px
             top 18px
             cursor pointer
-            background url('/src/assets/images/showPwd.png') no-repeat center
+            background url('/static/images/showPwd.png') no-repeat center
             background-size 18px 12px
           .showPwd
-            background url('/src/assets/images/hidePwd.png') no-repeat center
+            background url('/static/images/hidePwd.png') no-repeat center
             background-size 18px 9px
             top 19px
           .pasVer-three
