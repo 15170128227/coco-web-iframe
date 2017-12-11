@@ -494,7 +494,7 @@
           overflow hidden
           .one-columns
             a
-              padding 20px
+              padding 21px
           li
             a
               /*padding 12px 0*/
@@ -505,6 +505,7 @@
               background-color #555
               display block
               a
+                padding 21px
                 font-size 14px
                 font-weight normal
             .twoColumn
