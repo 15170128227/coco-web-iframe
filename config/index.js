@@ -45,22 +45,15 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
     proxyTable: {
-      '/tsh-api': {
+      /* '/tsh-api': {
         // target: 'http://192.168.1.180:8005/tsh-api',
         // target: 'http://www.test.cocosurprise.com/tsh-api',
         changeOrigin: true,
         pathRewrite: {
           '^/tsh-api': ''
         }
-      },
-      '/tsh-mg': {
-        target: 'http://open-center.test.cocosurprise.com/tsh-mg',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/tsh-mg': ''
-        }
-      }
-    },
+      } */
+    }
   },
 
   build: {
@@ -71,7 +64,6 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
-    assetsApiConfig: 'config',
     /**
      * Source Maps
      */

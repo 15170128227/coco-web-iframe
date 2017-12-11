@@ -1,6 +1,7 @@
-/**
+/*
+/!**
  * Created by Administrator on 2017/11/24.
- */
+ *!/
 // 测试环境api请求地址
 const rootUrl1 = '//www.test.cocosurprise.com'
 const rootUrl2 = '//open-center.test.cocosurprise.com'
@@ -28,3 +29,4 @@ const Api = {
 }
 
 export default Api
+*/
