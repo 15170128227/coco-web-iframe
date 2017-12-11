@@ -5,9 +5,6 @@ yarn-debug.log*
 yarn-error.log*
 /test/unit/coverage/
 
-/configs/devs.js
-/configs/locals.js
-
 package-lock.json
 
 # Editor directories and files
