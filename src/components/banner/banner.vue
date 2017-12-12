@@ -6,8 +6,8 @@
       <swiper-slide v-for="item in bannerData.info" :key="item.id">
         <img :src="item.imgUrl" class="s-img">
         <div class="banner-text">
-          <img class="b-img" :src="item.content.imgUrl">
-          <p>
+          <img v-if="item.content.imgUrl" class="b-img" :src="item.content.imgUrl">
+          <p v-if="item.content.textDescBg">
             <span class="b-descBg">{{ item.content.textDescBg }}</span>
           </p>
           <p>
@@ -88,6 +88,7 @@
         background rgba(0,0,0, 0.3)
         .b-img
           width 122px
+          border none
           margin-top 108px
           margin-bottom 28px
         .b-descBg
@@ -98,11 +99,13 @@
           font-size 50px
           margin-bottom 26px
           font-weight normal
+          font-style normal
           display inline-block
          .b-descSm
           color rgb(255,255,255)
-          font-size 25px
+          font-size 24px
           font-weight normal
+          font-style normal
           display inline-block
     .swiper-pagination
       > .swiper-pagination-bullet
@@ -116,6 +119,7 @@
     img
       width 100%
       height  484px
+      border none
       transform: translate(-50%,-50%);
       position: absolute;
       top: 50%;
@@ -129,7 +133,8 @@
       color rgb(255, 255, 255)
       .o-b-descBg
         font-size 50px
-        margin-top 180px
+        margin-top 170px
       .o-b-descSm
-        font-size 25px
+        font-size 50px
+        margin-top 32px
 </style>

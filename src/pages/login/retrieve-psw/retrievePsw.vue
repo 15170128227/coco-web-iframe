@@ -39,16 +39,18 @@
 <style lang="stylus" rel="stylesheet/stylus">
   /* retrieve-psw-outer start */
   .retrieve-psw-outer
-    padding 35px 0
+    padding 20px 0
     h2
-      padding-bottom 20px
+      padding-bottom 8px
+      font-size 26px
     .retrieve-pas-modal
       a
         color #fff
-        padding 20px
+        padding 10px
+        font-size 18px
         margin-top 20px
         background-color #DF4A43
         display inherit
-        border-radius 2px
+        border-radius 3px
   /* retrieve-psw-outer end */
 </style>
