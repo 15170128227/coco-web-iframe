@@ -41,7 +41,7 @@
         <div class="pasVer-two"  v-show="'step2' === isActive">
           <div class="two-content">
             <p class="control">
-              <span class="c-type">{{ stepTwoType }}手机短信验证码</span>
+              <span class="c-type">{{ stepTwoType }}验证码</span>
               <span class="newCode" @click="reNewCode">重新获取<span class="countNum">{{ countNum }}</span></span>
               <input name="atucode" :style="{'padding-left': step2Pf}" v-model="atucode" class="input" type="password">
               <span class="is-error" v-show="isTrueCode">{{ codeMsg }}</span>
@@ -55,7 +55,7 @@
             <p class="control">
               <span class="c-type">确认密码</span>
               <span class="swithPwd" :class="{showPwd:showPwd2}" @click="swithPwd(2)"></span>
-              <input name="suerPwd" class="input" :type="isPasType" v-model="suerPwd">
+              <input name="suerPwd" class="input" :type="isPasType2" v-model="suerPwd">
               <span class="is-error" v-show="isSuerPwd">{{ newSuerMsg }}</span>
             </p>
             <p class="control">
@@ -77,7 +77,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-//   import '../../../utils/validate.js'
   export default {
     data () {
       return {
@@ -93,6 +92,7 @@
         codeMsg: '', // 验证码提示
         pwd: '', // 密码
         isPasType: 'text', // 密码是否展示||隐藏
+        isPasType2: 'text',
         isPwd: false,
         step2Pf: '110px', // 第二步第一个输入框padding-left
         newMsg: '',  // 新密码验证提示信息
@@ -126,9 +126,9 @@
     created () {
       this.initType()
       this.ranCode()
-      this.timer = setInterval(() => {
+     /* this.timer = setInterval(() => {
         this.countNum === 0 ? clearInterval(this.timer) : this.countNum--
-      }, 1000)
+      }, 1000) */
     },
     methods: {
       // 初始化找回密码类型

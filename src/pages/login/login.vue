@@ -301,7 +301,7 @@
     width 100%
     height 680px
     overflow hidden
-    background url(/static/images/login_bg.jpg) no-repeat center
+    background url(/static/images/login_bg.jpg) no-repeat 0 0
     .w_960
       position relative
       height 100%
@@ -368,7 +368,7 @@
               letter-spacing 10px
               font-style italic
         .control-group
-          margin-top 20px
+          margin-top 6px
           display flex
           .auto-login
             text-align left

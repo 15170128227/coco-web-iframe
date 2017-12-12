@@ -571,7 +571,9 @@
               background-color $clrDF4A43
               color $clrfff
           .content-chunk
-            padding 5px
+            padding 20px 0
+            line-height 30px
+            font-family SimSuncss
       /* doc-right-center end */
     /* doc-content end */
   /* doc-container end */
