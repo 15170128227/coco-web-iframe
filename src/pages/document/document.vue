@@ -6,13 +6,11 @@
           <li class="one-columns">
             <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event)">
               API
-              <!--<span class="doc-down one-upDown isShow"></span>-->
             </a>
             <ul class="two-column" v-if="columnType1" :style="'display:'+ display">
               <li class="" v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
                 <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" class="arrow-down">
                   {{item.title}}
-                  <!--<span class="arrow-down two-upDown isShow"></span>-->
                 </a>
                 <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="'display:'+ display">
                   <li class="" v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
