@@ -84,7 +84,7 @@ team-group:tg
   .ab
     .co
       margin 0 auto
-      padding 81px 0 63px 0
+      padding 81px 0 53px 0
       .co-left
         width 410px
         float left
@@ -96,10 +96,10 @@ team-group:tg
       .co-right
         float left
         width 550px
-        padding-right 25px
+        padding-right 28px
         .cor-title
           padding-top 8px
-          padding-bottom 22px
+          padding-bottom 26px
         .cor-text
           font-size 14px
           line-height 20px

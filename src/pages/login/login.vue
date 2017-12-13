@@ -8,20 +8,20 @@
             <h2>账号登录</h2>
             <div class="control-group-container">
               <div class="control-label">
-                <input type="text" class="verify-user" placeholder="用户名" @keyup.13="enter($event)"/>
+                <input type="text" class="verify-user" placeholder="用户名" v-model="verifyUser"  @keyup="enter($event)"/>
                 <span class="user-error error-msg">{{userVerErr}}</span>
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label">
-                <input type="password" class="verify-psw" placeholder="密码" @keyup.13="enter($event)"/>
+                <input type="password" class="verify-psw" placeholder="密码" v-model="verifyPsw" @keyup="enter($event)"/>
                 <span class="psw-error error-msg">{{pswVerErr}}</span>
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label verify">
                 <div class="verify-outline">
-                  <input type="text" class="verify-code" placeholder="验证码" @keyup.13="enter($event)"/>
+                  <input type="text" class="verify-code" placeholder="验证码" v-model="verifyCode" @keyup="enter($event)"/>
                   <span class="verify-error error-msg">{{verCodeErr}}</span>
                 </div>
                 <span class="compar-verify" @click="createCode">{{verCodeVal}}</span>
@@ -29,8 +29,7 @@
             </div>
             <div class="control-group extra-group">
               <label class="auto-login">
-                <input type="checkbox" checked/>
-                记住账号
+                <span class="checkbox" :class="{active: isChecked}" @click="isCheckFn()"></span>记住账号
               </label>
               <span @click="isShowClick()">
               <router-link to="/login/retrievePsw" class="lost-pw">忘记密码？</router-link>
@@ -46,8 +45,8 @@
         </div>
       </div>
       <form :action="jumpApi" method="post" v-show="false">
-        <p><input type="text" name="username" v-model="username"/></p>
-        <p><input type="password" name="password" v-model="password"/></p>
+        <p><input type="text" name="username" v-model="verifyUser"/></p>
+        <p><input type="password" name="password" v-model="verifyPsw"/></p>
         <input type="submit" value="submit"  id="test"/>
       </form>
     </div>
@@ -69,54 +68,81 @@
         verCodeErr: '', // 验证码错误信息
         userVerErr: '',  // 用户名错误信息
         pswVerErr: '', // 密码错误信息
+        verifyUser: window.localStorage.getItem('user') || '', // 绑定用户名值
+        verifyCode: '', // 绑定验证码值
+        verifyPsw: '', // 绑定密码值
         isShow: true, // 默认展示登录界面:1.忘记密码展示忘记密码子组件
         iframeState: false, // 是否跳转中台
         username: '', // 请求成功调中台传用户名
         password: '', // // 请求成功调中台传密码
-        jumpApi: this.$api.LOGIN.POST_JUMPLOGIN
+        isChecked: true, // 是否记住账户
+        jumpApi: this.$api.LOGIN.POST_JUMPLOGIN // 登录接口校验成功跳转中台页面接口
       }
     },
+    // 路由变更时检测是否显示找回密码子组件
     beforeRouteUpdate (to, from, next) {
       this.isShow = true
-      next(vm => {
-      })
+      next()
     },
     created () {
       this.createCode()
     },
     methods: {
+      // 键盘事件
       enter (e) {
+        this.userVerErr = '' // 执行键盘事件时用户提示信息制空
+        this.pswVerErr = '' // 执行键盘事件时密码提示信息制空
+        this.verCodeErr = '' // 执行键盘事件时验证码||用户名和密码错误信息制空
         if (e.keyCode === 13) {
           this.validateCode()
         }
       },
       // 请求登录Api
       queryLogin (userName, pasw) {
-        this.username = userName
-        this.password = pasw
-        let login = this.$api.LOGIN.POST_LOGINUSER
-        this.axios({
-          method: 'post',
-          url: login,
-          data: {
-            username: userName,
-            password: pasw
-          }
+       /* this.username = userName
+        this.password = pasw */
+        let login = this.$api.LOGIN.POST_LOGINUSER // 校验用户登录用户名及密码是否正确
+        this.axios.post(login, {
+          username: userName,
+          password: pasw
         }).then(response => {
+          let code = response.data.code // 返回状态码--200成功、400错误
+          let message = response.data.message // 返回信息提示码--0101成功、0203用户名或密码错误、0207用户名不存在
           if (response) {
-            if (response.data.code === '200' && response.data.message === '0101') {
-              document.getElementById('test').click()
-            } else if (response.data.code === '400') {
-              if (response.data.message === '0203') {
-                this.verCodeErr = '用户名或密码错误'
-              } else if (response.data.message === '0207') {
-                this.verCodeErr = '用户名不存在'
-              } else {
-                this.verCodeErr = response.data.message
-              }
-            }
+            this.remUser()
+            this.jumpLogin(code, message) // 跳转中台函数
+            /*
+              * 如果checkbox选中状态--用户名和密码存入cookie(期限为7天)
+              * 否则未选中时清除cookie里用户信息，不在存入
+             */
+            /* if (this.isChecked === true) {
+              this.getLastUser()
+            } else {
+              this.resetCookie()
+            } */
           }
         })
+      },
+      remUser () {
+        if (this.isChecked === true) {
+          window.localStorage.setItem('user', this.verifyUser)
+        } else {
+          window.localStorage.removeItem('user')
+        }
+      },
+      // 检验用 户名和密码正确则跳转中台页面
+      jumpLogin (code, message) {
+        if (code === '200' && message === '0101') {
+          document.getElementById('test').click()  // 通过from表单请求跳转中台
+        } else if (code === '400') {
+          if (message === '0203') {
+            this.verCodeErr = '用户名或密码错误'
+          } else if (message === '0207') {
+            this.verCodeErr = '用户名不存在'
+          } else {
+            this.verCodeErr = message
+          }
+        }
       },
       // 验证验随机函数
       createCode () {
@@ -139,42 +165,132 @@
       },
       // 登录验证所有
       validateCode () {
-        const verifyUser = document.querySelector('.verify-user').value
-        let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母）
-        if (verifyUser === '') {
+        const self = this // 重置
+        let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
+        if (self.verifyUser === '') {
           this.userVerErr = '请输入用户名'
-        } else if (!uPattern.test(verifyUser)) {
+        } else if (!uPattern.test(self.verifyUser)) {
           this.verCodeErr = '用户名或密码错误'
-        } else if (uPattern.test(verifyUser)) {
+        } else if (uPattern.test(self.verifyUser)) {
           this.userVerErr = ''
         } else {
-          this.userVerErr = '该手机未注册'
+          this.userVerErr = '用户信息错误'
         }
         // 验证密码
-        const verifyPsw = document.querySelector('.verify-psw').value
 //        let resPsw = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{6,20}$/ //  密码正则，6到20位（字母，数字，下划线，减号）
-        let resPsw = new RegExp(/^[\w]{6,20}$/)
-        if (verifyPsw === '') {
+        let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
+        if (self.verifyPsw === '') {
           this.pswVerErr = '请输入密码'
-        } else if (!resPsw.test(verifyPsw)) {
+        } else if (!resPsw.test(self.verifyPsw)) {
           this.verCodeErr = '用户名或密码错误'
-        } else if (resPsw.test(verifyPsw)) {
+        } else if (resPsw.test(self.verifyPsw)) {
           this.pswVerErr = ''
         }
         // 校验验证码
-        // 获取验证码值
-        let oValue = document.querySelector('.verify-code').value.toUpperCase()
-        if (oValue === '') {
+//        let oValue = document.querySelector('.verify-code').value.toUpperCase() // 获取验证码值
+        if (this.verifyCode === '') {
           this.verCodeErr = '请输入验证码'
-        } else if (oValue !== this.verCodeVal) {
+        } else if (this.verifyCode !== this.verCodeVal) {
           this.verCodeErr = '验证码错误，请重新输入'
         } else {
-          this.queryLogin(verifyUser, verifyPsw)
+//          console.log("verifyUser:" ,self.verifyUser,  "verifyPsw:", self.verifyPsw)
+          this.queryLogin(self.verifyUser, self.verifyPsw)
         }
       },
+      // 是否切换找回密码子组件
       isShowClick () {
         this.isShow = false
+      },
+      // 是否记住账号
+      isCheckFn () {
+        console.log('是否记住账号', this.isChecked)
+        if (this.isChecked === true) {
+          this.isChecked = false
+        } else {
+          this.isChecked = true
+        }
       }
+     /* // 记录账号
+      getLastUser () {
+        let guTd = '49BAC005-7D5B-4231-8CEA-16939BEACD67' // GUID标识符
+        console.log('guTd:', guTd)
+        let usr = this.getCookie(guTd)
+        if (usr !== null) {
+//          let userVal = this.verifyUser // 取用户名值
+        } else {
+//          let userVal = ''
+        }
+        this.setPwdAndChk()
+      },
+      getCookie (name) {
+        console.log('name:', name)
+        let arg = name + '='
+        console.log('arg:', arg)
+        let alen = arg.length
+        console.log('arg:', alen)
+        let clen = document.cookie.length
+        console.log('clen:', clen)
+        let i = 0
+        while (i < clen) {
+          let j = i + alen
+          console.log('j:', j)
+          if (document.cookie.substring(i, j) === arg) {
+            return this.getCookieVal(j)
+          }
+          i = document.cookie.indexOf(' ', i) + 1
+          if (i === 0) break
+        }
+        return null
+      },
+      getCookieVal (offset) {
+        let endstr = document.cookie.indexOf(';', offset)
+        if (endstr === -1) endstr = document.cookie.length
+        return unescape(document.cookie.substring(offset, endstr)) // 函数可对通过 escape() 编码的字符串进行解码
+      },
+      // 点击登录时触发事件
+      setPwdAndChk () {
+        this.setLastUser(this.verifyUser) // 获取用户名
+        // 如果记住密码选项被选中
+        if (this.isChecked === true) {
+          let pwd = this.verifyPsw // 取密码值
+          console.log('pwd:', pwd)
+          let expdate = new Date()
+          expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000))
+          this.setCookies(this.verifyUser, pwd, expdate) // 将用户名和密码写入到Cookie
+        } else {
+          // 如果没有选中记住密码,则立即过期
+          this.resetCookie()
+        }
+      },
+      // 将用户信息写入cookie
+      setLastUser (user) {
+        let self = this
+        let guId = '49BAC005-7D5B-4231-8CEA-16939BEACD67'
+        let expdate = new Date()
+        expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000)) // 当前时间加上两周的时间
+        console.log('guId:', guId, 'expdate:', expdate, 'user:', user)
+        self.setCookies(guId, user, expdate)
+      },
+      // 未选中重置cookie信息
+      resetCookie () {
+        let usr = this.verifyUser
+        let expdate = new Date()
+        this.setCookies(usr, null, expdate)
+      },
+      setCookies (name, value, expires) {
+        console.log(arguments)
+        let argv = arguments
+        let argc = arguments.length
+        let expire = (argc > 2) ? argv[2] : null
+         let path = (argc > 3) ? argv[3] : null
+         let domain = (argc > 4) ? argv[4] : null
+         let secure = (argc > 5) ? argv[5] : false
+         console.log('expires:', expires, 'path:',  path, 'domain:' , domain, 'secure:' , secure)
+         document.cookie = name + '=' + escape(value) + ((expire == null) ? '' : ('; expires=' + expires.toGMTString()))
+         + ((path == null) ? '' : ('; path=' + path)) + ((domain == null) ? '' : ('; domain=' + domain))
+         + ((secure == true) ? '; secure' : '')
+        console.log(document.cookie)
+      } */
     }
   }
 </script>
@@ -185,7 +301,7 @@
     width 100%
     height 680px
     overflow hidden
-    background url(/static/images/login_bg.jpg) no-repeat center
+    background url(/static/images/login_bg.jpg) no-repeat 0 0
     .w_960
       position relative
       height 100%
@@ -248,14 +364,33 @@
               border 1px solid #CCC
               text-align center
               cursor pointer
+              display inline-block
+              letter-spacing 10px
+              font-style italic
         .control-group
-          margin-top 20px
+          margin-top 6px
           display flex
           .auto-login
             text-align left
+            vertical-align middle
+            display inline-block
             color rgb(46, 46, 46)
             font-size 12px
             flex 1
+            .active
+              background-color rgb(223, 74, 67)
+              background-image url('/static/images/checked.png')
+              background-position center
+              background-repeat no-repeat
+              border none!important
+            .checkbox
+              float left
+              height 16px
+              width 16px
+              margin-right 6px
+              display inline-block
+              cursor pointer
+              border 1px solid #a6a6a6
           .lost-pw
             flex 1
             text-align right
