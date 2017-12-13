@@ -6,11 +6,10 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import banner from './components/banner/banner.vue'
 import Common from './utils/common.js' // 公共函数组件注册
-// import Api from './utils/httpHelper'
-// import Api from './config/config'
+import Api from './utils/httpHelper'
 import './utils/util'
 import 'swiper/dist/css/swiper.css'
-Vue.prototype.$api = window.webApi
+Vue.prototype.$api = Api
 Vue.config.productionTip = false
 Vue.use(Common) // 公共函数 $common
 Vue.use(VueAwesomeSwiper)
