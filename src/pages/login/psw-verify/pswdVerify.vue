@@ -80,6 +80,9 @@
   export default {
     data () {
       return {
+        countDown: 3, // 找回密碼最後一步倒計時
+        states: null, // 停止
+        dataEmail: '', // 用戶名找回密碼成功返回郵箱
         pswType: '', // 当前找回密码类型
         stepTwoWord: '', // 当前找回密码步骤验证证码
         pswId: '', // 当前文本id类型
@@ -126,9 +129,6 @@
     created () {
       this.initType()
       this.ranCode()
-     /* this.timer = setInterval(() => {
-        this.countNum === 0 ? clearInterval(this.timer) : this.countNum--
-      }, 1000) */
     },
     methods: {
       // 初始化找回密码类型
@@ -211,11 +211,19 @@
       },
       // 通过用户名找回密码第一步
       retUserFn () {
-        let retUser = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 用户名验证找回
+        let retUser = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYUSERNAMEFROMPAGE // 用户名验证找回
         this.axios.post(retUser, {
-          email: this.typeVal
+          userName: this.typeVal
         }).then(response => {
           this.stepTwoType = '绑定邮箱'
+          this.querySecSte1(response)
+        })
+      },
+      retUserFnTwo () {
+        let retEmail = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 邮箱验证找回
+        this.axios.post(retEmail, {
+          email: this.dataEmail
+        }).then(response => {
           this.querySecSte1(response)
         })
       },
@@ -239,6 +247,7 @@
           this.isError = true
           this.phoneMsg = message
         } else if (code === '1') {
+          this.dataEmail = response.data.data
           this.validateorStep()
         }
       },
@@ -285,10 +294,13 @@
       },
       // 重新获取验证码
       reNewCode () {
-        if (this.typeVal === 'phone') {
+        this.pswId = this.$route.query.id
+        if (this.pswId === 'phone') {
           this.retMobFn()
-        } else if (this.typeVal === 'email' || this.typeVal === 'username') {
+        } else if (this.pswId === 'email') {
           this.retEmailFn()
+        } else if (this.pswId === 'username') {
+            this.retUserFnTwo()
         }
         if (this.countNum === 0) {
           clearInterval(this.timer)
@@ -315,9 +327,9 @@
         if (index === 2) {
           this.showPwd2 = !this.showPwd2
           if (this.showPwd2) {
-            this.isPasType = 'password'
+            this.isPasType2 = 'password'
           } else {
-            this.isPasType = 'text'
+            this.isPasType2 = 'text'
           }
         }
       },
@@ -397,7 +409,6 @@
           } else {
             this.isSuerPwd = message // 错误信息
           }
-          this.pswSuccess() // 找回密码第三步
         }).catch(error => {
           console.log(error)
         })
@@ -410,10 +421,13 @@
           validCode: this.atucode,
           password: this.suerPwd
         }).then(response => {
-          let message = response.data.message  // 返回提示信息--0101成功、
-          let code = response.data.code // 返回状态码--200成功、400错误
-          if (code === '200' && message === '0101') {
+          let message = response.data.codeMessage  // 返回提示信息--0101成功、
+          let code = response.data.flag // 返回状态码--0失败、1成功
+          if (code === '1') {
             this.pswSuccess() // 找回密码第三步
+          } else if (code === '0') {
+            this.isTrueCode = true
+            this.codeMsg = '验证码错误'
           } else {
             this.isSuerPwd = message // 错误信息
           }
@@ -423,7 +437,25 @@
       },
       // 用户名找回密码
       queryUser () {
-       this.queryEmail()
+        let molPass = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAIL
+        this.axios.post(molPass, {
+          email: this.dataEmail,
+          validCode: this.atucode,
+          password: this.suerPwd
+        }).then(response => {
+          let message = response.data.codeMessage  // 返回提示信息--0101成功、
+          let code = response.data.flag // 返回状态码--0失败、1成功
+          if (code === '1') {
+            this.pswSuccess() // 找回密码第三步
+          } else if (code === '0') {
+            this.isTrueCode = true
+            this.codeMsg = '验证码错误'
+          } else {
+            this.isSuerPwd = message // 错误信息
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       },
       // 找回密码第三步
       pswSuccess () {
@@ -435,8 +467,17 @@
           this.isActive = 'step3'
           this.urlImg = this.navData[2].urlImg
           if (this.isActive === 'step3') {
-            this.$router.replace({name: 'login'}) // 跳转登录页面
+            this.states = setInterval(this.goBackLogin, 1000)
           }
+        }
+      },
+      goBackLogin () {
+        if (this.countDown > 1) {
+          this.countDown--
+        } else {
+          clearInterval(this.states)
+          this.$router.replace({name: 'login'}) // 跳转登录页面
+          this.countDown = 3
         }
       }
     }

@@ -75,7 +75,7 @@
         iframeState: false, // 是否跳转中台
         username: '', // 请求成功调中台传用户名
         password: '', // // 请求成功调中台传密码
-        isChecked: true, // 是否记住账户
+        isChecked: false, // 是否记住账户
         jumpApi: this.$api.LOGIN.POST_JUMPLOGIN // 登录接口校验成功跳转中台页面接口
       }
     },
@@ -203,7 +203,6 @@
       },
       // 是否记住账号
       isCheckFn () {
-        console.log('是否记住账号', this.isChecked)
         if (this.isChecked === true) {
           this.isChecked = false
         } else {
@@ -389,7 +388,6 @@
               width 16px
               margin-right 6px
               display inline-block
-              cursor pointer
               border 1px solid #a6a6a6
           .lost-pw
             flex 1
@@ -403,6 +401,7 @@
             border-radius 2px
             font-size 20px
             color #fff
+            cursor pointer
             border none !important
       /* 表单内容块 */
   /* logo-container end */

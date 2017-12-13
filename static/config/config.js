@@ -4,7 +4,7 @@
  */
 var rootUrl1 = 'www.test.cocosurprise.com'
 var rootUrl2 = 'open-center.test.cocosurprise.com'
-// const rootUrl3 = 'http://192.168.1.48:8007'
+// const rootUrl3 = '192.168.1.48:8007'
 var protocol = location.protocol + '//'
 var Api = {
   HOME: {},
