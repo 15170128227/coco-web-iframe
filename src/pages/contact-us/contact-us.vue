@@ -13,7 +13,7 @@
       </div>
       <div class="bc-content">
         <div class="bus-consult" v-for="(item ,index) in business" :key="index">
-          <div class="weChatBg" v-if="isChat" :style="'background-image:' + 'url(' + weChatBg + ')'" :class="{active: index === listIndex}"></div>
+          <div class="weChatBg" v-if="isChat" :style="'background-image:' + 'url(' + weChatBg + ')'"></div>
           <div class="inFo" v-else>
             <h3>{{item.cooper}}</h3>
             <p class="consult-qq">QQ: {{item.QQ}}<span></span></p>
@@ -33,7 +33,7 @@
             <h4 class="cacl-title">深圳市场景零售科技有限公司</h4>
             <p class="cacl-list">
               <img src="/static/images/cbc-address.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806（地铁罗宝线深大站A出口)</span>
+              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806</span>
             </p>
             <p class="cacl-list">
               <img src="/static/images/cbc-tel.png" alt="ca" class="cacl-img">
@@ -41,7 +41,7 @@
             </p>
             <p class="cacl-list">
               <img src="/static/images/cbc-email.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">hejinfeng@cocosurprise.com</span>
+              <span class="cacl-text">fuling@cocosurprise.com</span>
             </p>
           </div>
           <div class="cac-right">
@@ -79,8 +79,8 @@
         business: [
           {
             'cooper': '渠道咨询',
-            'QQ': '437879051',
-            'TEL': '13631609254',
+            'QQ': '401241201',
+            'TEL': '17506299226',
             'img': '/static/images/weChat_icon.png'
           },
           {
@@ -92,13 +92,8 @@
         ]
       }
     },
-    /* created () {
-      this.showIn(0)
-    }, */
     methods: {
       showIn (e, index) {
-        console.log(index)
-        console.log(e.target.getAttribute('data-index'))
         if (index === 0) {
           this.listIndex = index
           this.isChat = true
@@ -110,8 +105,6 @@
         }
       },
       showOut (e, index) {
-        console.log(index)
-        console.log(e.target.getAttribute('data-index'))
         if (index === 0) {
           this.listIndex = -1
           this.isChat = false
