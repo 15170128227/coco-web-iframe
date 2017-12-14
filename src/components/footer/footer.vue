@@ -7,11 +7,11 @@
           <img src="/static/images/footer_logo.png" alt="cocoLogo"/>
         </div>
         <div class="footer-nav">
-          <ul v-if="cocoNav">
+          <!--<ul v-if="cocoNav">
             <li v-for="(item, index) in cocoNav" :key="index" :class="'cocoNav_' + index">
               <router-link :to="item.href">{{ item.text }}</router-link><span> | </span>
             </li>
-          </ul>
+          </ul>-->
         </div>
         <div class="footer-copyRight footerInfo">
           <p>{{copyRight}}</p>
@@ -90,7 +90,7 @@
         .footer-nav
           font-size $fontSizeNormal
           font-weight bold
-          padding 37px 0
+          padding 47px 0
           text-align left
           li
             display inline-block

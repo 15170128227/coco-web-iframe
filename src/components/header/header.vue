@@ -55,7 +55,7 @@
       },
       destroyed () {
         window.removeEventListener('scroll', this.handleScroll)
-      },
+      }
     }
   }
 </script>
@@ -66,7 +66,7 @@
     background-color #Fff
     top 0
     z-index 999
-    box-shadow 1px 1px 1px #e6e6e6
+    box-shadow 0px 0px 1px #e6e6e6
     /*border-bottom 1px solid #e6e6e6*/
   .head-contain
     overflow hidden
@@ -86,7 +86,6 @@
         img
           height auto
           width 85px
-          margin-top 20px
       .header-list
         float right
         li
