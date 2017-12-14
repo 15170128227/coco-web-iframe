@@ -13,8 +13,8 @@
       </div>
       <div class="bc-content">
         <div class="bus-consult" v-for="(item ,index) in business" :key="index">
-          <div class="weChatBg" v-if="isChat" :style="'background-image:' + 'url(' + weChatBg + ')'"></div>
-          <div class="inFo" v-else>
+          <div class="weChatBg" :style="index === 0 ? channelWeChatBg : supplierWeChatBg"></div>
+          <div class="inFo">
             <h3>{{item.cooper}}</h3>
             <p class="consult-qq">QQ: {{item.QQ}}<span></span></p>
             <P class="consult-tel">TEL: {{item.TEL}}<span></span></P>
@@ -65,7 +65,10 @@
       return {
         isChat: false,
         listIndex: -1,
-        weChatBg: '',
+        channelWeChatBg: '',
+        channelStyle: 'background-image:url("/static/images/channel_consult.png");',
+        supplierWeChatBg: '',
+        supplierStyle: 'background-image:url("/static/images/supply_consult.png");',
         bannerData: {
           isSwiper: false,
           info: {
@@ -97,22 +100,29 @@
         if (index === 0) {
           this.listIndex = index
           this.isChat = true
-          this.weChatBg = '/static/images/channel_consult.png'
+          this.channelWeChatBg = this.channelStyle
+          this.supplierWeChatBg = ''
+          // this.supplierWeChatBg = ''
         } else if (index === 1) {
           this.listIndex = index
           this.isChat = true
-          this.weChatBg = '/static/images/supply_consult.png'
+          this.supplierWeChatBg = this.supplierStyle
+          this.channelWeChatBg = ''
+          // this.supplierWeChatBg = '/static/images/supply_consult.png'
+          // this.channelWeChatBg = ''
         }
       },
       showOut (e, index) {
         if (index === 0) {
           this.listIndex = -1
           this.isChat = false
-          this.weChatBg = ''
+          this.channelWeChatBg = ''
+          this.supplierWeChatBg = ''
         } else if (index === 1) {
           this.listIndex = -1
           this.isChat = false
-          this.weChatBg = ''
+          this.channelWeChatBg = ''
+          this.supplierWeChatBg = ''
         }
       }
     }
@@ -128,6 +138,7 @@
         padding-bottom 66px
       .bc-content
         .bus-consult
+          position relative
           height 255px
           width 254px
           padding 30px 55px
@@ -138,9 +149,11 @@
             height 140px
             position relative
           .weChatBg
+            position absolute
+            z-index 2
+            top 15px
             width 140px
             height 140px
-            position relative
             text-align center
             img
              position absolute
