@@ -42,7 +42,7 @@
       <div class="ca w_960">
         <img src="/static/images/cost-access.png" alt="img" class="titileImg">
         <ul class="ca-list">
-          <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut()">
+          <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut(index)">
             <img :src="item.urlImg" alt="fd">
             <ul class="call-desc" :class="{active: index === listIndex}">
               <li class="calld-content" v-for="itemL in item.text" :key="itemL.id">{{ itemL.desc }}</li>
@@ -137,7 +137,7 @@
             text: '品牌资源'
           },
           {
-            urlImg: '/static/images/logoWhite.png',
+            urlImg: '/static/images/ecology_logo.png',
             text: '可可奇货'
           },
           {
@@ -273,29 +273,34 @@
     },
     methods: {
       overFn (e, index) {
-        console.log(index)
-       /* if (index === 0) {
+        if (index === 0) {
           this.emJson[0].urlImg = '/static/images/brand-w.png'
-          document.querySelector('.emll-img').classList.add('imgActive')
-          document.querySelector('.emll-line').classList.add('lineActive')
-        } */
-        /* else if (index === 1) {
-          this.emJson[1].urlImg = '/static/images/ecology_logo.png'
-          document.querySelector('.emll-img').classList.add('imgActive')
-          document.querySelector('.emll-line').classList.add('lineActive')
-        } */
+          document.querySelectorAll('.emll-img')[0].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[0].classList.add('lineActive')
+        } else if (index === 1) {
+          this.emJson[1].urlImg = '/static/images/logoWhite.png'
+          document.querySelectorAll('.emll-img')[1].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[1].classList.add('lineActive')
+        } else if (index === 2) {
+          this.emJson[2].urlImg = '/static/images/media-w.png'
+          document.querySelectorAll('.emll-img')[2].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[2].classList.add('lineActive')
+        }
       },
       outFn (e, index) {
-        /* if (index === 0) {
+        if (index === 0) {
           this.emJson[0].urlImg = '/static/images/brand-r.png'
-          e.target.querySelector('.emll-img').classList.remove('imgActive')
-          e.target.querySelector('.emll-line').classList.remove('lineActive')
-        } */
-        /* else if (index === 1) {
-          this.emJson[1].urlImg = '/static/images/logoWhite.png'
-          e.target.querySelector('.emll-img').classList.remove('imgActive')
-          e.target.querySelector('.emll-line').classList.remove('lineActive')
-        } */
+          document.querySelectorAll('.emll-img')[0].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[0].classList.remove('lineActive')
+        } else if (index === 1) {
+          this.emJson[1].urlImg = '/static/images/ecology_logo.png'
+          document.querySelectorAll('.emll-img')[1].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[1].classList.remove('lineActive')
+        } else if (index === 2) {
+          this.emJson[2].urlImg = '/static/images/media-r.png'
+          document.querySelectorAll('.emll-img')[2].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[2].classList.remove('lineActive')
+        }
       },
       showIn(index) {
         this.listIndex = index
@@ -323,7 +328,7 @@
         margin-top 88px
         &:nth-child(2)
           .emll-img
-             background-color $colorTitleColor
+             // background-color $colorTitleColor
             img
               width 95px
               height 36px
@@ -363,6 +368,7 @@
         .imgActive
           margin: 0 auto
           background-color $colorTitleColor
+          transition all .3s ease
         .emmll-logo
           background-color $colorTitleColor
         .emll-desc

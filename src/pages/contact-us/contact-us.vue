@@ -12,8 +12,15 @@
         <img src="/static/images/cbc-title2.png" alt="bc">
       </div>
       <div class="bc-content">
-        <img src="/static/images/cbc-code.png" alt="bc">
-        <img src="/static/images/cbc-consult.png" alt="bc">
+        <div class="bus-consult" v-for="(item ,index) in business" :key="index">
+          <div class="weChatBg" v-if="isChat" :style="'background-image:' + 'url(' + weChatBg + ')'"></div>
+          <div class="inFo" v-else>
+            <h3>{{item.cooper}}</h3>
+            <p class="consult-qq">QQ: {{item.QQ}}<span></span></p>
+            <P class="consult-tel">TEL: {{item.TEL}}<span></span></P>
+          </div>
+          <p class="consult-img" @mouseover="showIn($event, index)" @mouseout="showOut($event, index)"><img :src="item.img" :data-index="index" alt="weChat"></p>
+        </div>
       </div>
     </div>
     <div class="ca">
@@ -26,7 +33,7 @@
             <h4 class="cacl-title">深圳市场景零售科技有限公司</h4>
             <p class="cacl-list">
               <img src="/static/images/cbc-address.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806（地铁罗宝线深大 站C出口)</span>
+              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806</span>
             </p>
             <p class="cacl-list">
               <img src="/static/images/cbc-tel.png" alt="ca" class="cacl-img">
@@ -34,7 +41,7 @@
             </p>
             <p class="cacl-list">
               <img src="/static/images/cbc-email.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">hejinfeng@cocosurprise.com</span>
+              <span class="cacl-text">fuling@cocosurprise.com</span>
             </p>
           </div>
           <div class="cac-right">
@@ -56,6 +63,9 @@
     },
     data() {
       return {
+        isChat: false,
+        listIndex: -1,
+        weChatBg: '',
         bannerData: {
           isSwiper: false,
           info: {
@@ -65,6 +75,44 @@
               textDescSm: '-Contact CoCo-'
             }
           }
+        },
+        business: [
+          {
+            'cooper': '渠道咨询',
+            'QQ': '401241201',
+            'TEL': '17506299226',
+            'img': '/static/images/weChat_icon.png'
+          },
+          {
+            'cooper': '供应咨询',
+            'QQ': '2582983430',
+            'TEL': '13902451291',
+            'img': '/static/images/weChat_icon.png'
+          }
+        ]
+      }
+    },
+    methods: {
+      showIn (e, index) {
+        if (index === 0) {
+          this.listIndex = index
+          this.isChat = true
+          this.weChatBg = '/static/images/channel_consult.png'
+        } else if (index === 1) {
+          this.listIndex = index
+          this.isChat = true
+          this.weChatBg = '/static/images/supply_consult.png'
+        }
+      },
+      showOut (e, index) {
+        if (index === 0) {
+          this.listIndex = -1
+          this.isChat = false
+          this.weChatBg = ''
+        } else if (index === 1) {
+          this.listIndex = -1
+          this.isChat = false
+          this.weChatBg = ''
         }
       }
     }
@@ -78,10 +126,45 @@
       text-align center
       .bc-title
         padding-bottom 66px
-      .bc-content img
-        height 255px
-        width 254px
-        &:first-child
+      .bc-content
+        .bus-consult
+          height 255px
+          width 254px
+          padding 30px 55px
+          border 2px solid #f1f1f1
+          display inline-block
+          .inFo
+            width 140px
+            height 140px
+            position relative
+          .weChatBg
+            width 140px
+            height 140px
+            position relative
+            text-align center
+            img
+             position absolute
+          h3
+           font-weight bold
+           font-size 20px
+           padding-top 20px
+           color rgb(51, 51, 51)
+          .consult-qq
+            padding 24px 0 14px 0
+            font-size 14px
+            color rgb(51, 51, 51)
+          .consult-tel
+            font-size 14px
+            color rgb(51, 51, 51)
+          .consult-img
+            margin 25px 53px 0 53px
+            width 36px
+            height 30px
+            img
+              display inline-block
+              width 100%
+              height 100%
+        .bus-consult:first-child
           margin-right 252px
     .ca
       width 100%

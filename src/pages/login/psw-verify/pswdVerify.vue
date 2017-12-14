@@ -24,12 +24,12 @@
           <div class="one-content">
             <p class="control" v-if="pswType">
               <span class="c-type">{{ pswType }}</span>
-              <input :name="pswId" v-model="typeVal" class="input typeVal" type="text" @input="listenType">
+              <input :name="pswId" v-model="typeVal" class="input typeVal" type="text" @input="listenType" @keyup="nextEnter($event)">
               <span class="is-error" v-show="isError">{{ phoneMsg }}</span>
             </p>
             <p class="c-code control">
               <span class="c-type">验证码</span>
-              <input v-model="code" name="code" class="input" @input="codeInput" type="password">
+              <input v-model="code" name="code" class="input" type="password" @input="codeInput" @keyup="nextEnter($event)">
               <span  class="lc-code" @click="codeClick">{{ randomCode }}</span>
               <span class="is-error" v-show="isCode">{{ errCodeMsg }}</span>
             </p>
@@ -42,20 +42,21 @@
           <div class="two-content">
             <p class="control">
               <span class="c-type">{{ stepTwoType }}验证码</span>
-              <span class="newCode" @click="reNewCode">重新获取<span class="countNum">{{ countNum }}</span></span>
-              <input name="atucode" :style="{'padding-left': step2Pf}" v-model="atucode" class="input" type="password">
+              <span :class="{codeLeft: isLeft}" v-if="isLeft" @click="reNewCode">重新获取</span>
+              <span class="newCode" v-else>重新获取<span class="countNum">{{ countNum }}</span></span>
+              <input name="atucode" :style="{'padding-left': step2Pf}" v-model="atucode" class="input" type="password" @keyup="conEnter($event)">
               <span class="is-error" v-show="isTrueCode">{{ codeMsg }}</span>
             </p>
             <p class="control">
               <span class="c-type">新密码</span>
               <span class="swithPwd" :class="{showPwd:showPwd}" @click="swithPwd(1)"></span>
-              <input name="pwd" class="input" :type="isPasType" v-model="pwd">
+              <input name="pwd" class="input" :type="isPasType" v-model="pwd" @keyup="conEnter($event)">
               <span class="is-error" v-show="isPwd">{{ newMsg }}</span>
             </p>
             <p class="control">
               <span class="c-type">确认密码</span>
               <span class="swithPwd" :class="{showPwd:showPwd2}" @click="swithPwd(2)"></span>
-              <input name="suerPwd" class="input" :type="isPasType2" v-model="suerPwd">
+              <input name="suerPwd" class="input" :type="isPasType2" v-model="suerPwd" @keyup="conEnter($event)">
               <span class="is-error" v-show="isSuerPwd">{{ newSuerMsg }}</span>
             </p>
             <p class="control">
@@ -80,6 +81,10 @@
   export default {
     data () {
       return {
+        countDown: 3, // 找回密碼最後一步倒計時
+        states: null, // 停止
+        isLeft: false, // 倒計時樣式
+        dataEmail: '', // 用戶名找回密碼成功返回郵箱
         pswType: '', // 当前找回密码类型
         stepTwoWord: '', // 当前找回密码步骤验证证码
         pswId: '', // 当前文本id类型
@@ -126,9 +131,6 @@
     created () {
       this.initType()
       this.ranCode()
-     /* this.timer = setInterval(() => {
-        this.countNum === 0 ? clearInterval(this.timer) : this.countNum--
-      }, 1000) */
     },
     methods: {
       // 初始化找回密码类型
@@ -145,6 +147,14 @@
           this.stepTwoWord = '绑定邮箱验证码'
         }
       },
+      // 回車下一步
+      nextEnter (e) {
+        this.isError = ''
+        this.isCode = ''
+        if (e.keyCode === 13) {
+          this.nextStep()
+        }
+      },
       // 验证输入手机号 || 用户名 || 邮箱是否跳转下一步
       nextStep () {
         let typeId = this.$route.query.id
@@ -159,7 +169,6 @@
               this.phoneMsg = '手机号格式错误'
             } else {
               this.isError = false
-              this.retMobFn() // 手机号验证找回
             }
           } else if (typeId === 'email') {
             let email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
@@ -168,7 +177,6 @@
               this.phoneMsg = '邮箱格式错误'
             } else {
               this.isError = false
-              this.retEmailFn() // 邮箱验证找回
             }
           } else if (typeId === 'username') {
             let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
@@ -177,7 +185,6 @@
               this.phoneMsg = '用户名格式错误'
             } else {
               this.isError = false
-              this.retUserFn() // 用户名验证找回
             }
           }
         }
@@ -191,7 +198,15 @@
           this.errCodeMsg = '请输入验证码'
         } else {
           if (this.code.toUpperCase() === this.randomCode) {
+            let typeId = this.$route.query.id
             this.isCode = false
+            if (typeId === 'phone') {
+              this.retMobFn() // 手机号验证找回
+            } else if (typeId === 'email') {
+              this.retEmailFn() // 邮箱验证找回
+            } else if (typeId === 'username') {
+              this.retUserFn() // 用户名验证找回
+            }
           } else {
             this.isCode = true
             this.errCodeMsg = '验证码错误'
@@ -211,11 +226,22 @@
       },
       // 通过用户名找回密码第一步
       retUserFn () {
-        let retUser = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 用户名验证找回
+        let retUser = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYUSERNAMEFROMPAGE // 用户名验证找回
         this.axios.post(retUser, {
-          email: this.typeVal
+          userName: this.typeVal
         }).then(response => {
           this.stepTwoType = '绑定邮箱'
+          this.querySecSte1(response)
+        })
+      },
+      /*
+      * 1.重新獲取驗證碼時通過郵箱接口獲取驗證碼
+      * */
+      retUserFnTwo () {
+        let retEmail = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAILFROMPAGE // 用戶名使用邮箱验证找回
+        this.axios.post(retEmail, {
+          email: window.localStorage.getItem('dataEmail')
+        }).then(response => {
           this.querySecSte1(response)
         })
       },
@@ -239,6 +265,7 @@
           this.isError = true
           this.phoneMsg = message
         } else if (code === '1') {
+          window.localStorage.setItem('dataEmail', response.data.data) // 第一步用戶名找回密碼驗證成功存入信息
           this.validateorStep()
         }
       },
@@ -250,7 +277,14 @@
         self.isActive = 'step2'
         self.urlImg = self.navData[1].urlImg
         this.timer = setInterval(() => {
-          this.countNum === 0 ? clearInterval(this.timer) : this.countNum--
+//          this.countNum === 0 ? clearInterval(this.timer) : this.countNum--
+          if (this.countNum === 0) {
+            this.isLeft = true
+            clearInterval(this.timer)
+          } else {
+            this.isLeft = false
+            this.countNum--
+          }
         }, 1000)
       },
       // 随机验证码函数
@@ -285,18 +319,26 @@
       },
       // 重新获取验证码
       reNewCode () {
-        if (this.typeVal === 'phone') {
+        this.pswId = this.$route.query.id
+        if (this.pswId === 'phone') {
           this.retMobFn()
-        } else if (this.typeVal === 'email' || this.typeVal === 'username') {
+        } else if (this.pswId === 'email') {
           this.retEmailFn()
+        } else if (this.pswId === 'username') {
+            this.retUserFnTwo()
         }
+        this.countDownSixty()
+      },
+      countDownSixty () {
         if (this.countNum === 0) {
           clearInterval(this.timer)
           this.countNum = 59
           this.timer = setInterval(() => {
             if (this.countNum === 0) {
+              this.isLeft = true
               clearInterval(this.timer)
             } else {
+              this.isLeft = false
               this.countNum--
             }
           }, 1000)
@@ -315,10 +357,19 @@
         if (index === 2) {
           this.showPwd2 = !this.showPwd2
           if (this.showPwd2) {
-            this.isPasType = 'password'
+            this.isPasType2 = 'password'
           } else {
-            this.isPasType = 'text'
+            this.isPasType2 = 'text'
           }
+        }
+      },
+      //
+      conEnter (e) {
+        this.isTrueCode = ''
+        this.isPwd = ''
+        this.isSuerPwd = ''
+        if (e.keyCode === 13) {
+          this.checkrevamp()
         }
       },
       // 确认修改 -- 验证短信验证码 || 新密码
@@ -393,11 +444,10 @@
             this.pswSuccess() // 找回密码第三步
           } else if (code === '0') {
             this.isTrueCode = true
-            this.codeMsg = '验证码错误'
+            this.codeMsg = message
           } else {
             this.isSuerPwd = message // 错误信息
           }
-          this.pswSuccess() // 找回密码第三步
         }).catch(error => {
           console.log(error)
         })
@@ -410,10 +460,13 @@
           validCode: this.atucode,
           password: this.suerPwd
         }).then(response => {
-          let message = response.data.message  // 返回提示信息--0101成功、
-          let code = response.data.code // 返回状态码--200成功、400错误
-          if (code === '200' && message === '0101') {
+          let message = response.data.codeMessage  // 返回提示信息--0101成功、
+          let code = response.data.flag // 返回状态码--0失败、1成功
+          if (code === '1') {
             this.pswSuccess() // 找回密码第三步
+          } else if (code === '0') {
+            this.isTrueCode = true
+            this.codeMsg = '验证码错误'
           } else {
             this.isSuerPwd = message // 错误信息
           }
@@ -423,7 +476,25 @@
       },
       // 用户名找回密码
       queryUser () {
-       this.queryEmail()
+        let molPass = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAIL
+        this.axios.post(molPass, {
+          email: this.dataEmail,
+          validCode: this.atucode,
+          password: this.suerPwd
+        }).then(response => {
+          let message = response.data.codeMessage  // 返回提示信息--0101成功、
+          let code = response.data.flag // 返回状态码--0失败、1成功
+          if (code === '1') {
+            this.pswSuccess() // 找回密码第三步
+          } else if (code === '0') {
+            this.isTrueCode = true
+            this.codeMsg = '验证码错误'
+          } else {
+            this.isSuerPwd = message // 错误信息
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       },
       // 找回密码第三步
       pswSuccess () {
@@ -435,8 +506,18 @@
           this.isActive = 'step3'
           this.urlImg = this.navData[2].urlImg
           if (this.isActive === 'step3') {
-            this.$router.replace({name: 'login'}) // 跳转登录页面
+//            window.localStorage.removeItem('dataEmail') // 找回密碼成功清除存儲dataEmail
+            this.states = setInterval(this.goBackLogin, 1000)
           }
+        }
+      },
+      goBackLogin () {
+        if (this.countDown > 1) {
+          this.countDown--
+        } else {
+          clearInterval(this.states)
+          this.$router.replace({name: 'login'}) // 跳转登录页面
+          this.countDown = 3
         }
       }
     }
@@ -564,6 +645,13 @@
             border none
             cursor pointer
            // code
+          .codeLeft
+            position absolute
+            cursor pointer
+            font-size 12px
+            line-height 46px
+            color #999
+            left 276px !important
           .newCode
             position absolute
             cursor pointer

@@ -8,20 +8,20 @@
             <h2>账号登录</h2>
             <div class="control-group-container">
               <div class="control-label">
-                <input type="text" class="verify-user" placeholder="用户名" v-model="verifyUser"  @keyup="enter($event)"/>
+                <input type="text" class="verify-user" placeholder="用户名" v-model="verifyUser"  @keyup="loginEnter($event)"/>
                 <span class="user-error error-msg">{{userVerErr}}</span>
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label">
-                <input type="password" class="verify-psw" placeholder="密码" v-model="verifyPsw" @keyup="enter($event)"/>
+                <input type="password" class="verify-psw" placeholder="密码" v-model="verifyPsw" @keyup="loginEnter($event)"/>
                 <span class="psw-error error-msg">{{pswVerErr}}</span>
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label verify">
                 <div class="verify-outline">
-                  <input type="text" class="verify-code" placeholder="验证码" v-model="verifyCode" @keyup="enter($event)"/>
+                  <input type="text" class="verify-code" placeholder="验证码" v-model="verifyCode" @keyup="loginEnter($event)"/>
                   <span class="verify-error error-msg">{{verCodeErr}}</span>
                 </div>
                 <span class="compar-verify" @click="createCode">{{verCodeVal}}</span>
@@ -75,7 +75,7 @@
         iframeState: false, // 是否跳转中台
         username: '', // 请求成功调中台传用户名
         password: '', // // 请求成功调中台传密码
-        isChecked: true, // 是否记住账户
+        isChecked: false, // 是否记住账户
         jumpApi: this.$api.LOGIN.POST_JUMPLOGIN // 登录接口校验成功跳转中台页面接口
       }
     },
@@ -89,7 +89,7 @@
     },
     methods: {
       // 键盘事件
-      enter (e) {
+      loginEnter (e) {
         this.userVerErr = '' // 执行键盘事件时用户提示信息制空
         this.pswVerErr = '' // 执行键盘事件时密码提示信息制空
         this.verCodeErr = '' // 执行键盘事件时验证码||用户名和密码错误信息制空
@@ -153,9 +153,9 @@
         this.verCode = ''
         // 设置随机字符
         let random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-        // 循环codeLength 设置的4就是循环4次
+        // 循环codeLength 循环4次
         for (let i = 0; i < codeLength; i++) {
-          // 设置随机数范围,这设置为0 ~ 36
+          // 设置随机数范围设置为0 ~ 36
           let index = Math.floor(Math.random() * 36)
           // 字符串拼接 将每次随机的字符 进行拼接
           this.verCode += random[index]
@@ -188,9 +188,9 @@
         }
         // 校验验证码
 //        let oValue = document.querySelector('.verify-code').value.toUpperCase() // 获取验证码值
-        if (this.verifyCode === '') {
+        if (this.verifyCode.toUpperCase() === '') {
           this.verCodeErr = '请输入验证码'
-        } else if (this.verifyCode !== this.verCodeVal) {
+        } else if (this.verifyCode.toUpperCase() !== this.verCodeVal) {
           this.verCodeErr = '验证码错误，请重新输入'
         } else {
 //          console.log("verifyUser:" ,self.verifyUser,  "verifyPsw:", self.verifyPsw)
@@ -203,7 +203,6 @@
       },
       // 是否记住账号
       isCheckFn () {
-        console.log('是否记住账号', this.isChecked)
         if (this.isChecked === true) {
           this.isChecked = false
         } else {
@@ -389,7 +388,6 @@
               width 16px
               margin-right 6px
               display inline-block
-              cursor pointer
               border 1px solid #a6a6a6
           .lost-pw
             flex 1
@@ -403,6 +401,7 @@
             border-radius 2px
             font-size 20px
             color #fff
+            cursor pointer
             border none !important
       /* 表单内容块 */
   /* logo-container end */
