@@ -95,7 +95,15 @@
         ]
       }
     },
+    created () {
+      this.scrollTop()
+    },
     methods: {
+      // 页面初始化置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
+      },
       showIn (e, index) {
         if (index === 0) {
           this.listIndex = index
@@ -155,6 +163,7 @@
             width 140px
             height 140px
             text-align center
+            transition .3s
             img
              position absolute
           h3
@@ -173,6 +182,8 @@
             margin 25px 53px 0 53px
             width 36px
             height 30px
+            /* &:hover
+              transition .3s ease all */
             img
               display inline-block
               width 100%

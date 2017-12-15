@@ -435,16 +435,10 @@
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
         if (present.style.display === 'block') {
-          /* for (let i = 0; i < colummns.length; i++) {
-            colummns[i].style.display = "none"
-          } */
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
-          /* for (let i = 0; i < colummns.length; i++) {
-            colummns[i].style.display = "none"
-          } */
           present.style.display = 'block'
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')

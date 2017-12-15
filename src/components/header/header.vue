@@ -1,13 +1,15 @@
 <!-- 顶部导航组件 -->
 <template>
-  <header class="head-contain" id="head-contain" :class="searchBarFixed == true ? 'isFixed' :''">
-    <div class="head-nav">
-      <span class="logo"><router-link :to="navList[0].localHref"><img src="/static/images/logo.png" alt="logo"></router-link></span>
-      <nav class="header-list">
-        <li v-for="(item, index) in navList" :key="index">
-          <router-link :to="item.localHref">{{ item.text }}</router-link>
-        </li>
-      </nav>
+  <header class="head-contain" id="head-contain">
+    <div class="head-nav" :class="searchBarFixed == true ? 'isFixed' :''">
+      <div class="w_960">
+        <span class="logo"><router-link :to="navList[0].localHref"><img src="/static/images/logo.png" alt="logo"></router-link></span>
+        <nav class="header-list">
+          <li v-for="(item, index) in navList" :key="index">
+            <router-link :to="item.localHref">{{ item.text }}</router-link>
+          </li>
+        </nav>
+      </div>
     </div>
   </header>
 </template>
@@ -47,7 +49,7 @@
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         let offsetTop = document.querySelector('#head-contain').offsetTop
         console.log(offsetTop)
-        if (scrollTop > offsetTop) {
+        if (scrollTop > 450) {
           this.searchBarFixed = true
         } else {
           this.searchBarFixed = false
@@ -63,21 +65,24 @@
 <style lang="stylus" scoped>
   .isFixed
     position fixed
-    background-color #Fff
-    top 0
-    z-index 999
-    box-shadow 0px 0px 1px #e6e6e6
-    /*border-bottom 1px solid #e6e6e6*/
-  .head-contain
-    overflow hidden
-    width 100%
     height 70px
     line-height 70px
+    background-color #FFF
+    width 100%
+    top 0
+    z-index 999
+    box-shadow 0 0 11px rgba(0,0,0,.22)
+    transition ease-in .6s
+  .head-contain
+    height 70px
+    line-height 70px
+    position relative
+    overflow hidden
     .head-nav
+      height 70px
       background-color #ffffff
-      width 960px
-      margin  0 auto
-      overflow hidden
+      /*transition-duration .2s
+      transition visibility .2s ease-in-out*/
       .logo
         display block
         float left
