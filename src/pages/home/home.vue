@@ -14,8 +14,8 @@
       <div class="em w_960">
         <img src="/static/images/ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
-          <div class="eml-list" v-for="(item, index) in emJson" :key="item.id" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
-            <span class="emll-img">
+          <div class="eml-list" v-for="(item, index) in emJson" :key="item.id">
+            <span class="emll-img" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
               <img :src="item.urlImg" class="emmlli-pingpai">
             </span>
             <span class="emll-desc">{{ item.text }}</span>
@@ -271,7 +271,15 @@
         ]
       }
     },
+    created () {
+      this.scrollTop()
+    },
     methods: {
+      // 页面初始化置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
+      },
       overFn (e, index) {
         if (index === 0) {
           this.emJson[0].urlImg = '/static/images/brand-w.png'
@@ -332,11 +340,6 @@
             img
               width 95px
               height 36px
-          .emll-line
-            width 32px
-            height 3px
-            display inline-block
-            background-color rgb(223, 74, 67)
         .emll-desc
           font-size 22px
           color $colorTitleColor
@@ -357,6 +360,7 @@
           width 130px
           border-radius 130px
           position relative
+          transition .2s
           background-color rgb(245, 245, 245)
           img
             position: absolute

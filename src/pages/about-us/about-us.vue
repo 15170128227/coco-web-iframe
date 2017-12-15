@@ -76,6 +76,16 @@ team-group:tg
           }
         ]
       }
+    },
+    created () {
+      this.scrollTop()
+    },
+    methods: {
+      // 页面初始化置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
+      },
     }
   }
 </script>

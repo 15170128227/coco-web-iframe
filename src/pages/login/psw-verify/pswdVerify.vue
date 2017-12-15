@@ -644,6 +644,11 @@
             line-height 46px
             border none
             cursor pointer
+            &:hover
+                opacity .9
+            &:active
+              box-shadow: 1px 1px 1px #666
+              transform translateY(1px)  // 点击后按钮沿着Y轴位移，位移量等于阴影变化量
            // code
           .codeLeft
             position absolute

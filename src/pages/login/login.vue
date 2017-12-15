@@ -296,6 +296,9 @@
 
 <style lang="stylus" scoped>
   /* logo-container start */
+  input:focus
+    box-shadow 0 0 5px #09f
+    border 0px !important
   .login-container
     width 100%
     height 680px
@@ -385,6 +388,7 @@
             .checkbox
               float left
               height 16px
+              border-radius 2px
               width 16px
               margin-right 6px
               display inline-block
@@ -403,8 +407,28 @@
             color #fff
             cursor pointer
             border none !important
+            &:hover
+              opacity .9
+            &:active
+              box-shadow: 1px 1px 1px #666
+              transform translateY(1px)  // 点击后按钮沿着Y轴位移，位移量等于阴影变化量
       /* 表单内容块 */
   /* logo-container end */
+  @media screen and (min-width: 768px) and (max-width: 960px){
+    .copyRight {
+      margin-top 60px !important
+    }
+  }
+  @media screen and (min-width: 960px) and (max-width: 1190px){
+    .copyRight {
+      margin-top 80px !important
+    }
+  }
+  @media screen and (min-width: 1200px){
+    .copyRight {
+      margin-top 100px !important
+    }
+  }
   .copyRight
     color #999
     text-align center
