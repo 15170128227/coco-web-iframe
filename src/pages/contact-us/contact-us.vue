@@ -12,14 +12,14 @@
         <img src="/static/images/cbc-title2.png" alt="bc">
       </div>
       <div class="bc-content">
-        <div class="bus-consult" v-for="(item ,index) in business" :key="index">
+        <div class="bus-consult" v-for="(item ,index) in business" :key="index" @mouseover="showIn($event, index)" @mouseout="showOut($event, index)">
           <div class="weChatBg" :style="index === 0 ? channelWeChatBg : supplierWeChatBg"></div>
           <div class="inFo">
             <h3>{{item.cooper}}</h3>
             <p class="consult-qq">QQ: {{item.QQ}}<span></span></p>
             <P class="consult-tel">TEL: {{item.TEL}}<span></span></P>
           </div>
-          <p class="consult-img" @mouseover="showIn($event, index)" @mouseout="showOut($event, index)"><img :src="item.img" :data-index="index" alt="weChat"></p>
+          <p class="consult-img"><img :src="item.img" :data-index="index" alt="weChat"></p>
         </div>
       </div>
     </div>

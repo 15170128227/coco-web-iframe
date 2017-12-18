@@ -85,7 +85,7 @@ team-group:tg
       scrollTop () {
         window.scrollTo(0, 0)
         document.body.scrollTop = 0
-      },
+      }
     }
   }
 </script>
