@@ -47,7 +47,7 @@
     methods: {
       handleScroll () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        let offsetTop = document.querySelector('#head-contain').offsetTop
+//        let offsetTop = document.querySelector('#head-contain').offsetTop
         if (scrollTop > 450) {
           this.searchBarFixed = true
         } else {

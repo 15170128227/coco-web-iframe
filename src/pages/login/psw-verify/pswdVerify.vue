@@ -161,30 +161,37 @@
         if (this.typeVal === '') {
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
+          this.ranCode() // 重新生成验证码
         } else {
           if (typeId === 'phone') {
             let phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
             if (!phoneNum.test(this.typeVal) || !(this.typeVal.length === 11)) {
               this.isError = true
               this.phoneMsg = '手机号格式错误'
+              this.ranCode() // 重新生成验证码
             } else {
               this.isError = false
+              this.allNextStep() // 验证是否全部校验通过
             }
           } else if (typeId === 'email') {
             let email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
             if (!email.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '邮箱格式错误'
+              this.ranCode() // 重新生成验证码
             } else {
               this.isError = false
+              this.allNextStep() // 验证是否全部校验通过
             }
           } else if (typeId === 'username') {
             let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
             if (!uPattern.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '用户名格式错误'
+              this.ranCode() // 重新生成验证码
             } else {
               this.isError = false
+              this.allNextStep() // 验证是否全部校验通过
             }
           }
         }
@@ -193,24 +200,41 @@
         * 2.验证码与随机码匹配则验证成功
         * 3.验证码错误时重新生成新的随机验证码
         * */
-        if (this.code === '') {
+        if (this.code.toUpperCase === '') {
           this.isCode = true
           this.errCodeMsg = '请输入验证码'
+          this.ranCode() // 重新生成验证码
         } else {
+          console.log('this.code.toUpperCase() === this.randomCode', this.code.toUpperCase() === this.randomCode)
           if (this.code.toUpperCase() === this.randomCode) {
-            let typeId = this.$route.query.id
             this.isCode = false
-            if (typeId === 'phone') {
-              this.retMobFn() // 手机号验证找回
-            } else if (typeId === 'email') {
-              this.retEmailFn() // 邮箱验证找回
-            } else if (typeId === 'username') {
-              this.retUserFn() // 用户名验证找回
-            }
+            this.allNextStep() // 验证是否全部校验通过
           } else {
             this.isCode = true
             this.errCodeMsg = '验证码错误'
             this.ranCode() // 重新生成验证码
+          }
+        }
+      },
+      // 第一步验证是否全部通过
+      allNextStep () {
+        const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
+        const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
+        const uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
+        const typeId = this.$route.query.id
+        if (this.typeVal !== '') {
+          if (typeId === 'phone') {
+            if (phoneNum.test(this.typeVal) && this.typeVal.length === 11 && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+              this.retMobFn() // 手机号验证找回
+            }
+          } else if (typeId === 'email' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+            if (email.test(this.typeVal)) {
+              this.retEmailFn() // 邮箱验证找回
+            }
+          } else if (typeId === 'username' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+            if (uPattern.test(this.typeVal)) {
+              this.retUserFn() // 用户名验证找回
+            }
           }
         }
       },
@@ -264,6 +288,7 @@
         if (code === '0') {
           this.isError = true
           this.phoneMsg = message
+          this.ranCode() // 重新生成验证码
         } else if (code === '1') {
           window.localStorage.setItem('dataEmail', response.data.data) // 第一步用戶名找回密碼驗證成功存入信息
           this.validateorStep()
