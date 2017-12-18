@@ -104,8 +104,8 @@
                 textDescBg: '国内首家场景电商解决方案提供商',
                 textDescSm: '开启自媒体/APP内容电商变现时代/让流量更值钱'
               }
-            },
-            {
+            }
+            /* {
               'imgUrl': '/static/images/aboutUs.jpg',
               'content': {
                 imgUrl: '',
@@ -120,7 +120,7 @@
                 textDescBg: '',
                 textDescSm: ''
               }
-            }
+            } */
           ]
         },
         // 标题数据

@@ -3,7 +3,7 @@
   <div v-if="bannerData.isSwiper">
     <swiper :options="swiperOption" ref="mySwiper" class="my-swiper">
       <!-- slides -->
-      <swiper-slide v-for="(item, index) in bannerData.info" :key="item.id">
+      <swiper-slide v-for="(item, index) in bannerData.info" :key="item.id" class="swiper-no-swiping">
         <img :src="item.imgUrl" class="s-img">
         <div class="banner-text" :style="index === 1 || index === 2 ? banStyle : banStyle2">
           <img v-if="item.content.imgUrl" class="b-img" :src="item.content.imgUrl">
@@ -44,9 +44,10 @@
         banStyle: 'background:rgba(0,0,0,0)',
         banStyle2: 'background:rgba(0,0,0,0.3)',
         swiperOption: {
-          autoplay: 5000,
-          initialSlide: 0,
-          loop: true,
+//          autoplay: 5000,
+//          initialSlide: 0,
+//          loop: true,
+          noSwiping: true,
           pagination: '.swiper-pagination',
           onSlideChangeEnd(swiper) {
           }
