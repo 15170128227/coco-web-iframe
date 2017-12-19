@@ -341,7 +341,9 @@
               width 95px
               height 36px
         .emll-desc
-          font-size 22px
+          margin-top 34px
+          display block
+          font-size 20px
           color $colorTitleColor
         .emll-line
           width 32px
@@ -375,9 +377,7 @@
           transition all .3s ease
         .emmll-logo
           background-color $colorTitleColor
-        .emll-desc
-          margin-top 34px
-          display block
+          
     .fd
       overflow hidden
       background-color #f6f6f6

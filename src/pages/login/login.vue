@@ -112,7 +112,7 @@
         let verifyPsw = this.verifyPsw
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
         let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
-        if (verifyUser !== ' ' &&  verifyPsw !== '' && uPattern.test(this.verifyUser) && resPsw.test(this.verifyPsw)){
+        if (verifyUser !== ' ' && verifyPsw !== '' && uPattern.test(this.verifyUser) && resPsw.test(this.verifyPsw)) {
           this.queryLogin(this.verifyUser, this.verifyPsw)
         } else {
           this.createCode() // 重置验证码
