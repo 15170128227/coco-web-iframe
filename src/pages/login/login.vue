@@ -34,9 +34,9 @@
               <label class="auto-login">
                 <span class="checkbox" :class="{active: isChecked}" @click="isCheckFn()"></span>记住账号
               </label>
-              <span @click="isShowClick()">
-              <router-link to="/login/retrievePsw" class="lost-pw">忘记密码？</router-link>
-            </span>
+              <span @click="isShowClick()" class="lost-psw">
+                <router-link to="/login/retrievePsw" class="lost-pw">忘记密码？</router-link>
+              </span>
             </div>
             <div class="control-group-container submit">
               <div class="control-label">
@@ -113,7 +113,7 @@
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
         let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
         if (verifyUser !== ' ' && verifyPsw !== '' && uPattern.test(this.verifyUser) && resPsw.test(this.verifyPsw)) {
-          this.queryLogin(this.verifyUser, this.verifyPsw)
+          this.queryLogin(verifyUser, verifyPsw)
         } else {
           this.createCode() // 重置验证码
         }
@@ -159,12 +159,15 @@
           if (message === '0203') {
             this.verifyErr = true
             this.verCodeErr = '用户名或密码错误'
+            this.createCode() // 重置验证码
           } else if (message === '0207') {
             this.verifyErr = true
             this.verCodeErr = '用户名不存在'
+            this.createCode() // 重置验证码
           } else {
             this.verifyErr = true
             this.verCodeErr = message
+            this.createCode() // 重置验证码
           }
         }
       },
@@ -195,19 +198,15 @@
         if (self.verifyUser === '') {
           this.userErr = true
           this.userVerErr = '请输入用户名'
-          this.createCode() // 重置验证码
         } else if (!uPattern.test(self.verifyUser)) {
           this.userErr = true
           this.verCodeErr = '用户名或密码错误'
-          this.createCode() // 重置验证码
         } else if (uPattern.test(self.verifyUser)) {
           this.userErr = false
           this.userVerErr = ''
-          this.allVerfiy() // 验证是否全部通过
         } else {
           this.userErr = true
           this.userVerErr = '用户信息错误'
-          this.createCode() // 重置验证码
         }
         // 验证密码
 //        let resPsw = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{6,20}$/ //  密码正则，6到20位（字母，数字，下划线，减号）
@@ -215,30 +214,25 @@
         if (self.verifyPsw === '') {
           this.pswErr = true
           this.pswVerErr = '请输入密码'
-          this.createCode() // 重置验证码
         } else if (!resPsw.test(self.verifyPsw)) {
           this.pswErr = true
           this.verCodeErr = '用户名或密码错误'
-          this.createCode() // 重置验证码
         } else if (resPsw.test(self.verifyPsw)) {
           this.pswErr = false
           this.pswVerErr = ''
-          this.allVerfiy() // 验证是否全部通过
         }
         // 校验验证码
         if (this.verifyCode.toUpperCase() === '') {
           this.verifyErr = true
           this.verCodeErr = '请输入验证码'
-          this.createCode() // 重置验证码
         } else if (this.verifyCode.toUpperCase() === this.verCodeVal) {
           this.verifyErr = false
           this.verCodeErr = ''
-          this.allVerfiy() // 验证是否全部通过
         } else {
           this.verifyErr = true
           this.verCodeErr = '验证码错误，请重新输入'
-          this.createCode() // 重置验证码
         }
+        this.allVerfiy() // 验证是否全部通过
       },
       // 是否切换找回密码子组件
       isShowClick () {
@@ -425,9 +419,6 @@
           display flex
           position relative
           margin-top 6px
-          .lost-pw
-            margin-top: -3px
-            display: inline-block
           .auto-login
             text-align left
             vertical-align middle
@@ -449,10 +440,14 @@
               margin-right 6px
               display inline-block
               border 1px solid #a6a6a6
-          .lost-pw
+          .lost-psw
             flex 1
+            display: inline-block
             text-align right
-            color rgb(0, 145, 213)
+            .lost-pw
+              color rgb(0, 145, 213)
+              margin-top -1px
+              display inherit
         .submit
           button
             width 330px
