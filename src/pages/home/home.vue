@@ -14,8 +14,8 @@
       <div class="em w_960">
         <img src="/static/images/ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
-          <div class="eml-list" v-for="(item, index) in emJson" :key="item.id" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
-            <span class="emll-img">
+          <div class="eml-list" v-for="(item, index) in emJson" :key="item.id">
+            <span class="emll-img" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
               <img :src="item.urlImg" class="emmlli-pingpai">
             </span>
             <span class="emll-desc">{{ item.text }}</span>
@@ -25,7 +25,7 @@
       </div>
       <!-- 专注成长 -->
       <div class="fd">
-        <div class="fd-width">
+        <div class="w_960">
           <img src="/static/images/focus-director.png" alt="img" class="titileImg">
           <ul class="fd-list">
             <li class="fdl-img" v-for="item in fdJson" :key="item.id">
@@ -35,28 +35,14 @@
                 <span class="fdc-desc">{{ item.text }}</span>
               </div>
             </li>
-            <!-- <li class="fdl-img">
-                          <img src="/static/images/fd-list2.png" alt="fd">
-                           <div class="fd-content">
-                             <span class="fdc-title">新营销运营支持</span>
-                              <span class="fdc-desc">去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略</span>
-                          </div>
-                        </li>
-                         <li class="fdl-img">
-                          <img src="/static/images/fd-list3.png" alt="fd">
-                           <div class="fd-content">
-                             <span class="fdc-title">新收益高额佣金</span>
-                              <span class="fdc-desc">零对接成本，内容化运营，高转化率，持续性营收、其他增值服务</span>
-                          </div>
-                        </li> -->
           </ul>
         </div>
       </div>
       <!-- 零成本接入 -->
-      <div class="ca">
+      <div class="ca w_960">
         <img src="/static/images/cost-access.png" alt="img" class="titileImg">
         <ul class="ca-list">
-          <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut()">
+          <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut(index)">
             <img :src="item.urlImg" alt="fd">
             <ul class="call-desc" :class="{active: index === listIndex}">
               <li class="calld-content" v-for="itemL in item.text" :key="itemL.id">{{ itemL.desc }}</li>
@@ -73,7 +59,7 @@
         </div>
       </div>
       <!-- 合作流程 -->
-      <div class="cp">
+      <div class="cp w_960">
         <img src="/static/images/cooperation-press.png" alt="img" class="titileImg">
         <ul class="cp-list">
           <li v-for="item in cpJson" :key="item.id" class="cpl-list">
@@ -118,23 +104,23 @@
                 textDescBg: '国内首家场景电商解决方案提供商',
                 textDescSm: '开启自媒体/APP内容电商变现时代/让流量更值钱'
               }
-            },
-            {
+            }
+            /* {
               'imgUrl': '/static/images/aboutUs.jpg',
               'content': {
-                imgUrl: '/static/images/logoWhite.png',
-                textDescBg: 'text2',
-                textDescSm: 'text2'
+                imgUrl: '',
+                textDescBg: '',
+                textDescSm: ''
               }
             },
             {
               'imgUrl': '/static/images/contactUs.jpg',
               'content': {
-                imgUrl: '/static/images/logoWhite.png',
-                textDescBg: 'text3',
-                textDescSm: 'text3'
+                imgUrl: '',
+                textDescBg: '',
+                textDescSm: ''
               }
-            }
+            } */
           ]
         },
         // 标题数据
@@ -151,7 +137,7 @@
             text: '品牌资源'
           },
           {
-            urlImg: '/static/images/logoWhite.png',
+            urlImg: '/static/images/ecology_logo.png',
             text: '可可奇货'
           },
           {
@@ -181,13 +167,13 @@
             urlImg: '/static/images/ca-list1.png',
             title: '商城集成系统',
             text: [{
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 内容式H5商城'
               },
               {
-                desc: '+ 写手对商品趣味内容包装、无损用户体验损用户体验'
+                desc: '+ 自定义适合主体风格编辑'
               },
               {
-                desc: '+ 定制化联合会营销方案'
+                desc: '+ 详细后台数据分析'
               }
             ]
           },
@@ -198,10 +184,10 @@
                 desc: '+ 专业场景及用户行为分析'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 写手对商品趣味内容包装、无损用户体验'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 定制化联合会营销方案'
               }
             ]
           },
@@ -209,13 +195,13 @@
             urlImg: '/static/images/ca-list3.png',
             title: '供应链解决方案',
             text: [{
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 专业买手团队支持'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 奇货非常规商品物流、ERP专业系统支持'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 部分全网独家品牌资源'
               }
             ]
           },
@@ -223,13 +209,13 @@
             urlImg: '/static/images/ca-list4.png',
             title: '客户服务',
             text: [{
-                desc: '+ 专业场景及用户行为分析'
+                desc: ''
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 专业售后客服团队'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: ''
               }
             ]
           },
@@ -237,13 +223,13 @@
             urlImg: '/static/images/ca-list5.png',
             title: '数据AI系统',
             text: [{
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ AI数据预测，适应场景奇货'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: '+ 用户立体分析、更清晰了解消费喜好'
               },
               {
-                desc: '+ 专业场景及用户行为分析'
+                desc: ''
               }
             ]
           }
@@ -255,9 +241,14 @@
             text: '重内容轻交易结构 、迎合用户浏览习惯、延长用户停留时间 、提高用户粘性'
           },
           {
-            urlImg: '/static/images/ueImg.png',
+            urlImg: '/static/images/proImg.jpg',
             title: '· 产品介绍',
             text: '重内容轻交易结构 、迎合用户浏览'
+          },
+          {
+            urlImg: '/static/images/guideImg.jpg',
+            title: '· KOL式导购',
+            text: '让商品具备场景、通过软性内容包装、高效激发用户购买欲望'
           }
         ],
         // 合作流程数据
@@ -280,11 +271,44 @@
         ]
       }
     },
+    created () {
+      this.scrollTop()
+    },
     methods: {
+      // 页面初始化置顶
+      scrollTop () {
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
+      },
       overFn (e, index) {
-//        let img = e.target.querySelector('.emll-img')
+        if (index === 0) {
+          this.emJson[0].urlImg = '/static/images/brand-w.png'
+          document.querySelectorAll('.emll-img')[0].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[0].classList.add('lineActive')
+        } else if (index === 1) {
+          this.emJson[1].urlImg = '/static/images/logoWhite.png'
+          document.querySelectorAll('.emll-img')[1].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[1].classList.add('lineActive')
+        } else if (index === 2) {
+          this.emJson[2].urlImg = '/static/images/media-w.png'
+          document.querySelectorAll('.emll-img')[2].classList.add('imgActive')
+          document.querySelectorAll('.emll-line')[2].classList.add('lineActive')
+        }
       },
       outFn (e, index) {
+        if (index === 0) {
+          this.emJson[0].urlImg = '/static/images/brand-r.png'
+          document.querySelectorAll('.emll-img')[0].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[0].classList.remove('lineActive')
+        } else if (index === 1) {
+          this.emJson[1].urlImg = '/static/images/ecology_logo.png'
+          document.querySelectorAll('.emll-img')[1].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[1].classList.remove('lineActive')
+        } else if (index === 2) {
+          this.emJson[2].urlImg = '/static/images/media-r.png'
+          document.querySelectorAll('.emll-img')[2].classList.remove('imgActive')
+          document.querySelectorAll('.emll-line')[2].classList.remove('lineActive')
+        }
       },
       showIn(index) {
         this.listIndex = index
@@ -310,46 +334,50 @@
         width 320px
         float left
         margin-top 88px
-        cursor pointer
         &:nth-child(2)
           .emll-img
-             background-color $colorTitleColor
+             // background-color $colorTitleColor
             img
               width 95px
               height 36px
-          .emll-line
-            width 32px
-            height 3px
-            display inline-block
-            background-color rgb(223, 74, 67)
         .emll-desc
-          font-size 22px
+          margin-top 34px
+          display block
+          font-size 20px
           color $colorTitleColor
         .emll-line
           width 32px
           height 3px
           display inline-block
           background-color rgb(245, 245, 245)
+        .lineActive
+          width 32px
+          height 3px
+          display inline-block
+          background-color rgb(223, 74, 67)
         .emll-img
           display block
-          margin: 0 auto;
+          margin: 0 auto
           height 130px
           width 130px
           border-radius 130px
           position relative
+          transition .2s
           background-color rgb(245, 245, 245)
           img
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
+            position: absolute
+            top: 0
+            bottom: 0
+            left: 0
+            right: 0
+            margin: auto
+        .imgActive
+          margin: 0 auto
+          background-color $colorTitleColor
+          transition all .3s ease
         .emmll-logo
           background-color $colorTitleColor
-        .emll-desc
-          margin-top 34px
-          display block
+          
     .fd
       overflow hidden
       background-color #f6f6f6
@@ -389,9 +417,6 @@
     // 零成本接入
     .ca
       padding 97px 0 127px 0
-      overflow hidden
-      width 960px
-      margin 0 auto
       .titileImg
         margin-bottom 63px
       .ca-list
@@ -440,13 +465,12 @@
         margin 0 auto
         width 1060px
         padding 98px 0
+        font-family Microsoft YaHei
         .titileImg
           margin-bottom 64px
     // 合作流程
     .cp
-      width $width
       padding 100px 0
-      margin 0 auto
       .titileImg
         margin-bottom 66px
       .cp-list

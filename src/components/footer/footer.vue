@@ -29,7 +29,7 @@
         </div>
         <div class="coco-service rightInfo">
           客服在线时间：
-          <p>{{cocoService}}</p>
+          <p class="oTime">{{cocoService}}</p>
         </div>
       </div>
     </div>
@@ -76,11 +76,11 @@
     /*float left*/
     .footer-container
       display flex
-      padding 80px 0 70px 0
+      padding 83px 0 60px 0
       /* footer-left start */
       .footer-left
         color $clr000
-        flex 2
+        flex 3
         .footer-cocoLogo
           width 96px
           height 36px
@@ -98,7 +98,9 @@
             span
               color $clr2C2F3C
           a
+            font-weight normal
             color $clrfff
+            font-size 14px
             opacity 1
             &:hover
               opacity 0.8
@@ -106,7 +108,7 @@
             padding 0 27px
             color $clrfff
         .footer-copyRight
-          margin-bottom 22px
+          margin-bottom 16px
         .footerInfo
           color $clrfff
           text-align(left)
@@ -114,18 +116,20 @@
       /* footer-right start */
       .footer-right
         flex 1
-        padding-top 132px
+        padding-top 108px
         .rightInfo
           color #fff
           font-size $fontSize16
           text-align(left)
+          .oTime
+            padding-top 10px
         .coco-phone
-          margin-bottom 16px
+          margin-bottom 6px
           p
             font-size $fontSizeXL
         .coco-service
           font-style normal
-          font-size $fontSizeSmall
+          font-size $fontSizeNormal
   /* footer-right start */
   /* footer end */
 </style>

@@ -1,16 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>自动固定顶部的悬浮菜单栏代码</title>
+  <meta http-equiv="content-type" content="text/html;charset=gb2312">
+  <style type="text/css">
+    *{margin:0;padding:0;}
+    ul,li{list-style:none;}
+    #content{width:600px;margin:0 auto;border:1px solid #f00;}
+    ul li.item{width:400px;text-align:center;margin:20px 100px;background:#00f;color:#fff;font-size:14px;font-weight:bold;height:100px;line-height:100px;}
+    #float_banner{position:absolute;top:0;left:50%;width:900px;margin-left:-450px;height:30px;line-height:30px;text-align:center;background:#000;color:#fff;font-size:14px;font-weight:bold;z-index:2;}
+  </style>
 </head>
 <body>
-  <div>
-    <form action="http://192.168.1.48:8007/tsh-mg/login" method="post">
-      <p>First name: <input type="text" name="username" /></p>
-      <p>Last name: <input type="password" name="password" /></p>
-      <input type="submit" value="鐧诲綍" />
-    </form>
-  </div>
+<div id="float_banner">这里是顶部的横幅，随着页面滚动而浮动</div>
+<ul id="content">
+  <li class="item">第一块内容</li>
+  <li class="item">第二块内容</li>
+  <li class="item">第三块内容</li>
+  <li class="item">第四块内容</li>
+  <li class="item">第五块内容</li>
+  <li class="item">第六块内容</li>
+  <li class="item">第七块内容</li>
+  <li class="item">第八块内容</li>
+  <li class="item">第九块内容</li>
+  <li class="item">第十块内容</li>
+</ul>
+<script language="javascript">
+  var speed = 100;
+  var scrollTop = null;
+  var hold = 0;
+  var float_banner;
+  var pos = null;
+  var timer = null;
+  var moveHeight = null;
+  float_banner = document.getElementById("float_banner");
+  window.onscroll=scroll_ad;
+  function scroll_ad(){
+    scrollTop = document.documentElement.scrollTop+document.body.scrollTop;
+    pos = scrollTop - float_banner.offsetTop;
+    pos = pos/10
+    moveHeight = pos>0?Math.ceil(pos):Math.floor(pos);
+    if(moveHeight!=0){
+      float_banner.style.top = float_banner.offsetTop+moveHeight+"px";
+      setTimeout(scroll_ad,speed);
+    }
+//alert(scrollTop);
+  }
+</script>
 </body>
 </html>

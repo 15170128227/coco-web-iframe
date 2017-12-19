@@ -34,7 +34,8 @@
       return {
         swiperOption: {
           // swiper options 所有的配置同swiper官方api配置
-          autoplay: 5000,
+          autoplay: 4000,
+          loop: true, // 轮询
           // direction: 'vertical',
           grabCursor: true,
           setWrapperSize: true,
