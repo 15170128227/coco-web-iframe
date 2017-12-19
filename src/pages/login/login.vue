@@ -369,14 +369,14 @@
         /* 错误信息提示 */
         h2
           font-size 26px
-          margin-bottom 10px
+          margin-bottom 30px
           color rgb(46, 46, 46)
           text-align left
         /*.control-group-container:nth-child(4) .control-label input*/
           /*width 202px*/
         .control-group-container
-          margin-top 26px
           width 330px
+          height 72px
           text-align left
           .verify
             display flex
@@ -418,8 +418,7 @@
               font-style italic
         .control-group
           display flex
-          position relative
-          margin-top 6px
+          margin-bottom 20px
           .auto-login
             text-align left
             vertical-align middle
