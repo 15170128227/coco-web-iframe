@@ -243,7 +243,7 @@
           {
             urlImg: '/static/images/proImg.jpg',
             title: '· 产品介绍',
-            text: '重内容轻交易结构 、迎合用户浏览'
+            text: '一句话趣味内容、精准激发用户主动浏览兴趣'
           },
           {
             urlImg: '/static/images/guideImg.jpg',
@@ -377,7 +377,7 @@
           transition all .3s ease
         .emmll-logo
           background-color $colorTitleColor
-          
+
     .fd
       overflow hidden
       background-color #f6f6f6
