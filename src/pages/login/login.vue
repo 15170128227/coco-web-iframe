@@ -216,6 +216,7 @@
           this.pswVerErr = '请输入密码'
         } else if (!resPsw.test(self.verifyPsw)) {
           this.pswErr = true
+          this.pswVerErr = '密码不少于6位数'
           this.verCodeErr = '用户名或密码错误'
         } else if (resPsw.test(self.verifyPsw)) {
           this.pswErr = false

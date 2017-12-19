@@ -7,14 +7,14 @@
             <a :data-id="'1'" href="javascript:void(0)" class="arrow-down" @click="isOneNav($event)">
               API
             </a>
-            <ul class="two-column" v-if="columnType1" :style="'display:block'">
-              <li class="" v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
-                <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)">
+            <ul class="two-column apiColumn" v-if="columnType1" :style="'display:block'">
+              <li v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
+                <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" :data-index="index" class="arrow-down">
                   {{item.title}}
                 </a>
-                <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="index === '0' ? 'display:block' : 'display:' + display">
-                  <li class="" v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
-                    <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"> {{subNav.subNavTitle}} </router-link>
+                <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="index === 0 ? 'display:block' : 'display:' + display" :data-index="index">
+                  <li v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
+                    <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"  :data-tit="subNav.subNavTitle" :data-index="index"> {{subNav.subNavTitle}} </router-link>
                   </li>
                 </ul>
               </li>
@@ -23,7 +23,7 @@
         </ul>
         <ul class="one-column">
           <li class="one-columns">
-            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-up" @click="isOneNav($event)">
+            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event)">
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
@@ -62,12 +62,12 @@
         columnType: '', // 二级栏目
         subNav: '', // 三级栏目
         content: '', // 文档中心内容
-        currentH5Id: '48', // 初始化文档id
-        currentTit: 'API入驻指南', // 当前默认title
+        currentH5Id: window.sessionStorage.getItem('curId') ? window.sessionStorage.getItem('curId') : '48', // 初始化文档id
+        currentTit: window.sessionStorage.getItem('curTit') ? window.sessionStorage.getItem('curTit') : 'API入驻指南', // 当前默认title
         showOneNav: false, // 初始化一级导航是否需要隐藏导航
         showTwoNav: true, // 始化二级导航是否需要隐藏导航
         isShow: false,
-        display: 'none', // 初始化
+        display: 'block', // 初始化
         iconClass: 'down',
         docList: [
           // API文档模拟数据
@@ -363,8 +363,6 @@
       this.queryDocH5list(this.currentH5Id)
       this.queryList()
 //      document.querySelectorAll('.three-column')[0].style.display = 'block'
-      console.log(document.querySelector('.three-columns-0 a'))
-      document.querySelector('.three-columns-0 a').classList.add('router-link-exact-active')
     },
     methods: {
       iconClick (e) {
@@ -407,6 +405,9 @@
         if (e !== null) {
           this.currentTit = e.target.innerHTML
           this.currentH5Id = e.target.getAttribute('data-id')
+          this.currentTit = e.target.getAttribute('data-tit')
+          window.sessionStorage.setItem('curId', this.currentH5Id)
+          window.sessionStorage.setItem('curTit', this.currentTit)
           this.queryDocH5list(this.currentH5Id)
         } else {
           this.queryDocH5list(this.currentH5Id)
@@ -423,56 +424,47 @@
       isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
-        const colummn2 = document.querySelectorAll('.two-column')
+//        const colummn2 = document.querySelectorAll('.two-column')
         if (present.style.display === 'block') {
-          for (let i = 0; i < colummn2.length; i++) {
+         /* for (let i = 0; i < colummn2.length; i++) {
             colummn2[i].style.display = 'none'
-          }
+          } */
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
-          for (let i = 0; i < colummn2.length; i++) {
+          /* for (let i = 0; i < colummn2.length; i++) {
             colummn2[i].style.display = 'none'
-          }
+          } */
           present.style.display = 'block'
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
         }
-        /* if (present.style.display === 'block') {
-          present.style.display = 'none'
-          e.target.classList.remove('arrow-down')
-          e.target.classList.add('arrow-up')
-        } else {
-          present.style.display = 'block'
-          e.target.classList.remove('arrow-up')
-          e.target.classList.add('arrow-down')
-        } */
       },
       // 二级级导航是否展示 || 隐藏导航
       isTwoNav (e, index) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
-        const colummns = document.querySelectorAll('.three-column')
+//        const colummns = document.querySelectorAll('.three-column')
         if (present.style.display === 'block') {
-//          present.style.display = 'none'
-          target.children[0].classList.remove('activeLi')
-          for (let i = 0; i < colummns.length; i++) {
+          present.style.display = 'none'
+//          target.children[0].classList.remove('activeLi')
+          /* for (let i = 0; i < colummns.length; i++) {
             colummns[i].style.display = 'none'
           }
-          present.style.display = 'none'
+          present.style.display = 'none' */
          // 添加三角图标
-         /* e.target.classList.remove('arrow-down')
-          e.target.classList.add('arrow-up') */
+          e.target.classList.remove('arrow-down')
+          e.target.classList.add('arrow-up')
         } else {
-           for (let i = 0; i < colummns.length; i++) {
+           /* for (let i = 0; i < colummns.length; i++) {
              colummns[i].style.display = 'none'
-           }
+           } */
           present.style.display = 'block'
-          target.children[0].classList.add('activeLi')
+//          target.children[0].classList.add('activeLi')
           // 添加三角图标
-          /* e.target.classList.remove('arrow-up')
-          e.target.classList.add('arrow-down') */
+          e.target.classList.remove('arrow-up')
+          e.target.classList.add('arrow-down')
         }
         /* if (this.showTwoNav) {
             e.target.parentNode.children[1].classList.add('active')
@@ -489,6 +481,8 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import '../../assets/css/stylusFn.styl'
   /* doc-container start */
+  /* .two-column > li:first-child ul:nth-child(2)
+    display block */
   .doc-container
     background-color $defaultBg
     overflow hidden
@@ -532,7 +526,6 @@
               padding 20px
           li
             a
-              /*padding 12px 0*/
               font-weight bold
               font-size 16px
               display block
@@ -540,13 +533,11 @@
               background-color #555
               custor: pointer
               animation: bounce-in .5s
-              li:first-child three-column
-                display block !important
               li
                 padding-left 20px
                 transition: height 0.3s ease-in-out
                 // transform: rotate(360deg)
-                .activeLi
+                a:hover
                   color white
                 a
                   font-size 14px
@@ -562,8 +553,6 @@
                   width 3px
                   height 20px
                   background  $clrDF4A43
-            /* .active */
-              /* display none */
             .three-column
               /* background-color #777 */
               .router-link-exact-active

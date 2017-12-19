@@ -30,7 +30,7 @@
             <p class="c-code control">
               <span class="c-type">验证码</span>
               <input v-model="code" name="code" class="input" type="password" @input="codeInput" @keyup="nextEnter($event)">
-              <span  class="lc-code" @click="codeClick">{{ randomCode }}</span>
+              <span  class="lc-code" @click.stop="codeClick">{{ randomCode }}</span>
               <span class="is-error" v-show="isCode">{{ errCodeMsg }}</span>
             </p>
             <p class="control">
@@ -42,7 +42,7 @@
           <div class="two-content">
             <p class="control">
               <span class="c-type">{{ stepTwoType }}验证码</span>
-              <span :class="{codeLeft: isLeft}" v-if="isLeft" @click="reNewCode">重新获取</span>
+              <span :class="{codeLeft: isLeft}" v-if="isLeft" @click.stop="reNewCode">重新获取</span>
               <span class="newCode" v-else>重新获取<span class="countNum">{{ countNum }}</span></span>
               <input name="atucode" :style="{'padding-left': step2Pf}" v-model="atucode" class="input" type="password" @keyup="conEnter($event)">
               <span class="is-error" v-show="isTrueCode">{{ codeMsg }}</span>
@@ -107,8 +107,8 @@
         showPwd: false, // 密码是否显示||隐藏
         showPwd2: false, // 密码是否显示||隐藏
         newSuerMsg: '',
-        countNum: 59, // 初始化倒计时
-        timer: null, // 定时器是否关闭
+        countNum: '', // 初始化倒计时
+        timer: 0, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', //
         typeVal: '',
@@ -133,10 +133,10 @@
       this.ranCode()
     },
     methods: {
-      setTimeout () {
+      /* setTimeout () {
         if (this.countNum === 0) {
-          this.timer = null
-          clearInterval(this.timer)
+          let timer = 0
+          window.clearInterval(timer)
           this.isLeft = true
         } else {
           this.isLeft = false
@@ -146,6 +146,19 @@
       setInterval () {
         setInterval(() => {
           this.setTimeout()
+        }, 1000)
+      }, */
+       countNum60 () {
+        let time = 0
+        this.countNum = 60
+        time = setInterval(() => {
+          this.countNum --
+          this.isLeft = false
+          if (this.countNum === 0) {
+            window.clearInterval(time)
+            this.countNum = null
+            this.isLeft = true
+          }
         }, 1000)
       },
       // 初始化找回密码类型
@@ -318,7 +331,7 @@
         this.isCode = false
         self.isActive = 'step2'
         self.urlImg = self.navData[1].urlImg
-        this.setInterval()
+        this.countNum60()
       },
       // 随机验证码函数
       ranCode () {
@@ -360,14 +373,9 @@
         } else if (this.pswId === 'username') {
             this.retUserFnTwo()
         }
-        if (this.countNum === 0) {
-          this.timer = null
-          clearInterval(this.timer)
-          this.countNum = 59
-          this.timer = setInterval(() => {
-            this.setTimeout()
-          }, 1000)
-        }
+        let time = 0
+        window.clearInterval(time)
+        this.countNum60()
       },
       /* countDownSixty () {
         if (this.countNum === 0) {
@@ -420,19 +428,14 @@
           this.isPwd = true
           this.newMsg = '请输入新密码'
         } else {
-          if (!reg6.test(this.pwd)) {
+          // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
+          // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
+          // 特殊字符的范围为 !#$%^&*
+          if (!reg.test(this.pwd)) {
             this.isPwd = true
-            this.newMsg = '密码不能少于6位数'
+            this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
           } else {
-            // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
-            // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
-            // 特殊字符的范围为 !#$%^&*
-            if (!reg.test(this.pwd)) {
-              this.isPwd = true
-              this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
-            } else {
-              this.isPwd = false
-            }
+            this.isPwd = false
           }
         }
         if (this.suerPwd === '') {
@@ -441,6 +444,7 @@
         } else {
           if (this.pwd.length > 0 && this.suerPwd.length > 0 && this.pwd !== this.suerPwd) {
             this.isSuerPwd = true
+            this.isPwd = false
             this.newSuerMsg = '两次输入密码不一致'
           } else {
             this.isSuerPwd = false
