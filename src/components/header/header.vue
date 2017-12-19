@@ -73,11 +73,13 @@
     box-shadow 0 0 11px rgba(0,0,0,.22)
     transition ease-in .6s
   .head-contain
+    width 100%
     height 70px
     line-height 70px
     position relative
-    overflow hidden
     .head-nav
+      width 100%
+      min-width 960px
       height 70px
       background-color #ffffff
       /*transition-duration .2s

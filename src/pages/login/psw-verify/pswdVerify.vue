@@ -107,11 +107,11 @@
         showPwd: false, // 密码是否显示||隐藏
         showPwd2: false, // 密码是否显示||隐藏
         newSuerMsg: '',
-        countNum: '', // 初始化倒计时
+        countNum: 8, // 初始化倒计时
         timer: 0, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', //
-        typeVal: '',
+        typeVal: '', // 输入手机号的手机号的值
         isActive: 'step1', // 初始化找回密码步骤
         urlImg: '/static/images/pasVer_one.png', // 找回密码第一步nav背景初始化
         // 找回密码nav步骤背景图
@@ -125,7 +125,8 @@
           {
             urlImg: '/static/images/perVer_three.png'
           }
-        ]
+        ],
+        timeState: null
       }
     },
     created () {
@@ -148,15 +149,13 @@
           this.setTimeout()
         }, 1000)
       }, */
-       countNum60 () {
-        let time = 0
-        this.countNum = 60
-        time = setInterval(() => {
-          this.countNum --
+      countNum60 () {
+        this.countNum = 5
+        this.timeState = setInterval(() => {
+          this.countNum--
           this.isLeft = false
-          if (this.countNum === 0) {
-            window.clearInterval(time)
-            this.countNum = null
+          if (this.countNum <= 0) {
+            clearInterval(this.timeState)
             this.isLeft = true
           }
         }, 1000)
@@ -215,6 +214,7 @@
               this.isError = false
             }
           }
+          this.countNum60()
         }
         /*
         * 1.验证码为空时请输入验证码
@@ -331,7 +331,6 @@
         this.isCode = false
         self.isActive = 'step2'
         self.urlImg = self.navData[1].urlImg
-        this.countNum60()
       },
       // 随机验证码函数
       ranCode () {
@@ -373,8 +372,7 @@
         } else if (this.pswId === 'username') {
             this.retUserFnTwo()
         }
-        let time = 0
-        window.clearInterval(time)
+        clearInterval(this.timeState)
         this.countNum60()
       },
       /* countDownSixty () {
@@ -431,7 +429,7 @@
           // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
           // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
           // 特殊字符的范围为 !#$%^&*
-          if (!reg.test(this.pwd)) {
+          if (!reg.test(this.pwd.trim())) {
             this.isPwd = true
             this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
           } else {

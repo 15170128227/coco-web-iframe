@@ -323,10 +323,14 @@
 <style lang="stylus" scoped>
   $colorTitleColor = rgb(233,74,67)
   $width = 960px
-  .home .content
+  .home 
     width 100%
-    margin 0 auto
-    text-align center
+    min-width 960px
+    .content
+      width 100%
+      min-width 960px
+      margin 0 auto
+      text-align center
     .em
       padding 90px 0 102px 0
       overflow hidden
