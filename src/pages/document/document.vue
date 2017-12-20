@@ -405,7 +405,7 @@
       // 当前选择切换的文档栏目类型
       docH5ListType (e) {
         if (e !== null) {
-          this.currentTit = e.target.innerHTML
+          // this.currentTit = e.target.innerHTML
           this.currentH5Id = e.target.getAttribute('data-id')
           this.currentTit = e.target.getAttribute('data-tit')
           let list = document.querySelectorAll('.link-a')
@@ -425,6 +425,7 @@
         let url = this.$api.DOCUMENT.POST_API_APIDETAIL
         this.axios.get(`${url}?id=${currentH5Id}`).then(({data: {data}}) => {
           this.content = data.content
+          this.currentTit = data.title
         })
       },
       // 一级导航是否展示 || 隐藏导航
@@ -458,23 +459,34 @@
       // 二级级导航是否展示 || 隐藏导航
       isTwoNav (e, index) {
         let target = e.target.parentNode
-        const present = target.querySelector('.three-column')
+        let present = target.querySelector('.three-column')
         let list = document.querySelectorAll('.three-column')
         list.forEach(o => {
           if (o !== present) {
-            o.classList.remove('arrow-down')
+            o.parentNode.querySelector('a').classList.remove('arrow-down')
+            o.parentNode.querySelector('a').classList.add('arrow-up')
             o.style.display = 'none'
+          } else {
+            if (o.style.display === 'block') {
+              o.parentNode.querySelector('a').classList.remove('arrow-down')
+              o.parentNode.querySelector('a').classList.add('arrow-up')
+              o.style.display = 'none'
+            } else {
+              o.parentNode.querySelector('a').classList.remove('arrow-up')
+              o.parentNode.querySelector('a').classList.add('arrow-down')
+              o.style.display = 'block'
+            }
           }
         })
-        if (present.style.display === 'block') {
-          present.style.display = 'none'
-          e.target.classList.remove('arrow-down')
-          e.target.classList.add('arrow-up')
-        } else {
-          present.style.display = 'block'
-          e.target.classList.remove('arrow-up')
-          e.target.classList.add('arrow-down')
-        }
+        // if (present.style.display === 'block') {
+        //   present.style.display = 'none'
+        //   e.target.classList.remove('arrow-down')
+        //   e.target.classList.add('arrow-up')
+        // } else {
+        //   present.style.display = 'block'
+        //   e.target.classList.remove('arrow-up')
+        //   e.target.classList.add('arrow-down')
+        // }
       }
     }
   }

@@ -44,7 +44,7 @@
         copyRight: 'CopyRight 深圳市场景零售科技有限公司', // 版权所有
         records: '粤ICP备17073633号-1', // 备案号
         cocoAddr: '深圳市南山区科苑路科兴科学园A4栋806', // coco地址
-        cocoMail: 'hejinfeng@cocosurprise.com', // coco邮箱
+        cocoMail: 'fuling@cocosurprise.com', // coco邮箱
         cocoPhone: '0755-2692-0691', // coco联系方式
         cocoService: '10:00-19:00.工作日', // 客服服务时间
         cocoNav: [

@@ -167,6 +167,8 @@
       },
       // 验证输入手机号 || 用户名 || 邮箱是否跳转下一步
       nextStep () {
+        this.isError = ''
+        this.isCode = ''
         let typeId = this.$route.query.id
         if (this.typeVal.trim() === '') {
           this.isError = true
@@ -326,9 +328,9 @@
         // 设置长度4
         const codeLength = 4
         // 设置随机字符
-        const random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', ' R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        const random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         for (let i = 0; i < codeLength; i++) {
-          var index = Math.floor(Math.random() * 36)
+          let index = Math.floor(Math.random() * (random.length - 1))
           code += random[index]  // 字符串拼接 将每次随机的字符 进行拼接
         }
         this.randomCode = code // 将拼接好的字符串赋值给展示的Value

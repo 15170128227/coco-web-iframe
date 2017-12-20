@@ -13,19 +13,19 @@
       return {
         retrievePasM: [
           {
-            'title': '通过手机找回密码',
+            'title': '手机号找回密码',
             'value': 'phone',
             'type': '手机号',
             'id': '1'
           },
           {
-            'title': '通过邮箱找回密码',
+            'title': '邮箱找回密码',
             'value': 'email',
             'type': '邮箱',
             'id': '2'
           },
           {
-            'title': '通过用户名找回密码',
+            'title': '用户名找回密码',
             'value': 'username',
             'type': '用户名',
             'id': '3'
@@ -39,6 +39,9 @@
 <style lang="stylus" rel="stylesheet/stylus">
   /* retrieve-psw-outer start */
   .retrieve-psw-outer
+    position relative
+    top 50%
+    transform translateY(-65%)
     padding 20px 0
     h2
       padding-bottom 8px

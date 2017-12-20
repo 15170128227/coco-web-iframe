@@ -188,7 +188,6 @@
       },
       // 登录验证
       validateCode () {
-        this.createCode()
         const self = this // 重置
         // 用户名验证
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
@@ -198,6 +197,7 @@
           this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.userVerErr = '请输入用户名'
+          this.createCode() // 创建
           return
         } else if (!uPattern.test(self.verifyUser)) {
           this.userErr = true
@@ -239,6 +239,7 @@
         //   return
         // }
         // 验证码验证
+        console.log('this.verifyCode.toUpperCase().trim()', this.verifyCode.toUpperCase().trim(), this.verCodeVal.toUpperCase().trim())
         if (this.verifyCode.toUpperCase().trim() === '') {
           this.userErr = false
           this.pswErr = false
@@ -246,7 +247,7 @@
           this.verCodeErr = '请输入验证码'
           this.disabled.submit = false // 登录按钮启用
           return
-        } else if (this.verifyCode.toUpperCase().trim() === this.verCodeVal) {
+        } else if (this.verifyCode.toUpperCase().trim() === this.verCodeVal.toUpperCase().trim()) {
           this.verifyErr = false
           this.verCodeErr = ''
         } else {
