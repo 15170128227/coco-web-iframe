@@ -111,7 +111,7 @@
         timer: 0, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', //
-        typeVal: '13077841305', // 输入手机号的手机号的值
+        typeVal: '', // 输入手机号的手机号的值
         isActive: 'step1', // 初始化找回密码步骤
         urlImg: '/static/images/pasVer_one.png', // 找回密码第一步nav背景初始化
         // 找回密码nav步骤背景图
@@ -139,7 +139,7 @@
     },
     methods: {
       countNum60 () {
-        this.countNum = 15
+        this.countNum = 60
         this.timeState = setInterval(() => {
           this.countNum--
           this.isLeft = false
