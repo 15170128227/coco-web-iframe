@@ -424,18 +424,11 @@
       isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
-//        const colummn2 = document.querySelectorAll('.two-column')
         if (present.style.display === 'block') {
-         /* for (let i = 0; i < colummn2.length; i++) {
-            colummn2[i].style.display = 'none'
-          } */
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
-          /* for (let i = 0; i < colummn2.length; i++) {
-            colummn2[i].style.display = 'none'
-          } */
           present.style.display = 'block'
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
@@ -445,34 +438,15 @@
       isTwoNav (e, index) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
-//        const colummns = document.querySelectorAll('.three-column')
         if (present.style.display === 'block') {
           present.style.display = 'none'
-//          target.children[0].classList.remove('activeLi')
-          /* for (let i = 0; i < colummns.length; i++) {
-            colummns[i].style.display = 'none'
-          }
-          present.style.display = 'none' */
-         // 添加三角图标
           e.target.classList.remove('arrow-down')
           e.target.classList.add('arrow-up')
         } else {
-           /* for (let i = 0; i < colummns.length; i++) {
-             colummns[i].style.display = 'none'
-           } */
           present.style.display = 'block'
-//          target.children[0].classList.add('activeLi')
-          // 添加三角图标
           e.target.classList.remove('arrow-up')
           e.target.classList.add('arrow-down')
         }
-        /* if (this.showTwoNav) {
-            e.target.parentNode.children[1].classList.add('active')
-            this.showTwoNav = false
-         } else {
-            e.target.parentNode.children[1].classList.remove('active')
-            this.showTwoNav = true
-         } */
       }
     }
   }
