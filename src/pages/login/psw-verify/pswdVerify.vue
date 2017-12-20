@@ -134,23 +134,8 @@
       this.ranCode()
     },
     methods: {
-      /* setTimeout () {
-        if (this.countNum === 0) {
-          let timer = 0
-          window.clearInterval(timer)
-          this.isLeft = true
-        } else {
-          this.isLeft = false
-          this.countNum--
-        }
-      },
-      setInterval () {
-        setInterval(() => {
-          this.setTimeout()
-        }, 1000)
-      }, */
       countNum60 () {
-        this.countNum = 5
+        this.countNum = 60
         this.timeState = setInterval(() => {
           this.countNum--
           this.isLeft = false
@@ -375,21 +360,6 @@
         clearInterval(this.timeState)
         this.countNum60()
       },
-      /* countDownSixty () {
-        if (this.countNum === 0) {
-          clearInterval(this.timer = null)
-          this.countNum = 59
-          this.timer = setInterval(() => {
-            if (this.countNum === 0) {
-              this.isLeft = true
-              clearInterval(this.timer)
-            } else {
-              this.isLeft = false
-              this.countNum--
-            }
-          }, 1000)
-        }
-      }, */
       // 切换密码
       swithPwd (index) {
         if (index === 1) {
