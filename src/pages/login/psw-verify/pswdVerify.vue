@@ -111,7 +111,7 @@
         timer: 0, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', //
-        typeVal: '', // 输入手机号的手机号的值
+        typeVal: '13077841305', // 输入手机号的手机号的值
         isActive: 'step1', // 初始化找回密码步骤
         urlImg: '/static/images/pasVer_one.png', // 找回密码第一步nav背景初始化
         // 找回密码nav步骤背景图
@@ -177,6 +177,7 @@
         if (this.typeVal.trim() === '') {
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
+          this.ranCode() // 重置验证码
           return
         } else {
           if (typeId === 'phone') {
@@ -184,6 +185,7 @@
             if (!phoneNum.test(this.typeVal) || !(this.typeVal.length === 11)) {
               this.isError = true
               this.phoneMsg = '手机号格式错误'
+              this.ranCode() // 重置验证码
               return
             } else {
               this.isError = false
@@ -193,6 +195,7 @@
             if (!email.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '邮箱格式错误'
+              this.ranCode() // 重置验证码
               return
             } else {
               this.isError = false
@@ -202,12 +205,12 @@
             if (!uPattern.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '用户名格式错误'
+              this.ranCode() // 重置验证码
               return
             } else {
               this.isError = false
             }
           }
-          this.countNum60()
         }
         /*
         * 1.验证码为空时请输入验证码
@@ -217,12 +220,17 @@
         if (this.code.trim() === '') {
           this.isCode = true
           this.errCodeMsg = '请输入验证码'
+          this.ranCode() // 重置验证码
+          return
         } else {
           if (this.code.toUpperCase() === this.randomCode) {
             this.isCode = false
+            this.ranCode() // 重置验证码
           } else {
             this.isCode = true
             this.errCodeMsg = '验证码错误'
+            this.ranCode() // 重置验证码
+            return
           }
         }
         this.allNextStep() // 验证是否全部校验通过
@@ -233,31 +241,26 @@
         const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
         const uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
         const typeId = this.$route.query.id
-        if (this.typeVal !== '') {
-          if (typeId === 'phone') {
-            if (phoneNum.test(this.typeVal) && this.typeVal.length === 11 && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
-              this.retMobFn() // 手机号验证找回
-            } else {
-              this.ranCode() // 重置验证码
-            }
-          } else if (typeId === 'email' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
-            if (email.test(this.typeVal)) {
-              this.retEmailFn() // 邮箱验证找回
-            } else {
-              this.ranCode() // 重置验证码
-            }
-          } else if (typeId === 'username' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
-            if (uPattern.test(this.typeVal)) {
-              this.retUserFn() // 用户名验证找回
-            } else {
-              this.ranCode() // 重置验证码
-            }
-          } else {
-            this.ranCode() // 重置验证码
-          }
-        } else {
-          this.ranCode() // 重置验证码
+        if (typeId === 'phone') {
+          this.retMobFn() // 手机号验证找回
+        } else if (typeId === 'email') {
+          this.retEmailFn() // 邮箱验证找回
+        } else if (typeId === 'username') {
+          this.retUserFn() // 用户名验证找回
         }
+        // if (typeId === 'phone') {
+        //   if (phoneNum.test(this.typeVal) && this.typeVal.length === 11 && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+        //     this.retMobFn() // 手机号验证找回
+        //   }
+        // } else if (typeId === 'email' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+        //   if (email.test(this.typeVal)) {
+        //     this.retEmailFn() // 邮箱验证找回
+        //   }
+        // } else if (typeId === 'username' && this.code.toUpperCase() !== '' && this.code.toUpperCase() === this.randomCode) {
+        //   if (uPattern.test(this.typeVal)) {
+        //     this.retUserFn() // 用户名验证找回
+        //   }
+        // }
       },
       // 通过手机号找回密码第一步
       retMobFn () {
@@ -324,6 +327,7 @@
         this.isCode = false
         self.isActive = 'step2'
         self.urlImg = self.navData[1].urlImg
+        this.countNum60() // 倒计时
       },
       // 随机验证码函数
       ranCode () {
