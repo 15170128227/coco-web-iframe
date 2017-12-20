@@ -24,17 +24,17 @@
           <div class="one-content">
             <p class="control" v-if="pswType">
               <span class="c-type">{{ pswType }}</span>
-              <input :name="pswId" v-model="typeVal" class="input typeVal" type="text" @input="listenType" @keyup="nextEnter($event)">
+              <input :name="pswId" v-model="typeVal" class="input typeVal" type="text" @input="listenType">
               <span class="is-error" v-show="isError">{{ phoneMsg }}</span>
             </p>
             <p class="c-code control">
               <span class="c-type">验证码</span>
-              <input v-model="code" name="code" class="input" type="password" @input="codeInput" @keyup="nextEnter($event)">
+              <input v-model="code" name="code" class="input" type="password" @input="codeInput">
               <span  class="lc-code" @click.stop="codeClick">{{ randomCode }}</span>
               <span class="is-error" v-show="isCode">{{ errCodeMsg }}</span>
             </p>
             <p class="control">
-              <button class="next"  @click="nextStep">下一步</button>
+              <button class="next" @click="nextStep" @keyup.enter="nextEnter">下一步</button>
             </p>
           </div>
         </div>
@@ -163,22 +163,22 @@
       nextEnter (e) {
         this.isError = ''
         this.isCode = ''
-        if (e.keyCode === 13) {
-          this.nextStep()
-        }
+        this.nextStep()
       },
       // 验证输入手机号 || 用户名 || 邮箱是否跳转下一步
       nextStep () {
         let typeId = this.$route.query.id
-        if (this.typeVal === '') {
+        if (this.typeVal.trim() === '') {
           this.isError = true
           this.phoneMsg = '请输入' + this.pswType
+          return
         } else {
           if (typeId === 'phone') {
-            let phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
+            let phoneNum = new RegExp(/^1[3-8][0-9]\d{8}$/)
             if (!phoneNum.test(this.typeVal) || !(this.typeVal.length === 11)) {
               this.isError = true
               this.phoneMsg = '手机号格式错误'
+              return
             } else {
               this.isError = false
             }
@@ -187,6 +187,7 @@
             if (!email.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '邮箱格式错误'
+              return
             } else {
               this.isError = false
             }
@@ -195,6 +196,7 @@
             if (!uPattern.test(this.typeVal)) {
               this.isError = true
               this.phoneMsg = '用户名格式错误'
+              return
             } else {
               this.isError = false
             }
@@ -206,7 +208,7 @@
         * 2.验证码与随机码匹配则验证成功
         * 3.验证码错误时重新生成新的随机验证码
         * */
-        if (this.code.toUpperCase === '') {
+        if (this.code.trim() === '') {
           this.isCode = true
           this.errCodeMsg = '请输入验证码'
         } else {
@@ -392,9 +394,20 @@
       checkrevamp () {
         const reg6 = new RegExp(/^[a-zA-Z\d_]{6,}$/) // 密码不要少于6位数
         const reg = new RegExp(/^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/) // 验证密码
-        if (this.pwd === '') {
+        // 验证码
+        if (this.atucode.trim() === '') {
+          this.isTrueCode = true
+          this.codeMsg = '请输入验证码'
+          return
+        } else {
+          this.isTrueCode = false
+          // this.verifyPass(reg6, reg)
+        }
+        // 新密码
+        if (this.pwd.trim() === '') {
           this.isPwd = true
           this.newMsg = '请输入新密码'
+          return
         } else {
           // 数字+字母，数字+特殊字符，字母+特殊字符，数字+字母+特殊字符组合，而且不能是纯数字，纯字母，纯特殊字符
           // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/
@@ -402,23 +415,27 @@
           if (!reg.test(this.pwd.trim())) {
             this.isPwd = true
             this.newMsg = '请输入6-20位字母、数字和符号任意两者已上组合'
+            return
           } else {
             this.isPwd = false
           }
         }
-        if (this.suerPwd === '') {
+        // 二次新密码
+        if (this.suerPwd.trim() === '') {
           this.isSuerPwd = true
           this.newSuerMsg = '请输入确认密码'
+          return
         } else {
-          if (this.pwd.length > 0 && this.suerPwd.length > 0 && this.pwd !== this.suerPwd) {
+          if (this.pwd.trim().length > 0 && this.suerPwd.trim().length > 0 && this.pwd.trim() !== this.suerPwd.trim()) {
             this.isSuerPwd = true
             this.isPwd = false
             this.newSuerMsg = '两次输入密码不一致'
+            return
           } else {
             this.isSuerPwd = false
           }
         }
-        if (this.atucode === '') {
+        if (this.atucode.trim() === '') {
           this.isTrueCode = true
           this.codeMsg = '请输入验证码'
         } else {
@@ -428,7 +445,9 @@
       },
       // 所以验证已通过
       verifyPass (reg6, reg) {
-        if (this.pwd !== '' && this.suerPwd !== '' && this.atucode !== '' && reg6.test(this.pwd) && reg.test(this.pwd) && this.pwd === this.suerPwd) {
+        console.log(3333333333)
+        if (!this.isTrueCode && !this.isPwd && !this.isSuerPwd) {
+        // if (this.pwd !== '' && this.suerPwd !== '' && this.atucode !== '' && reg6.test(this.pwd) && reg.test(this.pwd) && this.pwd === this.suerPwd) {
           this.resPassWord() // 根据修改密码类型请求
         }
       },

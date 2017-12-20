@@ -6,7 +6,7 @@
         <span class="logo"><router-link :to="navList[0].localHref"><img src="/static/images/logo.png" alt="logo"></router-link></span>
         <nav class="header-list">
           <li v-for="(item, index) in navList" :key="index">
-            <router-link :to="item.localHref">{{ item.text }}</router-link>
+            <router-link :to="item.localHref" @click.native="refresh">{{ item.text }}</router-link>
           </li>
         </nav>
       </div>
@@ -45,6 +45,11 @@
       window.addEventListener('scroll', this.handleScroll)
     },
     methods: {
+      // 刷新当前页面，并返回顶部
+      refresh (e) {
+        document.documentElement.scrollTop = document.body.scrollTop = 0
+        this.$router.go(0)
+      },
       handleScroll () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
 //        let offsetTop = document.querySelector('#head-contain').offsetTop
@@ -53,10 +58,10 @@
         } else {
           this.searchBarFixed = false
         }
-      },
-      destroyed () {
-        window.removeEventListener('scroll', this.handleScroll)
       }
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll)
     }
   }
 </script>

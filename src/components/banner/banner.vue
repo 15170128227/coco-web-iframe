@@ -115,6 +115,7 @@
         background-color red
   .otherBanner
     width 100%
+    min-width 960px
     height 484px
     text-align center
     overflow hidden

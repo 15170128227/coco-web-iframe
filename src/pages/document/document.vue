@@ -9,12 +9,12 @@
             </a>
             <ul class="two-column apiColumn" v-if="columnType1" :style="'display:block'">
               <li v-for="(item, index) in columnType1" :key="index" :class="'two-columns-' + index">
-                <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" :data-index="index" class="arrow-down">
+                <a href="javascript:void(0)" :data-id="item.dataId" @click="isTwoNav($event, index)" :data-index="index" class="arrow-up">
                   {{item.title}}
                 </a>
                 <ul class="three-column" :class="'three-column-' + index" v-if="item.subNav && showTwoNav" :style="index === 0 ? 'display:block' : 'display:' + display" :data-index="index">
-                  <li v-for="(subNav, index) in item.subNav" :key="index" :class="'three-columns-' + index" @click="docH5ListType($event, subNav.subNavTypeId)">
-                    <router-link :to="'document?docApiId=' + subNav.subNavTypeId" :data-id="subNav.subNavTypeId"  :data-tit="subNav.subNavTitle" :data-index="index"> {{subNav.subNavTitle}} </router-link>
+                  <li v-for="(subNav, subNavIndex) in item.subNav" :key="subNavIndex" :class="'three-columns-' + subNavIndex" @click="docH5ListType($event, subNav.subNavTypeId)">
+                    <a class="link-a" :class="[(index === 0 && subNavIndex === 0) ? 'link-active' : '']" :data-id="subNav.subNavTypeId" :data-tit="subNav.subNavTitle" :data-index="subNavIndex"> {{subNav.subNavTitle}} </a>
                   </li>
                 </ul>
               </li>
@@ -23,12 +23,12 @@
         </ul>
         <ul class="one-column">
           <li class="one-columns">
-            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-down" @click="isOneNav($event)">
+            <a href="javascript:void(0)"  :data-id="'2'" class="arrow-up" @click="isOneNav($event)">
               H5
             </a>
             <ul class="two-column twoColumn" v-if="columnType2" :style="'display:'+ display">
               <li class="" v-for="(item, index) in columnType2" :key="index" :class="'two-columns-' + index" @click="docH5ListType($event, item.dataId)">
-                <router-link :to="'document?docH5Id=' + item.dataId" :data-id="item.dataId"> {{item.title}} </router-link>
+                <a class="link-a" :data-id="item.dataId"> {{item.title}} </a>
               </li>
             </ul>
           </li>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <coco-footer></coco-footer>
+    <!-- <coco-footer></coco-footer> -->
   </div>
 </template>
 
@@ -62,12 +62,13 @@
         columnType: '', // 二级栏目
         subNav: '', // 三级栏目
         content: '', // 文档中心内容
-        currentH5Id: window.sessionStorage.getItem('curId') ? window.sessionStorage.getItem('curId') : '48', // 初始化文档id
+        // currentH5Id: window.sessionStorage.getItem('curId') ? window.sessionStorage.getItem('curId') : '48', // 初始化文档id
+        currentH5Id: '48', // 初始化文档id
         currentTit: window.sessionStorage.getItem('curTit') ? window.sessionStorage.getItem('curTit') : 'API入驻指南', // 当前默认title
         showOneNav: false, // 初始化一级导航是否需要隐藏导航
         showTwoNav: true, // 始化二级导航是否需要隐藏导航
         isShow: false,
-        display: 'block', // 初始化
+        display: 'none', // 初始化
         iconClass: 'down',
         docList: [
           // API文档模拟数据
@@ -335,7 +336,8 @@
             'dataId': '50'
           },
           {
-            'title': '订单兑换成功/失败消息的接收接口',
+            // 'title': '订单兑换成功/失败消息的接收接口',
+            'title': '订单兑换的接收接口',
             'dataId': '51'
           },
           {
@@ -406,8 +408,13 @@
           this.currentTit = e.target.innerHTML
           this.currentH5Id = e.target.getAttribute('data-id')
           this.currentTit = e.target.getAttribute('data-tit')
-          window.sessionStorage.setItem('curId', this.currentH5Id)
-          window.sessionStorage.setItem('curTit', this.currentTit)
+          let list = document.querySelectorAll('.link-a')
+          list.forEach(o => {
+            o.classList.remove('link-active')
+          })
+          e.target.classList.add('link-active')
+          // window.sessionStorage.setItem('curId', this.currentH5Id)
+          // window.sessionStorage.setItem('curTit', this.currentTit)
           this.queryDocH5list(this.currentH5Id)
         } else {
           this.queryDocH5list(this.currentH5Id)
@@ -424,6 +431,20 @@
       isOneNav (e) {
         let target = e.target.parentNode
         const present = target.querySelector('.two-column')
+        let list = document.querySelectorAll('.two-column')
+        list.forEach(o => {
+          if (o != present) {
+            o.classList.remove('arrow-down')
+            o.style.display = 'none'
+          }
+        })
+        let listOne = document.querySelectorAll('.one-columns>a')
+        listOne.forEach(o => {
+          if (o != e.target) {
+            o.classList.remove('arrow-down')
+            o.classList.add('arrow-up')
+          }
+        })
         if (present.style.display === 'block') {
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
@@ -438,6 +459,13 @@
       isTwoNav (e, index) {
         let target = e.target.parentNode
         const present = target.querySelector('.three-column')
+        let list = document.querySelectorAll('.three-column')
+        list.forEach(o => {
+          if (o != present) {
+            o.classList.remove('arrow-down')
+            o.style.display = 'none'
+          }
+        })
         if (present.style.display === 'block') {
           present.style.display = 'none'
           e.target.classList.remove('arrow-down')
@@ -458,6 +486,7 @@
   /* .two-column > li:first-child ul:nth-child(2)
     display block */
   .doc-container
+    min-width 960px
     background-color $defaultBg
     overflow hidden
     /* doc-content start */
@@ -488,17 +517,20 @@
         a
          color $clrd5
         .one-column
-          /* background-color #444 */
-          background: linear-gradient(#444, #777)
+          background-color #444
+          // background: linear-gradient(#444, #777)
           overflow hidden
           &:before
             content: ""
             height: 0
             border-color: transparent transparent transparent #000
+
           .one-columns
             a
               padding 20px
           li
+            .link-a
+              padding 12px 20px
             a
               font-weight bold
               font-size 16px
@@ -517,7 +549,8 @@
                   font-size 14px
                   font-weight normal
             .twoColumn
-              .router-link-exact-active
+              // .router-link-exact-active
+              .link-active
                 color $clrfff
                 &::before
                   positions(absolute, left: 20px)
@@ -529,7 +562,7 @@
                   background  $clrDF4A43
             .three-column
               /* background-color #777 */
-              .router-link-exact-active
+              .link-active
                 color $clrfff
                 &::before
                   positions(absolute, left: 40px)
@@ -549,13 +582,16 @@
       /* doc-column-left end */
       /* doc-right-center start */
       .doc-right-center
+        min-width 700px
         margin-left 260px
         background-color #f4f4f4
         overflow hidden
         .doc-content-chunk
-          background-color $defaultBg
+          box-sizing border-box
+          min-width 700px
           margin 72px
           padding 60px
+          background-color $defaultBg
           .doc-content-tit
             font-size 18px
             padding-left 10px
