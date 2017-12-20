@@ -339,6 +339,7 @@
     border 0px !important
   .login-container
     width 100%
+    min-width 960px
     height 680px
     overflow hidden
     background url(/static/images/login_bg.jpg) no-repeat 0 0
