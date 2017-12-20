@@ -433,14 +433,14 @@
         const present = target.querySelector('.two-column')
         let list = document.querySelectorAll('.two-column')
         list.forEach(o => {
-          if (o != present) {
+          if (o !== present) {
             o.classList.remove('arrow-down')
             o.style.display = 'none'
           }
         })
         let listOne = document.querySelectorAll('.one-columns>a')
         listOne.forEach(o => {
-          if (o != e.target) {
+          if (o !== e.target) {
             o.classList.remove('arrow-down')
             o.classList.add('arrow-up')
           }
@@ -461,7 +461,7 @@
         const present = target.querySelector('.three-column')
         let list = document.querySelectorAll('.three-column')
         list.forEach(o => {
-          if (o != present) {
+          if (o !== present) {
             o.classList.remove('arrow-down')
             o.style.display = 'none'
           }
