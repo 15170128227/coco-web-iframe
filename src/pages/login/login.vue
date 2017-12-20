@@ -122,7 +122,7 @@
         if (!this.userErr && !this.pswErr && !this.verifyErr) {
           this.queryLogin(verifyUser, verifyPsw)
         } else {
-          this.createCode() // 重置验证码
+          // this.createCode() // 重置验证码
         }
       },
       // 请求登录Api
@@ -163,7 +163,7 @@
             // this.verifyErr = true
             this.verCodeErr = message
           }
-          this.createCode() // 重置验证码
+          // this.createCode() // 重置验证码
         }
       },
       // 验证验随机函数
@@ -188,16 +188,21 @@
       },
       // 登录验证
       validateCode () {
+        this.createCode()
         const self = this // 重置
         // 用户名验证
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
         if (self.verifyUser.trim() === '') {
           this.userErr = true
+          this.pswErr = false
+          this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.userVerErr = '请输入用户名'
           return
         } else if (!uPattern.test(self.verifyUser)) {
           this.userErr = true
+          this.pswErr = false
+          this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.verCodeErr = '用户名或密码错误'
           return
@@ -213,7 +218,9 @@
         // 密码验证
         // let resPsw = new RegExp(/^\w{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
         if (self.verifyPsw.trim() === '') {
+          this.userErr = false
           this.pswErr = true
+          this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.pswVerErr = '请输入密码'
           return
@@ -233,6 +240,8 @@
         // }
         // 验证码验证
         if (this.verifyCode.toUpperCase().trim() === '') {
+          this.userErr = false
+          this.pswErr = false
           this.verifyErr = true
           this.verCodeErr = '请输入验证码'
           this.disabled.submit = false // 登录按钮启用
@@ -241,6 +250,8 @@
           this.verifyErr = false
           this.verCodeErr = ''
         } else {
+          this.userErr = false
+          this.pswErr = false
           this.verifyErr = true
           this.disabled.submit = false // 登录按钮启用
           this.verCodeErr = '验证码错误，请重新输入'
