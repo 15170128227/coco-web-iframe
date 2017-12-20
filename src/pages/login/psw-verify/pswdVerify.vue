@@ -111,7 +111,7 @@
         timer: 0, // 定时器是否关闭
         suerPwd: '',
         stepTwoType: '', //
-        typeVal: '', // 输入手机号的手机号的值
+        typeVal: '13077841305', // 输入手机号的手机号的值
         isActive: 'step1', // 初始化找回密码步骤
         urlImg: '/static/images/pasVer_one.png', // 找回密码第一步nav背景初始化
         // 找回密码nav步骤背景图
@@ -133,9 +133,13 @@
       this.initType()
       this.ranCode()
     },
+    beforeRouteLeave (to, from, next) {
+      clearInterval(this.timeState)
+      next()
+    },
     methods: {
       countNum60 () {
-        this.countNum = 60
+        this.countNum = 15
         this.timeState = setInterval(() => {
           this.countNum--
           this.isLeft = false
@@ -353,15 +357,15 @@
       },
       // 重新获取验证码
       reNewCode () {
+        clearInterval(this.timeState)
         this.pswId = this.$route.query.id
         if (this.pswId === 'phone') {
           this.retMobFn()
         } else if (this.pswId === 'email') {
           this.retEmailFn()
         } else if (this.pswId === 'username') {
-            this.retUserFnTwo()
+          this.retUserFnTwo()
         }
-        clearInterval(this.timeState)
         this.countNum60()
       },
       // 切换密码
