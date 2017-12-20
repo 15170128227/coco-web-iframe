@@ -46,7 +46,7 @@
         cocoAddr: '深圳市南山区科苑路科兴科学园A4栋806', // coco地址
         cocoMail: 'fuling@cocosurprise.com', // coco邮箱
         cocoPhone: '0755-2692-0691', // coco联系方式
-        cocoService: '10:00-19:00.工作日', // 客服服务时间
+        cocoService: '10:00-19:00，工作日', // 客服服务时间
         cocoNav: [
           {
             'href': '/home',
@@ -118,7 +118,7 @@
       /* footer-right start */
       .footer-right
         flex 1
-        padding-top 108px
+        padding-top 102px
         .rightInfo
           color #fff
           font-size $fontSize16
@@ -128,6 +128,7 @@
         .coco-phone
           margin-bottom 6px
           p
+            margin-top 7px
             font-size $fontSizeXL
         .coco-service
           font-style normal

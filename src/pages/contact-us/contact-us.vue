@@ -32,16 +32,16 @@
           <div class="cac-left">
             <h4 class="cacl-title">深圳市场景零售科技有限公司</h4>
             <p class="cacl-list">
-              <img src="/static/images/cbc-address.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806</span>
+              <img src="/static/images/cbc-email.png" alt="ca" class="cacl-img">
+              <span class="cacl-text">fuling@cocosurprise.com</span>
             </p>
             <p class="cacl-list">
               <img src="/static/images/cbc-tel.png" alt="ca" class="cacl-img">
               <span class="cacl-text">0755-26920691</span>
             </p>
             <p class="cacl-list">
-              <img src="/static/images/cbc-email.png" alt="ca" class="cacl-img">
-              <span class="cacl-text">fuling@cocosurprise.com</span>
+              <img src="/static/images/cbc-address.png" alt="ca" class="cacl-img">
+              <span class="cacl-text">广东省深圳市南山区科苑路科兴科学园A4栋806</span>
             </p>
           </div>
           <div class="cac-right">
