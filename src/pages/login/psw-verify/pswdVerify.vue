@@ -491,6 +491,7 @@
       },
       // 邮箱找回密码
       queryEmail () {
+        console.log('this.typeVal', this.typeVal)
         let molPass = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAIL
         this.axios.post(molPass, {
           email: this.typeVal,
@@ -515,10 +516,11 @@
       queryUser () {
         let molPass = this.$api.RETRIEVEPSW.POST_MODIFYPWDBYEMAIL
         this.axios.post(molPass, {
-          email: this.dataEmail,
+          email: window.sessionStorage.getItem('dataEmail'),
           validCode: this.atucode,
           password: this.suerPwd
         }).then(response => {
+          console.log('queryUser', response)
           let message = response.data.codeMessage  // 返回提示信息--0101成功、
           let code = response.data.flag // 返回状态码--0失败、1成功
           if (code === '1') {
