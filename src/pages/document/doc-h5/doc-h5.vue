@@ -197,7 +197,6 @@
     methods: {
       // API和H5导航切换
       modifyNav (e, currentDocType) {
-        console.log(e, currentDocType)
         if (!this.typeState) return // 为false时返回
         if (e !== null) {
           let target = e.target

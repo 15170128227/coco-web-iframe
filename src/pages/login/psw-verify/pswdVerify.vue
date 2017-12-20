@@ -139,7 +139,7 @@
     },
     methods: {
       countNum60 () {
-        this.countNum = 60
+        this.countNum = 15
         this.timeState = setInterval(() => {
           this.countNum--
           this.isLeft = false
@@ -152,7 +152,7 @@
       // 初始化找回密码类型
       initType () {
         this.pswId = this.$route.query.id
-        if (this.pswId === 'phone') {
+        if (this.pswId === 'phone') { 
           this.pswType = '手机号'
           this.stepTwoWord = '手机短信验证码'
         } else if (this.pswId === 'email') {
@@ -370,7 +370,6 @@
         } else if (this.pswId === 'username') {
           this.retUserFnTwo()
         }
-        this.countNum60()
       },
       // 切换密码
       swithPwd (index) {
