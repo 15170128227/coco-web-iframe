@@ -9,23 +9,24 @@
             <div class="control-group-container">
               <div class="control-label">
                 <i>用户名</i>
-                <input type="text" class="verify-user" v-model="verifyUser"  @keyup="loginEnter($event)"/>
-                <span class="user-error error-msg" v-if="userErr">* {{userVerErr}}</span>
+                <input type="text" class="verify-user" :class="{'error': userErr}" v-model="verifyUser""/>
+                <!-- <span class="user-error error-msg" v-if="userErr">* {{userVerErr}}</span> -->
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label">
                 <i>密码</i>
-                <input type="password" class="verify-psw" v-model="verifyPsw" @keyup="loginEnter($event)"/>
-                <span class="psw-error error-msg" v-if="pswErr">* {{pswVerErr}}</span>
+                <input type="password" class="verify-psw" :class="{'error': pswErr}" v-model="verifyPsw""/>
+                <!-- <span class="psw-error error-msg" v-if="pswErr">* {{pswVerErr}}</span> -->
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label verify">
                 <div class="verify-outline">
                   <i>验证码</i>
-                  <input type="text" class="verify-code" v-model="verifyCode" @keyup="loginEnter($event)"/>
-                  <span class="verify-error error-msg" v-if="verifyErr">* {{verCodeErr}}</span>
+                  <!-- <input type="text" class="verify-code" :class="{'error': verifyErr}" v-model="verifyCode" @keyup="loginEnter($event)"/> -->
+                  <input type="text" class="verify-code" :class="{'error': verifyErr}" v-model="verifyCode"/>
+                  <span class="verify-error error-msg" v-if="verCodeErr">* {{verCodeErr}}</span>
                 </div>
                 <span class="compar-verify" @click="createCode">{{verCodeVal}}</span>
               </div>
@@ -34,17 +35,17 @@
               <label class="auto-login">
                 <span class="checkbox" :class="{active: isChecked}" @click="isCheckFn()"></span>记住账号
               </label>
-              <span @click="isShowClick()">
-              <router-link to="/login/retrievePsw" class="lost-pw">忘记密码？</router-link>
-            </span>
+              <span class="lost-psw">
+                <span @click="isShowClick()" class="lost-pw">忘记密码？</span>
+              </span>
             </div>
             <div class="control-group-container submit">
               <div class="control-label">
-                <button @click="validateCode" type="button">登录</button>
+                <button @click="validateCode" type="button" :disabled="disabled.submit">登录</button>
               </div>
             </div>
           </form>
-          <retrieve-psw  v-show="!isShow"></retrieve-psw>
+          <retrieve-psw v-show="!isShow"></retrieve-psw>
         </div>
       </div>
       <form :action="jumpApi" method="post" v-show="false">
@@ -82,7 +83,10 @@
         username: '', // 请求成功调中台传用户名
         password: '', // // 请求成功调中台传密码
         isChecked: false, // 是否记住账户
-        jumpApi: this.$api.LOGIN.POST_JUMPLOGIN // 登录接口校验成功跳转中台页面接口
+        jumpApi: this.$api.LOGIN.POST_JUMPLOGIN, // 登录接口校验成功跳转中台页面接口
+        disabled: {
+          submit: false
+        }
       }
     },
     // 路由变更时检测是否显示找回密码子组件
@@ -94,53 +98,46 @@
       this.createCode()
     },
     methods: {
-      // 键盘事件
+      // 登录
       loginEnter (e) {
-        this.userVerErr = '' // 执行键盘事件时用户提示信息制空
-        this.pswVerErr = '' // 执行键盘事件时密码提示信息制空
-        this.verCodeErr = '' // 执行键盘事件时验证码||用户名和密码错误信息制空
+        // 重置参数
+        this.userVerErr = '' // 执行键盘事件时用户提示信息置空
+        this.pswVerErr = '' // 执行键盘事件时密码提示信息置空
+        this.verCodeErr = '' // 执行键盘事件时验证码||用户名和密码错误信息置空
         this.userErr = false
         this.pswErr = false
         this.verifyErr = false
-        if (e.keyCode === 13) {
-          this.validateCode()
+        this.disabled.submit = true // 登录按钮禁用
+        if (e.keyCode === 13) { // 回车键执行
+          this.validateCode() // 执行验证
         }
       },
       // 验证是否所有验证通过
       allVerfiy () {
         let verifyUser = this.verifyUser
         let verifyPsw = this.verifyPsw
-        let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
-        let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
-        if (verifyUser !== ' ' && verifyPsw !== '' && uPattern.test(this.verifyUser) && resPsw.test(this.verifyPsw)) {
-          this.queryLogin(this.verifyUser, this.verifyPsw)
+        // let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
+        // let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
+        // if (verifyUser !== ' ' && verifyPsw !== '' && uPattern.test(this.verifyUser) && resPsw.test(this.verifyPsw)) {
+        if (!this.userErr && !this.pswErr && !this.verifyErr) {
+          this.queryLogin(verifyUser, verifyPsw)
         } else {
-          this.createCode() // 重置验证码
+          // this.createCode() // 重置验证码
         }
       },
       // 请求登录Api
       queryLogin (userName, pasw) {
-       /* this.username = userName
-        this.password = pasw */
         let login = this.$api.LOGIN.POST_LOGINUSER // 校验用户登录用户名及密码是否正确
         this.axios.post(login, {
           username: userName,
           password: pasw
         }).then(response => {
+          this.disabled.submit = false // 登录按钮启用
           let code = response.data.code // 返回状态码--200成功、400错误
           let message = response.data.message // 返回信息提示码--0101成功、0203用户名或密码错误、0207用户名不存在
           if (response) {
             this.remUser()
             this.jumpLogin(code, message) // 跳转中台函数
-            /*
-              * 如果checkbox选中状态--用户名和密码存入cookie(期限为7天)
-              * 否则未选中时清除cookie里用户信息，不在存入
-             */
-            /* if (this.isChecked === true) {
-              this.getLastUser()
-            } else {
-              this.resetCookie()
-            } */
           }
         })
       },
@@ -151,21 +148,22 @@
           window.localStorage.removeItem('user')
         }
       },
-      // 检验用 户名和密码正确则跳转中台页面
+      // 检验用户名和密码正确则跳转中台页面
       jumpLogin (code, message) {
         if (code === '200' && message === '0101') {
           document.getElementById('test').click()  // 通过from表单请求跳转中台
         } else if (code === '400') {
           if (message === '0203') {
-            this.verifyErr = true
+            // this.verifyErr = true
             this.verCodeErr = '用户名或密码错误'
           } else if (message === '0207') {
-            this.verifyErr = true
+            // this.verifyErr = true
             this.verCodeErr = '用户名不存在'
           } else {
-            this.verifyErr = true
+            // this.verifyErr = true
             this.verCodeErr = message
           }
+          // this.createCode() // 重置验证码
         }
       },
       // 验证验随机函数
@@ -188,57 +186,79 @@
         // 将拼接好的字符串赋值给展示verCodeVal
         this.verCodeVal = code
       },
-      // 登录验证所有
+      // 登录验证
       validateCode () {
         const self = this // 重置
+        // 用户名验证
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
-        if (self.verifyUser === '') {
+        if (self.verifyUser.trim() === '') {
           this.userErr = true
-          this.userVerErr = '请输入用户名'
-          this.createCode() // 重置验证码
+          this.pswErr = false
+          this.verifyErr = false
+          this.disabled.submit = false // 登录按钮启用
+          // this.userVerErr = '请输入用户名'
+          this.createCode() // 创建
+          return
         } else if (!uPattern.test(self.verifyUser)) {
           this.userErr = true
-          this.verCodeErr = '用户名或密码错误'
-          this.createCode() // 重置验证码
+          this.pswErr = false
+          this.verifyErr = false
+          this.disabled.submit = false // 登录按钮启用
+          // this.verCodeErr = '用户名或密码错误'
+          return
         } else if (uPattern.test(self.verifyUser)) {
           this.userErr = false
           this.userVerErr = ''
-          this.allVerfiy() // 验证是否全部通过
+        }
+        // else {
+        //   this.userErr = true
+        //   this.userVerErr = '用户信息错误'
+        //   return
+        // }
+        // 密码验证
+        // let resPsw = new RegExp(/^\w{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
+        if (self.verifyPsw.trim() === '') {
+          this.userErr = false
+          this.pswErr = true
+          this.verifyErr = false
+          this.disabled.submit = false // 登录按钮启用
+          // this.pswVerErr = '请输入密码'
+          return
         } else {
-          this.userErr = true
-          this.userVerErr = '用户信息错误'
-          this.createCode() // 重置验证码
-        }
-        // 验证密码
-//        let resPsw = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{6,20}$/ //  密码正则，6到20位（字母，数字，下划线，减号）
-        let resPsw = new RegExp(/^[\w]{6,20}$/) // 密码[6,12为任何字符数字字符都皆可]
-        if (self.verifyPsw === '') {
-          this.pswErr = true
-          this.pswVerErr = '请输入密码'
-          this.createCode() // 重置验证码
-        } else if (!resPsw.test(self.verifyPsw)) {
-          this.pswErr = true
-          this.verCodeErr = '用户名或密码错误'
-          this.createCode() // 重置验证码
-        } else if (resPsw.test(self.verifyPsw)) {
           this.pswErr = false
-          this.pswVerErr = ''
-          this.allVerfiy() // 验证是否全部通过
         }
-        // 校验验证码
-        if (this.verifyCode.toUpperCase() === '') {
+        // else if (!resPsw.test(self.verifyPsw)) {
+        //   this.pswErr = true
+        //   this.pswVerErr = '密码不少于6位数'
+        //   this.verCodeErr = '用户名或密码错误'
+        //   return
+        // }
+        // else if (resPsw.test(self.verifyPsw)) {
+        //   this.pswErr = false
+        //   this.pswVerErr = ''
+        //   return
+        // }
+        // 验证码验证
+        console.log('this.verifyCode.toUpperCase().trim()', this.verifyCode.toUpperCase().trim(), this.verCodeVal.toUpperCase().trim())
+        if (this.verifyCode.toUpperCase().trim() === '') {
+          this.userErr = false
+          this.pswErr = false
           this.verifyErr = true
           this.verCodeErr = '请输入验证码'
-          this.createCode() // 重置验证码
-        } else if (this.verifyCode.toUpperCase() === this.verCodeVal) {
+          this.disabled.submit = false // 登录按钮启用
+          return
+        } else if (this.verifyCode.toUpperCase().trim() === this.verCodeVal.toUpperCase().trim()) {
           this.verifyErr = false
           this.verCodeErr = ''
-          this.allVerfiy() // 验证是否全部通过
         } else {
+          this.userErr = false
+          this.pswErr = false
           this.verifyErr = true
+          this.disabled.submit = false // 登录按钮启用
           this.verCodeErr = '验证码错误，请重新输入'
-          this.createCode() // 重置验证码
+          return
         }
+        this.allVerfiy() // 验证是否全部通过
       },
       // 是否切换找回密码子组件
       isShowClick () {
@@ -339,11 +359,18 @@
 
 <style lang="stylus" scoped>
   /* logo-container start */
-  input:focus
-    box-shadow 0 0 5px #09f
-    border 0px !important
+  input
+    border 1px solid #ccc
+    border-radius 3px
+    &:focus
+      box-shadow 0 0 8px #2887e8
+      border 1px solid #3e94ea
+    &.error
+      box-shadow 0 0 8px #e88383
+      border 1px solid #e88383
   .login-container
     width 100%
+    min-width 960px
     height 680px
     overflow hidden
     background url(/static/images/login_bg.jpg) no-repeat 0 0
@@ -374,14 +401,14 @@
         /* 错误信息提示 */
         h2
           font-size 26px
-          margin-bottom 10px
+          margin-bottom 30px
           color rgb(46, 46, 46)
           text-align left
         /*.control-group-container:nth-child(4) .control-label input*/
           /*width 202px*/
         .control-group-container
-          margin-top 26px
           width 330px
+          height 72px
           text-align left
           .verify
             display flex
@@ -406,8 +433,8 @@
               line-height 46px
               display inline-block
               padding-left 72px
-              border-radius 2px
-              border 1px solid #CCC
+              
+            
             .compar-verify
               width 118px
               margin-left 10px
@@ -423,17 +450,15 @@
               font-style italic
         .control-group
           display flex
-          position relative
-          margin-top 6px
-          .lost-pw
-            margin-top: -3px
-            display: inline-block
+          margin-bottom 20px
+          font-size 12px
+          a
+            font-size 12px
           .auto-login
             text-align left
             vertical-align middle
             display inline-block
             color rgb(46, 46, 46)
-            font-size 12px
             flex 1
             .active
               background-color rgb(223, 74, 67)
@@ -449,10 +474,12 @@
               margin-right 6px
               display inline-block
               border 1px solid #a6a6a6
-          .lost-pw
+          .lost-psw
             flex 1
+            display: inline-block
             text-align right
-            color rgb(0, 145, 213)
+            .lost-pw
+              color rgb(0, 145, 213)
         .submit
           button
             width 330px

@@ -86,6 +86,7 @@
       .banner-text
         position absolute
         top 0
+        left 0
         width 100%
         height 484px
         .b-img
@@ -114,6 +115,7 @@
         background-color red
   .otherBanner
     width 100%
+    min-width 960px
     height 484px
     text-align center
     overflow hidden
@@ -130,6 +132,7 @@
       position absolute
       top 0
       width 100%
+      min-width 960px
       height 484px
       background rgba(0,0,0, 0.3)
       color rgb(255, 255, 255)

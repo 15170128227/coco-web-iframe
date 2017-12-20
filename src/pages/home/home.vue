@@ -243,7 +243,7 @@
           {
             urlImg: '/static/images/proImg.jpg',
             title: '· 产品介绍',
-            text: '重内容轻交易结构 、迎合用户浏览'
+            text: '一句话趣味内容、精准激发用户主动浏览兴趣'
           },
           {
             urlImg: '/static/images/guideImg.jpg',
@@ -323,10 +323,14 @@
 <style lang="stylus" scoped>
   $colorTitleColor = rgb(233,74,67)
   $width = 960px
-  .home .content
+  .home 
     width 100%
-    margin 0 auto
-    text-align center
+    min-width 960px
+    .content
+      width 100%
+      min-width 960px
+      margin 0 auto
+      text-align center
     .em
       padding 90px 0 102px 0
       overflow hidden
@@ -377,7 +381,7 @@
           transition all .3s ease
         .emmll-logo
           background-color $colorTitleColor
-          
+
     .fd
       overflow hidden
       background-color #f6f6f6
