@@ -192,6 +192,7 @@
           margin-right 252px
     .ca
       width 100%
+      min-width 960px
       background-color #f6f6f6
       text-align center
       padding 90px 0 86px 0

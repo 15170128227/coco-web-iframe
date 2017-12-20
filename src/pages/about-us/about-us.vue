@@ -117,6 +117,7 @@ team-group:tg
     .tg
       padding 100px 0
       width 100%
+      min-width 960px
       background-color #f6f6f6
       .tg-left
         float left

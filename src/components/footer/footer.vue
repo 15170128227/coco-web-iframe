@@ -73,6 +73,8 @@
     background-color $Bg2C2F3C
     color $clrfff
     font-size $fontSizeNormal
+    width 100%
+    min-width 960px
     /*float left*/
     .footer-container
       display flex

@@ -131,6 +131,7 @@
       position absolute
       top 0
       width 100%
+      min-width 960px
       height 484px
       background rgba(0,0,0, 0.3)
       color rgb(255, 255, 255)
