@@ -152,7 +152,7 @@
       // 初始化找回密码类型
       initType () {
         this.pswId = this.$route.query.id
-        if (this.pswId === 'phone') { 
+        if (this.pswId === 'phone') {
           this.pswType = '手机号'
           this.stepTwoWord = '手机短信验证码'
         } else if (this.pswId === 'email') {
@@ -237,9 +237,9 @@
       },
       // 第一步验证是否全部通过
       allNextStep () {
-        const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
-        const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
-        const uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
+        // const phoneNum = new RegExp(/^1[3|4|5|8][0-9]\d{4,8}$/)
+        // const email = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/)
+        // const uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
         const typeId = this.$route.query.id
         if (typeId === 'phone') {
           this.retMobFn() // 手机号验证找回
