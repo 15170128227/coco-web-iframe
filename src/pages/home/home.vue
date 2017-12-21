@@ -12,11 +12,11 @@
     <div class="content">
       <!-- 生态图 -->
       <div class="em w_960">
-        <img src="/static/images/ecological-map.png" alt="img" class="titileImg">
+        <img v-imgpath src="ecological-map.png" alt="img" class="titileImg">
         <div class="em-list">
           <div class="eml-list" v-for="(item, index) in emJson" :key="item.id">
-            <span class="emll-img" @mouseover="overFn($event, index)" @mouseout="outFn($event, index)">
-              <img :src="item.urlImg" class="emmlli-pingpai">
+            <span class="emll-img" @mouseover="overFn($event, index)" @mouseleave="outFn($event, index)">
+              <img v-imgpath :src="item.urlImg" class="emmlli-pingpai">
             </span>
             <span class="emll-desc">{{ item.text }}</span>
             <span class="emll-line"></span>
@@ -26,10 +26,10 @@
       <!-- 专注成长 -->
       <div class="fd">
         <div class="w_960">
-          <img src="/static/images/focus-director.png" alt="img" class="titileImg">
+          <img v-imgpath src="focus-director.png" alt="img" class="titileImg">
           <ul class="fd-list">
             <li class="fdl-img" v-for="item in fdJson" :key="item.id">
-              <img :src="item.urlImg" alt="fd">
+              <img v-imgpath :src="item.urlImg" alt="fd">
               <div class="fd-content">
                 <span class="fdc-title">{{ item.title }}</span>
                 <span class="fdc-desc">{{ item.text }}</span>
@@ -40,10 +40,10 @@
       </div>
       <!-- 零成本接入 -->
       <div class="ca w_960">
-        <img src="/static/images/cost-access.png" alt="img" class="titileImg">
+        <img v-imgpath src="cost-access.png" alt="img" class="titileImg">
         <ul class="ca-list">
           <li class="cal-list" v-for="(item, index) in caJson" :key="item.id" @mouseover="showIn(index)" @mouseout="showOut(index)">
-            <img :src="item.urlImg" alt="fd">
+            <img v-imgpath :src="item.urlImg" alt="fd">
             <ul class="call-desc" :class="{active: index === listIndex}">
               <li class="calld-content" v-for="itemL in item.text" :key="itemL.id">{{ itemL.desc }}</li>
             </ul>
@@ -54,18 +54,18 @@
       <!-- 无损用户体验 -->
       <div class="ue">
         <div class="ue-div">
-          <img src="/static/images/user-experience.png" alt="img" class="titileImg">
+          <img v-imgpath src="user-experience.png" alt="img" class="titileImg">
           <ue-banner :ueData="ueData"></ue-banner>
         </div>
       </div>
       <!-- 合作流程 -->
       <div class="cp w_960">
-        <img src="/static/images/cooperation-press.png" alt="img" class="titileImg">
+        <img v-imgpath src="cooperation-press.png" alt="img" class="titileImg">
         <ul class="cp-list">
           <li v-for="item in cpJson" :key="item.id" class="cpl-list">
             <div class="cpll-left">
               <span class="cpll-img">
-                    <img :src="item.urlImg" alt="cp">
+                    <img v-imgpath :src="item.urlImg" alt="cp">
                 </span>
               <span class="cpll-text">{{ item.text }}</span>
             </div>
@@ -98,15 +98,15 @@
         bannerData: {
           isSwiper: true,
           info: [{
-              'imgUrl': '/static/images/index.jpg',
+              'imgUrl': 'index.jpg',
               'content': {
-                imgUrl: '/static/images/logoWhite.png',
+                imgUrl: 'logoWhite.png?resize,w_122',
                 textDescBg: '国内首家场景电商解决方案提供商',
                 textDescSm: '开启自媒体/APP内容电商变现时代/让流量更值钱'
               }
             }
             /* {
-              'imgUrl': '/static/images/aboutUs.jpg',
+              'imgUrl': 'aboutUs.jpg',
               'content': {
                 imgUrl: '',
                 textDescBg: '',
@@ -114,7 +114,7 @@
               }
             },
             {
-              'imgUrl': '/static/images/contactUs.jpg',
+              'imgUrl': 'contactUs.jpg',
               'content': {
                 imgUrl: '',
                 textDescBg: '',
@@ -125,46 +125,46 @@
         },
         // 标题数据
         titleJson: [
-          '/static/images/ecological-map.png',
-          '/static/images/focus-director.png',
-          '/static/images/cost-access.png',
-          '/static/images/user-experience.png',
-          '/static/images/cooperation-press.png'
+          'ecological-map.png',
+          'focus-director.png',
+          'cost-access.png',
+          'user-experience.png',
+          'cooperation-press.png'
         ],
         // 生态图数据
         emJson: [{
-            urlImg: '/static/images/brand-r.png',
+            urlImg: 'brand-r.png',
             text: '品牌资源'
           },
           {
-            urlImg: '/static/images/ecology_logo.png',
+            urlImg: 'ecology_logo.png?resize,w_95',
             text: '可可奇货'
           },
           {
-            urlImg: '/static/images/media-r.png',
+            urlImg: 'media-r.png',
             text: '自媒体'
           }
         ],
         // 专注成长数据
         fdJson: [{
-            urlImg: '/static/images/fd-list1.png',
+            urlImg: 'fd-list1.png',
             title: '新零售整体方案',
             text: '符合自媒体的新型电商变现方案整体运营、技术、供应链、客服体系支持无损用户体验式解决方案'
           },
           {
-            urlImg: '/static/images/fd-list2.png',
+            urlImg: 'fd-list2.png',
             title: '新营销运营支持',
             text: '去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略'
           },
           {
-            urlImg: '/static/images/fd-list3.png',
+            urlImg: 'fd-list3.png',
             title: '新收益高额佣金',
             text: '零对接成本，内容化运营，高转化率，持续性营收、其他增值服务'
           }
         ],
         // 零成本接入数据
         caJson: [{
-            urlImg: '/static/images/ca-list1.png',
+            urlImg: 'ca-list1.png',
             title: '商城集成系统',
             text: [{
                 desc: '+ 内容式H5商城'
@@ -178,7 +178,7 @@
             ]
           },
           {
-            urlImg: '/static/images/ca-list2.png',
+            urlImg: 'ca-list2.png',
             title: '运营解决方案',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -192,7 +192,7 @@
             ]
           },
           {
-            urlImg: '/static/images/ca-list3.png',
+            urlImg: 'ca-list3.png',
             title: '供应链解决方案',
             text: [{
                 desc: '+ 专业买手团队支持'
@@ -206,7 +206,7 @@
             ]
           },
           {
-            urlImg: '/static/images/ca-list4.png',
+            urlImg: 'ca-list4.png',
             title: '客户服务',
             text: [{
                 desc: ''
@@ -220,7 +220,7 @@
             ]
           },
           {
-            urlImg: '/static/images/ca-list5.png',
+            urlImg: 'ca-list5.png',
             title: '数据AI系统',
             text: [{
                 desc: '+ AI数据预测，适应场景奇货'
@@ -236,36 +236,36 @@
         ],
         // 无损用户体验数据
         ueData: [{
-            urlImg: '/static/images/ueImg.png',
+            urlImg: 'ueImg.png',
             title: '· 产品结构',
             text: '重内容轻交易结构 、迎合用户浏览习惯、延长用户停留时间 、提高用户粘性'
           },
           {
-            urlImg: '/static/images/proImg.jpg',
+            urlImg: 'proImg.jpg',
             title: '· 产品介绍',
             text: '一句话趣味内容、精准激发用户主动浏览兴趣'
           },
           {
-            urlImg: '/static/images/guideImg.jpg',
+            urlImg: 'guideImg.jpg',
             title: '· KOL式导购',
             text: '让商品具备场景、通过软性内容包装、高效激发用户购买欲望'
           }
         ],
         // 合作流程数据
         cpJson: [{
-            urlImg: '/static/images/cp-list1.png',
+            urlImg: 'cp-list1.png',
             text: '联系商务经理'
           },
           {
-            urlImg: '/static/images/cp-list2.png',
+            urlImg: 'cp-list2.png',
             text: '授权后台账号'
           },
           {
-            urlImg: '/static/images/cp-list3.png',
+            urlImg: 'cp-list3.png',
             text: '技术接入'
           },
           {
-            urlImg: '/static/images/cp-list4.png',
+            urlImg: 'cp-list4.png',
             text: '开始运营'
           }
         ]
@@ -281,31 +281,34 @@
         document.body.scrollTop = 0
       },
       overFn (e, index) {
+        // console.log('e', e.target.children[0].src)
+        let src = e.target.children[0].src
         if (index === 0) {
-          this.emJson[0].urlImg = '/static/images/brand-w.png'
+          this.emJson[0].urlImg = src.replace('brand-r.png', 'brand-w.png')
           document.querySelectorAll('.emll-img')[0].classList.add('imgActive')
           document.querySelectorAll('.emll-line')[0].classList.add('lineActive')
         } else if (index === 1) {
-          this.emJson[1].urlImg = '/static/images/logoWhite.png'
+          this.emJson[1].urlImg = src.replace('ecology_logo.png', 'logoWhite.png')
           document.querySelectorAll('.emll-img')[1].classList.add('imgActive')
           document.querySelectorAll('.emll-line')[1].classList.add('lineActive')
         } else if (index === 2) {
-          this.emJson[2].urlImg = '/static/images/media-w.png'
+          this.emJson[2].urlImg = src.replace('media-r.png', 'media-w.png')
           document.querySelectorAll('.emll-img')[2].classList.add('imgActive')
           document.querySelectorAll('.emll-line')[2].classList.add('lineActive')
         }
       },
       outFn (e, index) {
+        let src = e.target.children[0].src
         if (index === 0) {
-          this.emJson[0].urlImg = '/static/images/brand-r.png'
+          this.emJson[0].urlImg = src.replace('brand-w.png', 'brand-r.png')
           document.querySelectorAll('.emll-img')[0].classList.remove('imgActive')
           document.querySelectorAll('.emll-line')[0].classList.remove('lineActive')
         } else if (index === 1) {
-          this.emJson[1].urlImg = '/static/images/ecology_logo.png'
+          this.emJson[1].urlImg = src.replace('logoWhite.png', 'ecology_logo.png')
           document.querySelectorAll('.emll-img')[1].classList.remove('imgActive')
           document.querySelectorAll('.emll-line')[1].classList.remove('lineActive')
         } else if (index === 2) {
-          this.emJson[2].urlImg = '/static/images/media-r.png'
+          this.emJson[2].urlImg = src.replace('media-w.png', 'media-r.png')
           document.querySelectorAll('.emll-img')[2].classList.remove('imgActive')
           document.querySelectorAll('.emll-line')[2].classList.remove('lineActive')
         }
@@ -321,6 +324,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import '../../assets/css/stylusFn.styl'
   $colorTitleColor = rgb(233,74,67)
   $width = 960px
   .home 
@@ -469,7 +473,7 @@
         margin 0 auto
         width 1060px
         padding 98px 0
-        font-family Microsoft YaHei
+        font-family 'Microsoft YaHei'
         .titileImg
           margin-bottom 64px
     // 合作流程
@@ -492,7 +496,7 @@
               color rgb(51,51,51)
               display block
           .cpll-right
-            background url('/static/images/arrow-right.png')
+            background url($imgpath + 'arrow-right.png')
             height 25px
             width 25px
             display block

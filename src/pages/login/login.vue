@@ -9,14 +9,14 @@
             <div class="control-group-container">
               <div class="control-label">
                 <i>用户名</i>
-                <input type="text" class="verify-user" :class="{'error': userErr}" v-model="verifyUser""/>
+                <input type="text" class="verify-user" :class="{'error': userErr}" v-model="verifyUser"/>
                 <!-- <span class="user-error error-msg" v-if="userErr">* {{userVerErr}}</span> -->
               </div>
             </div>
             <div class="control-group-container">
               <div class="control-label">
                 <i>密码</i>
-                <input type="password" class="verify-psw" :class="{'error': pswErr}" v-model="verifyPsw""/>
+                <input type="password" class="verify-psw" :class="{'error': pswErr}" v-model="verifyPsw"/>
                 <!-- <span class="psw-error error-msg" v-if="pswErr">* {{pswVerErr}}</span> -->
               </div>
             </div>
@@ -359,6 +359,7 @@
 
 <style lang="stylus" scoped>
   /* logo-container start */
+  @import '../../assets/css/stylusFn.styl'
   input
     border 1px solid #ccc
     border-radius 3px
@@ -373,7 +374,7 @@
     min-width 960px
     height 680px
     overflow hidden
-    background url(/static/images/login_bg.jpg) no-repeat 0 0
+    background url($imgpath + 'login_bg.jpg') no-repeat 0 0
     .w_960
       position relative
       height 100%

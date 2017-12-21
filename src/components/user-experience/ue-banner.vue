@@ -10,7 +10,7 @@
             <h3 class="ut-title">{{ item.title }}</h3>
             <p class="ut-content">{{ item.text }}</p>
           </div>
-          <img :src="item.urlImg" class="ue-img">
+          <img v-imgpath :src="item.urlImg" class="ue-img">
         </div>
       </swiper-slide>
       <!-- Optional controls -->
@@ -66,18 +66,19 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import '../../assets/css/stylusFn.styl'
   @import '../../../node_modules/swiper/dist/css/swiper.min.css'
   .my-swiper
     width 100%
     height 220px
     .swiper-button-prev
-      background-image url('/static/images/swiper-button-prev.png')
+      background-image url($imgpath + 'swiper-button-prev.png')
       transform rotate(180deg)
       left 0
       width 25px
       height 28px
     .swiper-button-next
-      background-image url('/static/images/swiper-button-prev.png')
+      background-image url($imgpath + 'swiper-button-prev.png')
       width 25px
       height 28px
       right 0

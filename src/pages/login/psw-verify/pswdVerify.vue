@@ -67,7 +67,7 @@
         <div class="pasVer-three" v-show="'step3' === isActive">
           <div class="three-content">
             <p class="three-c">
-              <img src="/static/images/fb-suer.png">
+              <img v-imgpath src="fb-suer.png">
               <span class="three-desc">马上为您跳转到登录...</span>
             </p>
           </div>

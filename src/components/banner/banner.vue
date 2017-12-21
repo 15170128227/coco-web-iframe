@@ -4,9 +4,9 @@
     <swiper :options="swiperOption" ref="mySwiper" class="my-swiper">
       <!-- slides -->
       <swiper-slide v-for="(item, index) in bannerData.info" :key="item.id" class="swiper-no-swiping">
-        <img :src="item.imgUrl" class="s-img">
+        <img v-imgpath :src="item.imgUrl" class="s-img">
         <div class="banner-text" :style="index === 1 || index === 2 ? banStyle : banStyle2">
-          <img v-if="item.content.imgUrl" class="b-img" :src="item.content.imgUrl">
+          <p v-show="item.content.imgUrl"><img v-imgpath  class="b-img" :src="item.content.imgUrl"></p>
           <p v-if="item.content.textDescBg">
             <span class="b-descBg">{{ item.content.textDescBg }}</span>
           </p>
@@ -23,7 +23,7 @@
     </swiper>
   </div>
   <div v-else class="otherBanner">
-    <img :src="bannerData.info.imgUrl">
+    <img v-imgpath :src="bannerData.info.imgUrl">
     <div class="o-text">
       <p class="o-b-descBg">{{ bannerData.info.content.textDescBg }}</p>
       <p class="o-b-descSm">{{ bannerData.info.content.textDescSm }}</p>
@@ -42,7 +42,7 @@
     data() {
       return {
         banStyle: 'background:rgba(0,0,0,0)',
-        banStyle2: 'background:rgba(0,0,0,0.3)',
+        banStyle2: 'background:rgba(0,0,0,0)',
         swiperOption: {
 //          autoplay: 5000,
 //          initialSlide: 0,
@@ -134,7 +134,6 @@
       width 100%
       min-width 960px
       height 484px
-      background rgba(0,0,0, 0.3)
       color rgb(255, 255, 255)
       .o-b-descBg
         font-size 50px

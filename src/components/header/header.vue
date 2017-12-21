@@ -1,9 +1,10 @@
 <!-- 顶部导航组件 -->
 <template>
   <header class="head-contain" id="head-contain">
-    <div class="head-nav" :class="searchBarFixed == true ? 'isFixed' :''">
+    <!-- <div class="head-nav" :class="searchBarFixed == true ? 'isFixed' :''"> -->
+    <div class="head-nav isFixed">
       <div class="w_960">
-        <span class="logo"><router-link :to="navList[0].localHref"><img src="/static/images/logo.png" alt="logo"></router-link></span>
+        <span class="logo"><router-link :to="navList[0].localHref"><img v-imgpath src="logo.png" alt="logo"></router-link></span>
         <nav class="header-list">
           <li v-for="(item, index) in navList" :key="index">
             <router-link :to="item.localHref" @click.native="refresh">{{ item.text }}</router-link>
@@ -42,7 +43,7 @@
       }
     },
     mounted () {
-      window.addEventListener('scroll', this.handleScroll)
+      // window.addEventListener('scroll', this.handleScroll)
     },
     methods: {
       // 刷新当前页面，并返回顶部
