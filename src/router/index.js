@@ -48,7 +48,11 @@ const routes = [
     path: '/document', // 文档中心
     name: 'document',
     component: docum
-  }
+  },
+  {
+    path: '*',
+    redirect: '/home'
+  },
 ]
 
 Vue.use(VueRouter)
