@@ -17,7 +17,7 @@
           <div class="inFo">
             <h3>{{item.cooper}}</h3>
             <p class="consult-qq">QQ: {{item.QQ}}<span></span></p>
-            <P class="consult-tel">Email: {{item.Email}}<span></span></P>
+            <P class="consult-tel">TEL: {{item.TEL}}<span></span></P>
           </div>
           <p class="consult-img"><img :src="item.img" :data-index="index" alt="weChat"></p>
         </div>
@@ -83,15 +83,15 @@
           {
             'cooper': '渠道咨询',
             'QQ': '401241201',
-            // 'TEL': '17506299226',
-            'Email': 'denghui@cocosurprise.com',
+            'TEL': '17506299226',
+            // 'Email': 'denghui@cocosurprise.com',
             'img': '/static/images/weChat_icon.png'
           },
           {
             'cooper': '供应咨询',
             'QQ': '2582983430',
-            // 'TEL': '13902451291',
-            'Email': 'weililing@cocosurprise.com',
+            'TEL': '13902451291',
+            // 'Email': 'denghui@cocosurprise.com',
             'img': '/static/images/weChat_icon.png'
           }
         ]
