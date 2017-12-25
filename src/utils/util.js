@@ -19,8 +19,10 @@ Vue.prototype.axios = axios
 
 // 注册一个全局自定义指令 `v-focus`
 // const pubImgPath = '//static-sz-cocosurprise.oss-cn-shenzhen.aliyuncs.com/images/coco-web/'
-let pubImgPath = '//static.cocosurprise.com/images/coco-web/'
-const imgCacheParams = '?x-oss-process=image/format,webp/interlace,1'
+const pubImgPath = '//static.cocosurprise.com/images/coco-web/'
+const jpgImg = '?x-oss-process=image/format,jpg/interlace,1'
+const pngImg = '?x-oss-process=image/format,png/interlace,1'
+let imgCacheParams, newSrc
 const imgpathFn = function (el) {
   let src = el.getAttribute('src')
   let arr, imgName, params
@@ -31,7 +33,17 @@ const imgpathFn = function (el) {
   } else {
     imgName = src
   }
-  let newSrc = params ? pubImgPath + imgName + imgCacheParams + '/' + params : pubImgPath + imgName + imgCacheParams
+  if (imgName.indexOf('.png') > -1) {
+    if (params && params.indexOf('format=jpg') > -1) {
+      params = params.replace('format=jpg', '')
+      imgCacheParams = jpgImg
+    } else {
+      imgCacheParams = pngImg
+    }
+  } else {
+    imgCacheParams = jpgImg
+  }
+  newSrc = params ? pubImgPath + imgName + imgCacheParams + '/' + params : pubImgPath + imgName + imgCacheParams
   el.setAttribute('src', newSrc)
 }
 Vue.directive('imgpath', {

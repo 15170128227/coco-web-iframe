@@ -41,6 +41,7 @@ export default {
   @import 'assets/css/reset.styl'
   @import 'assets/css/base.styl'
   #app
+    height 100%
     .isDisplay
       display none
     table

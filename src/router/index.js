@@ -52,7 +52,7 @@ const routes = [
   {
     path: '*',
     redirect: '/home'
-  },
+  }
 ]
 
 Vue.use(VueRouter)

@@ -463,7 +463,7 @@
             flex 1
             .active
               background-color rgb(223, 74, 67)
-              background-image url('/static/images/checked.png')
+              background-image url($imgpath + 'checked.png')
               background-position center
               background-repeat no-repeat
               border none!important

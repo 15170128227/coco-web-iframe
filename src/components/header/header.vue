@@ -49,7 +49,7 @@
       // 刷新当前页面，并返回顶部
       refresh (e) {
         document.documentElement.scrollTop = document.body.scrollTop = 0
-        this.$router.go(0)
+        // this.$router.go(0)
       },
       handleScroll () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop

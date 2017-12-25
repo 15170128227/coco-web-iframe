@@ -147,24 +147,24 @@
         ],
         // 专注成长数据
         fdJson: [{
-            urlImg: 'fd-list1.png',
+            urlImg: 'fd-list1.png?format=jpg',
             title: '新零售整体方案',
             text: '符合自媒体的新型电商变现方案整体运营、技术、供应链、客服体系支持无损用户体验式解决方案'
           },
           {
-            urlImg: 'fd-list2.png',
+            urlImg: 'fd-list2.png?format=jpg',
             title: '新营销运营支持',
             text: '去品牌化奇货运营策略，区别于价格战的内容导向策略，IP+品牌联合策略'
           },
           {
-            urlImg: 'fd-list3.png',
+            urlImg: 'fd-list3.png?format=jpg',
             title: '新收益高额佣金',
             text: '零对接成本，内容化运营，高转化率，持续性营收、其他增值服务'
           }
         ],
         // 零成本接入数据
         caJson: [{
-            urlImg: 'ca-list1.png',
+            urlImg: 'ca-list1.png?format=jpg',
             title: '商城集成系统',
             text: [{
                 desc: '+ 内容式H5商城'
@@ -178,7 +178,7 @@
             ]
           },
           {
-            urlImg: 'ca-list2.png',
+            urlImg: 'ca-list2.png?format=jpg',
             title: '运营解决方案',
             text: [{
                 desc: '+ 专业场景及用户行为分析'
@@ -192,7 +192,7 @@
             ]
           },
           {
-            urlImg: 'ca-list3.png',
+            urlImg: 'ca-list3.png?format=jpg',
             title: '供应链解决方案',
             text: [{
                 desc: '+ 专业买手团队支持'
@@ -206,7 +206,7 @@
             ]
           },
           {
-            urlImg: 'ca-list4.png',
+            urlImg: 'ca-list4.png?format=jpg',
             title: '客户服务',
             text: [{
                 desc: ''
@@ -220,7 +220,7 @@
             ]
           },
           {
-            urlImg: 'ca-list5.png',
+            urlImg: 'ca-list5.png?format=jpg',
             title: '数据AI系统',
             text: [{
                 desc: '+ AI数据预测，适应场景奇货'
@@ -236,7 +236,7 @@
         ],
         // 无损用户体验数据
         ueData: [{
-            urlImg: 'ueImg.png',
+            urlImg: 'ueImg.png?format=jpg',
             title: '· 产品结构',
             text: '重内容轻交易结构 、迎合用户浏览习惯、延长用户停留时间 、提高用户粘性'
           },

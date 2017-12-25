@@ -499,10 +499,12 @@
     display block */
   .doc-container
     min-width 960px
+    height 100%
     background-color $defaultBg
     overflow hidden
     /* doc-content start */
     .doc-content
+      min-height 100%
       background-color $Bg32
       overflow hidden
       text-align(left)
@@ -520,12 +522,12 @@
           right 20px
         .arrow-down
           animation: bounce-in .5s
-          background url(/static/images/docment/down.png) no-repeat right
+          background url($imgpath + 'down.png') no-repeat right
           margin-right 20px
         .arrow-up
           animation: bounce-in .5s
           margin-right 20px
-          background url(/static/images/docment/up.png) no-repeat right
+          background url($imgpath + 'up.png') no-repeat right
         a
          color $clrd5
         .one-column
@@ -594,10 +596,11 @@
       /* doc-column-left end */
       /* doc-right-center start */
       .doc-right-center
+        overflow hidden
         min-width 700px
+        min-height 498px
         margin-left 260px
         background-color #f4f4f4
-        overflow hidden
         .doc-content-chunk
           box-sizing border-box
           min-width 700px
@@ -630,7 +633,8 @@
           .content-chunk
             padding 20px 0
             line-height 30px
-            font-family SimSuncss
+            img
+              max-width 100%
       /* doc-right-center end */
     /* doc-content end */
   /* doc-container end */
