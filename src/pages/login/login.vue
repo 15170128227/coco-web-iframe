@@ -206,6 +206,7 @@
           this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.verCodeErr = '用户名或密码错误'
+          this.createCode() // 创建
           return
         } else if (uPattern.test(self.verifyUser)) {
           this.userErr = false
@@ -224,6 +225,7 @@
           this.verifyErr = false
           this.disabled.submit = false // 登录按钮启用
           // this.pswVerErr = '请输入密码'
+          this.createCode() // 创建
           return
         } else {
           this.pswErr = false
@@ -256,6 +258,7 @@
           this.verifyErr = true
           this.disabled.submit = false // 登录按钮启用
           this.verCodeErr = '验证码错误，请重新输入'
+          this.createCode() // 创建
           return
         }
         this.allVerfiy() // 验证是否全部通过
