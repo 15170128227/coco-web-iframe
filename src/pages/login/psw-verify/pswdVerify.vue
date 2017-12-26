@@ -454,7 +454,6 @@
       },
       // 所以验证已通过
       verifyPass (reg6, reg) {
-        console.log(3333333333)
         if (!this.isTrueCode && !this.isPwd && !this.isSuerPwd) {
         // if (this.pwd !== '' && this.suerPwd !== '' && this.atucode !== '' && reg6.test(this.pwd) && reg.test(this.pwd) && this.pwd === this.suerPwd) {
           this.resPassWord() // 根据修改密码类型请求

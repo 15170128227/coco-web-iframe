@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(function(config) {
   if (config.method === 'post') {
     let params = new URLSearchParams()
     Object.keys(config.data).forEach(v => {
@@ -11,7 +11,7 @@ axios.interceptors.request.use(function (config) {
   }
   // Do something before request is sent
   return config
-}, function (error) {
+}, function(error) {
   // Do something with request error
   return Promise.reject(error)
 })
@@ -23,7 +23,7 @@ const pubImgPath = '//static.cocosurprise.com/images/coco-web/'
 const jpgImg = '?x-oss-process=image/format,jpg/interlace,1'
 const pngImg = '?x-oss-process=image/format,png/interlace,1'
 let imgCacheParams, newSrc
-const imgpathFn = function (el) {
+const imgpathFn = function(el) {
   let src = el.getAttribute('src')
   let arr, imgName, params
   if (src.indexOf('?') > -1) {

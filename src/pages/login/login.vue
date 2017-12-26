@@ -163,7 +163,7 @@
             // this.verifyErr = true
             this.verCodeErr = message
           }
-          // this.createCode() // 重置验证码
+          this.createCode() // 重置验证码
         }
       },
       // 验证验随机函数
@@ -188,6 +188,7 @@
       },
       // 登录验证
       validateCode () {
+        /// test end
         const self = this // 重置
         // 用户名验证
         let uPattern = new RegExp(/^[0-9a-zA-z-_]+$/) // 用户名正则（数字或字母皆可）
@@ -239,7 +240,6 @@
         //   return
         // }
         // 验证码验证
-        console.log('this.verifyCode.toUpperCase().trim()', this.verifyCode.toUpperCase().trim(), this.verCodeVal.toUpperCase().trim())
         if (this.verifyCode.toUpperCase().trim() === '') {
           this.userErr = false
           this.pswErr = false
